@@ -1,5 +1,7 @@
 package com.kcc.trioffice.domain.chat_bot.controller;
 
+import com.kcc.trioffice.global.auth.PrincipalDetail;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,10 +30,10 @@ public class ChatBotRestController {
   private final ChatBotService chatBotService;
 
   @GetMapping(value = "/chat-bot", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-  public Flux<String> getClientMessages(@RequestParam String clientMessage) {
+  public Flux<String> getClientMessages(@RequestParam String clientMessage, @AuthenticationPrincipal PrincipalDetail principalDetail) {
     System.out.println("받은 메세지: " + clientMessage);
 
-    Flux<String> responseMessage = chatBotService.streamChatBotResponse(clientMessage);
+    Flux<String> responseMessage = chatBotService.streamChatBotResponse(clientMessage, principalDetail);
     //공백 정상 출력
 //            .doOnNext(ch -> System.out.println("보내는 메세지 : " + ch + "공백 체크")
 
