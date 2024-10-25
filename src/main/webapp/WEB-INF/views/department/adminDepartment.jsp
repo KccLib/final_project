@@ -82,31 +82,31 @@
                 <br>
                 <div class="form-row">
                     <label for="employee-id" style="margin-left: 130px; font-size: 20px;">*아이디</label>
-                    <input type="text" id="employee-id" class="form-control" style="margin-right: 80px; border: 1.5px solid black;" placeholder="아이디를 입력하세요">
+                    <input type="text" id="employee-id" class="form-control" style="margin-right: 80px;border: 1.5px solid black;margin-left: 120px;" placeholder="아이디를 입력하세요">
                 </div>
                 <br>
                 <div class="form-row">
                     <label for="employee-password" style="margin-left: 130px; font-size: 20px;">*비밀번호</label>
-                    <input type="text" id="employee-password" class="form-control" style="margin-right: 80px; border: 1.5px solid black;" placeholder="비밀번호를 입력하세요">
+                    <input type="text" id="employee-password2" class="form-control" style="margin-right: 80px;border: 1.5px solid black;margin-left: 102px;" placeholder="비밀번호를 입력하세요">
                 </div>
                 <br>
                 <div class="form-row">
                     <label for="employee-password2" style="margin-left: 130px; font-size: 20px;">*비밀번호 확인</label>
-                    <input type="text" id="employee-password2" class="form-control" style="margin-right: 80px; border: 1.5px solid black;" placeholder="비밀번호를 입력하세요">
+                    <input type="text" id="employee-password2" class="form-control" style="margin-right: 80px;border: 1.5px solid black;margin-left: 62px;" placeholder="비밀번호를 입력하세요">
                 </div>
                 <br>
 
                 <div class="form-row" style="display: flex; align-items: center;">
                     <label for="position" style="margin-left: 130px; font-size: 20px;">직위</label>
-                    <select id="position" class="form-control" style="margin-right: 160px; border: 1.5px solid black;" onchange="updatePositionName(this)">
-                        <option value="">선택하세요</option>
-                    </select>
+                    <select id="position" class="form-control" style="margin-right: 160px;border: 1.5px solid black;margin-left: 145px;" onchange="updatePositionName(this)">
+                                            <option value="">선택하세요</option>
+                                        </select>
                 </div>
 
                 <br>
                 <div class="form-row" style="display: flex; align-items: center;">
                     <label for="upper-dept" style="margin-left: 130px; font-size: 20px;">부서</label>
-                    <select id="upper-dept" class="form-control" style="margin-right: 160px; border: 1.5px solid black;" onchange="updatePositionName(this)">
+                    <select id="upper-dept" class="form-control" style="margin-left: 145px;margin-right: 160px; border: 1.5px solid black;" onchange="updatePositionName(this)">
                         <option value="">kcc정보통신</option>
                         <c:forEach var="department" items="${departmentTree}">
                             <option value="${department.deptId}">${department.departmentName}</option>
