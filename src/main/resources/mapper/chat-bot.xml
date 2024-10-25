@@ -5,6 +5,47 @@
 
 <mapper namespace="com.kcc.trioffice.domain.chat_bot.mapper.ChatBotMapper">
 
+    <insert id="saveChatRoom" >
+        <selectKey keyProperty="chatRoomCreate.chatRoomId" resultType="long" order="BEFORE">
+            SELECT SEQ_CHAT_ROOM.NEXTVAL FROM DUAL
+        </selectKey>
 
+        INSERT INTO chat_room (chat_room_id, name, writer, write_dt, modifier, modified_dt, is_deleted)
+        VALUES (#{chatRoomCreate.chatRoomId}, #{chatRoomCreate.chatRoomName}, #{writer}, SYSDATE, #{writer}, SYSDATE, 0)
+    </insert>
+
+
+    <insert id="saveParticipationEmployee" parameterType="map">
+        INSERT INTO participation_employee (chat_room_id, employee_id, is_favorited, is_entered, writer, write_dt, modifier, modified_dt, is_deleted)
+        VALUES (#{chatRoomId}, #{employeeId}, 0, 0, #{employeeId}, SYSDATE, #{employeeId}, SYSDATE, 0)
+    </insert>
+
+    <insert id="saveChatMessage" parameterType="com.kcc.trioffice.domain.chat_room.dto.request.ChatMessage">
+        <selectKey keyProperty="chatId" resultType="long" order="BEFORE">
+            SELECT SEQ_CHAT.NEXTVAL FROM DUAL
+        </selectKey>
+        INSERT INTO chat (
+        chat_id
+        , chat_room_id
+        , contents
+        , chat_type
+        , writer
+        , write_dt
+        , modifier
+        , modified_dt
+        , is_deleted
+        )
+        VALUES (
+        #{chatId}
+        , #{roomId}
+        , #{message}
+        , #{chatType}
+        , #{senderId}
+        , SYSDATE
+        , #{senderId}
+        , SYSDATE
+        , 0
+        )
+    </insert>
 
 </mapper>

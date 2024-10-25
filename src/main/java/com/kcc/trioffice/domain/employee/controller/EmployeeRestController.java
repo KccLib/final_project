@@ -41,7 +41,6 @@ public class EmployeeRestController {
     public ResponseEntity<EmployeeInfo> getCurrentEmployee(@AuthenticationPrincipal PrincipalDetail principalDetail) {
         return ResponseEntity.ok(employeeService.getEmployeeInfo(principalDetail.getEmployeeId()));
     }
-
     @GetMapping("/find-password/id")
     public HttpStatus findPasswordCheckId(@RequestParam final String email) {
         System.out.println("요청한 회원 이메일 :" + email);

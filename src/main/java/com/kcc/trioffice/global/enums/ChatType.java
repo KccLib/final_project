@@ -7,7 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum ChatType {
-    ENTER(1), CHAT(2), FILE(3), QUIT(4), IMAGE(5);
+    ENTER(1), CHAT(2), FILE(3), QUIT(4), IMAGE(5), CHAT_BOT(6);
 
     private final long value;
 
@@ -23,6 +23,8 @@ public enum ChatType {
                 return QUIT.value;
             case "IMAGE":
                 return IMAGE.value;
+            case "CHAT_BOT":
+                return CHAT_BOT.value;
             default:
                 throw new BadRequestException("chatType이 잘못되었습니다.");
         }
@@ -40,6 +42,8 @@ public enum ChatType {
                 return QUIT.name();
             case 5:
                 return IMAGE.name();
+            case 6:
+                return CHAT_BOT.name();
             default:
                 throw new BadRequestException("chatType이 잘못되었습니다.");
         }

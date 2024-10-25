@@ -73,7 +73,16 @@ uri="http://www.springframework.org/security/tags" %>
 
     <!-- tagify -->
     <!-- 소스 다운 -->
-    <script src="https://unpkg.com/@yaireo/tagify"></script>
+    <!-- <script src="https://unpkg.com/@yaireo/tagify"></script> -->
+    <script
+      async
+      src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@3.20.0/dist/tagify.polyfills.min.js"
+    ></script>
+    <script
+      async
+      src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@3.20.0/dist/tagify.min.js"
+    ></script>
+
     <!-- 폴리필 (구버젼 브라우저 지원) -->
     <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
     <link
@@ -89,7 +98,7 @@ uri="http://www.springframework.org/security/tags" %>
       rel="stylesheet"
       href="<%= request.getContextPath() %>/static/component/reset.css"
     />
-    <%-- markdown  --%>
+    <%-- markdown --%>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <style>

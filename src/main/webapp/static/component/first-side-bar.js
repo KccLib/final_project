@@ -78,6 +78,12 @@ function submitChatBot() {
     //   // 한 글자씩 응답을 받아서 채팅에 계속 추가
     //   addServerMessage(event.data, serverMessageElement);
     // }
+    // messages = event.data;
+    // messages.forEach((char, index) => {
+    //   setTimeout(() => {
+    //     addServerMessage(char, serverMessageElement); // 각각의 문자 추가
+    //   }, index * 50); // 50ms 간격으로 추가
+    // });
     addServerMessage(event.data, serverMessageElement);
 
   };
@@ -118,7 +124,7 @@ function addServerMessage(message, serverMessageElement) {
   if (addChatMessage.innerText.includes("💬")) {
     addChatMessage.innerText = addChatMessage.innerText.replace("💬", ""); // "💬"를 빈 문자열로 대체
   }
-  console.log("추가할 메시지:", message, "공백검사ㅌ"); // 추가할 메시지 로그
+  // console.log("추가할 메시지:", message, "공백검사ㅌ"); // 추가할 메시지 로그
 
   // 공백을 검사하여 ""인 경우 " "로 대체
   if (message === "") {
