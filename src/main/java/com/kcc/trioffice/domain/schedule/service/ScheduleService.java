@@ -152,7 +152,7 @@ public class ScheduleService {
               "    <p><strong>일정 제목:</strong> " + saveSchedule.getName() + "</p>" +
               "    <p><strong>일정 기간:</strong> " + saveSchedule.getStartedDt() + " ~ " + saveSchedule.getEndedDt()
               + "</p>" +
-              "    <a href='#' class='button' style='display: inline-block; padding: 10px 20px; margin-top: 20px; background-color: #0056b3; color: #ffffff; text-decoration: none; border-radius: 5px; font-weight: bold;'>일정 확인하기</a>"
+              "    <a href='trioffice.site/notifications' class='button' style='display: inline-block; padding: 10px 20px; margin-top: 20px; background-color: #0056b3; color: #ffffff; text-decoration: none; border-radius: 5px; font-weight: bold;'>일정 확인하기</a>"
               +
               "</div>" +
               "<div class='footer' style='text-align: center; padding: 10px; font-size: 12px; color: #999999; border-top: 1px solid #dddddd; margin-top: 20px;'>"
