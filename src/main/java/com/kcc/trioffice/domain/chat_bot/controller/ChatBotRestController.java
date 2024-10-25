@@ -30,6 +30,11 @@ public class ChatBotRestController {
   @GetMapping(value = "/chat-bot", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
   public Flux<String> getClientMessages(@RequestParam String clientMessage) {
     System.out.println("받은 메세지: " + clientMessage);
-    return chatBotService.streamChatBotResponse(clientMessage);
+
+    Flux<String> responseMessage = chatBotService.streamChatBotResponse(clientMessage);
+    //공백 정상 출력
+//            .doOnNext(ch -> System.out.println("보내는 메세지 : " + ch + "공백 체크")
+
+    return responseMessage;
   }
 }

@@ -12,6 +12,7 @@ uri="http://www.springframework.org/security/tags" %>
       rel="stylesheet"
       href="<%= request.getContextPath() %>/static/component/main-contents.css"
     />
+
     <link
       rel="stylesheet"
       href="<%= request.getContextPath() %>/static/component/second-side-bar.css"
@@ -88,6 +89,8 @@ uri="http://www.springframework.org/security/tags" %>
       rel="stylesheet"
       href="<%= request.getContextPath() %>/static/component/reset.css"
     />
+    <%-- markdown  --%>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <script src="<%= request.getContextPath() %>/static/component/common.js"></script>
 

@@ -38,20 +38,18 @@ public class ChatBotService {
         throw new NotFoundException("GPT의 응답을 생성할 수 없습니다." + e);
       }
 
-      Flux<String> responseFlux = Flux.fromStream(responseMessage.chars()
-      .mapToObj(c -> String.valueOf((char) c)))
-      .delayElements(Duration.ofMillis(30)); // 100ms마다 한 글자씩 전송
       StringBuilder messageBuilder = new StringBuilder();
 
+      Flux<String> responseFlux = Flux.fromStream(responseMessage.chars()
+      .mapToObj(c -> String.valueOf((char) c)))
+      .delayElements(Duration.ofMillis(50)) // 100ms마다 한 글자씩 전송
+      .doOnNext(ch -> {
+          //공백 정상 출력
+          System.out.println("현재 문자: '" + ch + "'");
+      }); //띄어쓰기 검사하기
 
-//      return responseFlux.doOnNext(message -> {
-//                // 수신된 메시지를 StringBuilder에 추가
-//                messageBuilder.append(message);
-//                // 현재까지의 메시지를 로그에 출력 (혹은 다른 방식으로 처리)
-//                System.out.println("현재 메시지: " + messageBuilder.toString());
-//              })
-//              .map(message -> messageBuilder.toString()); // 누적된 메시지 반환
+      System.out.println("반환된 메세지는 : " +responseMessage);
     return  responseFlux;
-}
+    }
 
 }
