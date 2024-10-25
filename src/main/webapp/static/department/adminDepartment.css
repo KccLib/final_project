@@ -27,14 +27,19 @@
     display: none; /* 기본적으로 숨김 */
 }
 
+.form-row2 .fa-circle-user {
+    margin-left: 257px;
+    font-size: 12em;
+    color: #8b8787;
+}
 
 .add-employee-form {
     height: 650px;
-    margin-left: 270px;
-    margin-top: 130px;
+    margin-left: 200px;
+    margin-top: 60px;
     background-color: white;
     display: block; /* 블록으로 설정 */
-    width: calc(100% - 540px); /* 좌우 마진을 고려한 폭 설정 (540px는 270px * 2) */
+    width: 750px; /* 좌우 마진을 고려한 폭 설정 (540px는 270px * 2) */
     max-width: 800px; /* 최대 폭 설정 (필요에 따라 조정) */
     padding: 20px; /* 여백 추가 */
     box-shadow: 0 4px 8px rgba(0.05, 0.05, 0.05, 0.05); /* 그림자 효과 추가 (선택사항) */
@@ -171,10 +176,11 @@ li {
     left: 17px;
 }
 .add-department-form p {
-    font-size: 40px;
-    text-align: center; /* 텍스트를 가운데 정렬 */
+    font-size: 30px;
+    text-align: left;
+    margin-left: 13px;
     margin-bottom: 40px;
-    margin-top: 20px;
+    margin-top: 17px;
 }
 
 .employee-name, employee-email {
@@ -183,10 +189,10 @@ li {
 }
 
 .add-employee-form p {
-    font-size: 40px;
-    text-align: center; /* 텍스트를 가운데 정렬 */
-    margin-bottom: 40px;
-    margin-top: 20px;
+    font-size: 30px;
+    text-align: left;
+    margin-left: 13px;
+    margin-top: 17px;
 }
 
 
@@ -215,7 +221,6 @@ li {
     margin-left: 100px; /* 잘못된 부분 수정 */
 }
 
-
 .img2 {
     position: absolute;
     padding-top: 190px;
@@ -224,7 +229,7 @@ li {
 }
 
 .img2 img {
-    width: 830px;
+    width: 1100px;
 }
 
 .profile2 img {
@@ -282,7 +287,7 @@ li {
 
 .contents-1-1 {
     position: relative;
-    height: 585px;
+    height: 770px;
     margin-left: 60px;
     margin-top: 60px;
     margin-bottom: 60px;
@@ -293,7 +298,7 @@ li {
 }
 
 .contents {
-    width: 1000px;
+    width: 800px;
     height: 1000px;
 }
 

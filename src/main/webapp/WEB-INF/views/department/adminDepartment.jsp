@@ -23,7 +23,6 @@
 <body>
     <jsp:include page="/WEB-INF/views/component/top-bar.jsp" />
     <div class="layout-container">
-
     <jsp:include page="/WEB-INF/views/component/first-side-bar.jsp" />
 
     <div class="second-side-bar">
@@ -66,51 +65,57 @@
                 </div>
 
 
-            <div class="add-employee-form" style="display: none;">
+            <div class="add-employee-form" style="display: block;">
                 <p>사원 등록</p>
+
+                <div class="form-row2" style="position: relative;">
+                    <i class="fa-solid fa-circle-user"></i>
+                    <i class="fa-regular fa-pen-to-square" style="position: absolute; font-size: 1.5em;left: 414px;top: 150px;"></i>
+                </div>
+
+                <br>
+
                 <div class="form-row">
-                    <label for="employee-name" style="margin-left: 48px; font-size: 20px;">이름(한글)</label>
+                    <label for="employee-name" style="margin-left: 130px; font-size: 20px;">이름(한글)</label>
                     <input type="text" id="employee-name" class="form-control" style="margin-right: 80px; border: 1.5px solid black;" placeholder="사원명을 입력하세요">
                 </div>
                 <br>
                 <div class="form-row">
-                    <label for="employee-id" style="margin-left: 48px; font-size: 20px;">*아이디</label>
+                    <label for="employee-id" style="margin-left: 130px; font-size: 20px;">*아이디</label>
                     <input type="text" id="employee-id" class="form-control" style="margin-right: 80px; border: 1.5px solid black;" placeholder="아이디를 입력하세요">
                 </div>
                 <br>
                 <div class="form-row">
-                    <label for="employee-password" style="margin-left: 48px; font-size: 20px;">*비밀번호</label>
+                    <label for="employee-password" style="margin-left: 130px; font-size: 20px;">*비밀번호</label>
                     <input type="text" id="employee-password" class="form-control" style="margin-right: 80px; border: 1.5px solid black;" placeholder="비밀번호를 입력하세요">
                 </div>
                 <br>
                 <div class="form-row">
-                    <label for="employee-password2" style="margin-left: 48px; font-size: 20px;">*비밀번호 확인</label>
+                    <label for="employee-password2" style="margin-left: 130px; font-size: 20px;">*비밀번호 확인</label>
                     <input type="text" id="employee-password2" class="form-control" style="margin-right: 80px; border: 1.5px solid black;" placeholder="비밀번호를 입력하세요">
                 </div>
                 <br>
-                <label for="position" style="margin-left: 50px; font-size: 20px;">직위</label>
-                <select id="position" class="form-control" style="margin-right: 160px; border: 1.5px solid black;" onchange="updatePositionName(this)">
-                    <option value="">선택하세요</option>
-                    <!-- 포지션 목록을 동적으로 표시할 부분 -->
-                    <!-- AJAX를 통해 포지션 목록을 가져오도록 수정 -->
-                </select>
 
-                <label for="upper-dept" style="margin-left: 50px; font-size: 20px;">부서</label>
-                                        <select id="upper-dept" class="form-control" style="margin-right: 160px; border: 1.5px solid black;" onchange="updateDepartmentName(this)">
-                                            <option value="">kcc정보통신</option>
-                                            <!-- 부서 목록을 동적으로 표시 -->
-                                            <c:forEach var="department" items="${departmentTree}">
-                                                <option value="${department.deptId}">${department.departmentName}</option>
-                                            </c:forEach>
-                                        </select>
-
-
-
-
+                <div class="form-row" style="display: flex; align-items: center;">
+                    <label for="position" style="margin-left: 130px; font-size: 20px;">직위</label>
+                    <select id="position" class="form-control" style="margin-right: 160px; border: 1.5px solid black;" onchange="updatePositionName(this)">
+                        <option value="">선택하세요</option>
+                    </select>
+                </div>
 
                 <br>
-                <button id="save-employee" class="btn btn-primary" style="margin-top: 50px;margin-left: 180px;background-color: #0056b3;width: 90px;">저장</button>
-                <button id="cancel-employee" class="btn btn-secondary" style="margin-top: 50px;margin-left: 10px;width: 90px;">취소</button>
+                <div class="form-row" style="display: flex; align-items: center;">
+                    <label for="upper-dept" style="margin-left: 130px; font-size: 20px;">부서</label>
+                    <select id="upper-dept" class="form-control" style="margin-right: 160px; border: 1.5px solid black;" onchange="updatePositionName(this)">
+                        <option value="">kcc정보통신</option>
+                        <c:forEach var="department" items="${departmentTree}">
+                            <option value="${department.deptId}">${department.departmentName}</option>
+                        </c:forEach>
+                    </select>
+                </div>
+
+                <button id="save-employee" class="btn btn-primary" style="margin-left: 250px;background-color: #0056b3;width: 90px;">저장</button>
+                <button id="cancel-employee" class="btn btn-secondary" style="margin-left: 10px;width: 90px;">취소</button>
             </div>
 
 
@@ -168,12 +173,14 @@
 
 
             <div class="img2">
-                <img src="/static/component/kcc-logo.png">
+                <img src="/static/component/kcc-logo.png" style="
+                                                              display: none;
+                                                          ">
             </div>
 
         </div>
     </div>
-
+</div>
 
 <!-- 드롭다운 메뉴 구조 수정 -->
 <div class="btn-group dropend2" id="dropdownMenu" style="display: none;">
@@ -183,7 +190,6 @@
         <li class="dropdown-item-container"><a class="dropdown-item modify" href="#">부서 수정</a></li>
         <li class="dropdown-item-container"><a class="dropdown-item delete" href="#">부서 삭제</a></li>
     </ul>
-</div>
 </div>
 
 <script>
@@ -216,6 +222,7 @@
                 e.preventDefault();
                 e.stopPropagation(); // 클릭 이벤트 전파 방지
                 var $dropdownMenu = $(this).next('.dropdown-menu');
+
                 $dropdownMenu.toggle(); // 드롭다운 메뉴 토글
             });
 
@@ -305,12 +312,12 @@
             // menu3 클릭 시 드롭다운 표시
             $(document).on('click', '.menu3', function(e) {
                 e.stopPropagation(); // 클릭 이벤트 전파 방지
-                var $fixedMenu = $(this).closest('.fixed-menu');
+                var $fixedMenu = $(this).closest('.second-side-bar');
                 var dropdown = $('#dropdownMenu');
 
                 // 드롭다운 표시 및 위치 조정
                 dropdown.toggle().css({
-                    top: $(this).offset().top - 68 + 'px', // 메뉴 아래
+                    top: $(this).offset().top - 960 + 'px', // 메뉴 아래
                     left: $fixedMenu.offset().left + $fixedMenu.outerWidth() - 2 + 'px', // fixed-menu 오른쪽으로 정렬
                     backgroundColor: '#f5f5f5', // 배경 색상 설정
                     border: '1.4px solid rgb(0 0 0)' // 경계선 설정
