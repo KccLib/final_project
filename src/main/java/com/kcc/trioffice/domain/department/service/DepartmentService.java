@@ -49,4 +49,24 @@ public class DepartmentService {
     }
 
 
+    // 부서 추가 메서드
+    public void saveDepartment(Department department) {
+        departmentMapper.insertDepartment(department);
+    }
+
+    // 부서 수정 메서드 추가
+    public void updateDepartment(Department department) {
+        departmentMapper.updateDepartment(department);
+    }
+
+    // 부서 삭제 메서드 추가
+    public void deleteDepartment(Long deptId) {
+        departmentMapper.deleteDepartment(deptId);
+    }
+
+    // 특정 부서 정보 조회
+    public Department getDepartmentById(Long deptId) {
+        return departmentMapper.findDepartmentById(deptId); // 매퍼를 통해 특정 부서 정보 조회
+    }
+
 }
