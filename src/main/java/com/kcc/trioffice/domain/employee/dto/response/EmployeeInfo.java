@@ -20,7 +20,7 @@ public class EmployeeInfo implements Serializable {
     private String location;
     private Boolean isReceiveNotification;
     private String position;
-    private String status;
+    private Long status;
     private String statusMessage;
     private String fcmToken;
     private Long writer;

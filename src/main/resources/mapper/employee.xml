@@ -10,6 +10,7 @@
       SELECT e.employee_id as id
              , e.name
              , d.name as deptName
+             , d.dept_id
              , e.position
         FROM employee e
         LEFT JOIN department d
@@ -20,7 +21,7 @@
         ORDER BY e.name
     </select>
 
-    <select id="getAllEmployeesInfo" 
+    <select id="getAllEmployeesInfo"
             resultType="com.kcc.trioffice.domain.employee.dto.response.SearchEmployee">
         SELECT e.employee_id as id
              , e.name
@@ -29,7 +30,7 @@
             FROM employee e
             LEFT JOIN department d
                 ON e.dept_id = d.dept_id AND d.is_deleted = 0
-            WHERE 
+            WHERE
                 e.is_deleted = 0
             ORDER BY
                 e.name
@@ -91,7 +92,7 @@
             WHERE email = #{id}
                 AND is_deleted = 0
     </select>
-    
+
 
     <select id="getEmployeeInfoList" parameterType="java.util.List"
             resultType="com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo">
@@ -252,6 +253,99 @@
       WHERE employee_id = #{employeeId}
     </update>
 
+    <update id="changeEmployeeStatus">
+      UPDATE employee
+        SET status = #{status}
+            , modifier = #{employeeId}
+            , modified_dt = sysdate
+        WHERE employee_id = #{employeeId}
+    </update>
 
-    
+
+
+    <!-- 사원 등록 쿼리 -->
+    <insert id="saveEmployeeFindById" parameterType="com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo">
+        INSERT INTO employee (
+        employee_id,
+        dept_id,
+        company_id,
+        email,
+        password,
+        phone_num,
+        external_email,
+        name,
+        birth,
+        profile_url,
+        fax,
+        location,
+        is_receive_notification,
+        position,
+        status,
+        status_message,
+        writer,
+        write_dt,
+        modifier,
+        modified_dt,
+        is_deleted
+        ) VALUES (
+        seq_employee.nextval,
+        #{deptId},
+        #{companyId},
+        #{email},
+        #{password},
+        #{phoneNum},
+        #{externalEmail},
+        #{name},
+        #{birth},
+        #{profileUrl},
+        #{fax},
+        #{location},
+        #{isReceiveNotification},
+        #{position},
+        #{status},
+        #{statusMessage, jdbcType=VARCHAR},
+        #{writer},
+        sysdate,
+        #{modifier},
+        sysdate,
+        0
+        )
+    </insert>
+
+
+    <!-- 사원 수정 쿼리 -->
+    <update id="updateEmployee" parameterType="com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo">
+        UPDATE employee
+        SET dept_id = #{deptId},
+        email = #{email},
+        phone_num = #{phoneNum},
+        external_email = #{externalEmail},
+        name = #{name},
+        birth = #{birth},
+        profile_url = #{profileUrl},
+        fax = #{fax},
+        location = #{location},
+        is_receive_notification = #{isReceiveNotification},
+        position = #{position},
+        status = #{status},
+        status_message = #{statusMessage},
+        modifier = #{modifier},
+        modified_dt = sysdate
+        WHERE employee_id = #{employeeId}
+    </update>
+
+    <!-- 사원 삭제 쿼리 -->
+    <update id="deleteEmployee" parameterType="Long">
+        UPDATE employee
+        SET is_deleted = 1
+        WHERE employee_id = #{employeeId}
+    </update>
+
+    <select id="getAllPositions" resultType="String">
+        SELECT DISTINCT position
+        FROM employee
+        WHERE is_deleted = 0
+        ORDER BY position
+    </select>
+
 </mapper>

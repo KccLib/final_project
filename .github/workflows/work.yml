@@ -30,7 +30,7 @@ jobs:
       - name: Set up firebase js
         run: |
           mkdir -p src/main/resources/static
-          printf "%s" "${{ secrets.FIREBASE_JS }}" > src/main/resources/static/firebase-messaging-sw.js
+          printf "%s" "${{ secrets.FIREBASE_JS }}" | base64 -d > src/main/resources/static/firebase-messaging-sw.js
 
       - name: ✨ JDK 17 설정
         uses: actions/setup-java@v3

@@ -47,10 +47,22 @@ $(document).ready(function() {
             console.log("WebSocket 연결 성공");
             reconnectAttempts = 0; // 재연결 성공 시 재연결 횟수 초기화
             subscribeToChatRoomList();
+
+            // 재연결 후 현재 채팅방이 열려 있으면 다시 구독
+            if (currentChatRoomId) {
+                console.log("재연결 후 채팅방 구독을 재설정합니다:", currentChatRoomId);
+                subscribeToChatRoom(currentChatRoomId);
+            }
         }, function (error) {
             console.error("WebSocket 연결 에러:", error);
             reconnectWebSocket();
         });
+
+        // 연결 종료 이벤트 처리
+        stompClient.ws.onclose = function() {
+            console.log("WebSocket 연결이 종료되었습니다.");
+            reconnectWebSocket();
+        };
     }
 
     function reconnectWebSocket() {
@@ -145,12 +157,28 @@ $(document).ready(function() {
     }
 
     function addProfileStatus(chatRoom) {
-        if (chatRoom.participantCount == 2) {
+        if (chatRoom.employeeStatus == 1) {
             return `<div class="status d-flex justify-content-center align-items-center">
-                            <i class="fa-solid fa-check check-icon"></i>
-                        </div>`;
+                        <i class="fa-solid fa-check check-icon"></i>
+                    </div>`;
+        } else if(chatRoom.employeeStatus == 2) {
+            return `<div class="absent-status d-flex justify-content-center align-items-center">
+                        <i class="fa-solid fa-minus"></i>
+                    </div>`;
+        } else if (chatRoom.employeeStatus == 3) {
+            return `<div class="inactive-status d-flex justify-content-center align-items-center">
+                        <i class="fa-solid fa-minus"></i>
+                    </div>`;
+        } else if (chatRoom.employeeStatus == 4) {
+            return `<div class="dnd-status d-flex justify-content-center align-items-center">
+                        <i class="fa-solid fa-minus"></i>
+                    </div>`;
         }
         return '';
+    }
+
+    function addStatus(chatRoom) {
+
     }
 
     function addChatRoomActive(chatRoom) {
@@ -249,6 +277,9 @@ $(document).ready(function() {
     function updateChatRoomInfo(data) {
         $('.contents .group-name').text(data.chatRoomName);
         $('.chat-room-profile-image').attr('src', data.chatRoomProfileImageUrl);
+        $('.chat-room-profile div').replaceWith(addProfileStatus(data));
+        console.log(data);
+
         console.log(data.participantCount)
         $('.emp-count').text(data.participantCount);
     }
@@ -664,6 +695,8 @@ $(document).ready(function() {
     }
 
     function connectWebSocket(chatRoomId) {
+        currentChatRoomId = chatRoomId; // 현재 채팅방 ID 저장
+
         if (!stompClient || !stompClient.connected) {
             console.error("STOMP 클라이언트가 연결되어 있지 않습니다. 재연결을 시도합니다...");
             reconnectWebSocket();
@@ -682,7 +715,6 @@ $(document).ready(function() {
 
         subscribeToChatRoom(chatRoomId);
         console.log("채팅방에 연결되었습니다:", chatRoomId);
-        currentChatRoomId = chatRoomId;
     }
 
     function subscribeToChatRoom(chatRoomId) {
@@ -714,7 +746,12 @@ $(document).ready(function() {
             }
         }, function (error) {
             console.error("채팅방 구독 중 에러 발생:", error);
-            reconnectWebSocket();
+            if (stompClient && stompClient.connected) {
+                console.log("채팅방에 재구독을 시도합니다...");
+                subscribeToChatRoom(chatRoomId);
+            } else {
+                reconnectWebSocket();
+            }
         });
     }
 

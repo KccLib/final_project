@@ -19,6 +19,9 @@ public interface EmployeeMapper {
 
     int saveEmployee(SaveEmployee saveEmployee);
 
+    // 새로운 사원 등록 메서드 추가
+    int saveEmployeeFindById(EmployeeInfo employeeInfo);
+
     Optional<EmployeeInfo> getEmployeeInfoFindById(String id);
 
     Optional<String> findByEmail(String email);
@@ -33,6 +36,11 @@ public interface EmployeeMapper {
 
     Optional<EmployeeInfo> getEmployeeInfoFindByEmail(String email);
 
-    List<String> getEmployeeEmailforSend(List<String> Ids);
+    List<String> getEmployeeEmailforSend(List<Long> Ids);
+
     int saveFcmToken(@Param("employeeId") Long employeeId, @Param("fcmToken") String fcmToken);
+
+    int changeEmployeeStatus(@Param("employeeId") Long employeeId, @Param("status") Long status);
+
+    List<String> getAllPositions();
 }

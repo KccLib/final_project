@@ -92,6 +92,8 @@ uri="http://www.springframework.org/security/tags" %>
     <%-- markdown  --%>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
+    <script src="<%= request.getContextPath() %>/static/component/common.js"></script>
+
     <style>
       /* NanumSquare_ac 폰트 정의 */
       @font-face {

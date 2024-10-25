@@ -10,7 +10,7 @@ public class SaveSchedule extends ComponentDto {
   private String startedDt;
   private String endedDt;
   private String contents;
-  private List<String> employeeIds;
+  private List<Long> employeeIds;
   private int emailCheck;
 
 }

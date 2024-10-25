@@ -33,4 +33,6 @@ public interface ScheduleMapper {
   int modifySchedule(SaveSchedule saveSchedule, Timestamp startedDt, Timestamp endedDt);
 
   int deleteScheduleInvite(Long deleteScheduleNum);
+
+  int updateScheduleInviteParticipate(Long employeeId, Long scheduleId, Long isParticipated);
 }

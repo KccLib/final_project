@@ -20,7 +20,16 @@ button {
 }
 
 .add-dept-box {
-    margin-left: 115px !important;
+    margin-left: 10% !important;
+    cursor: pointer;
+}
+
+.add-dept-button {
+    background-color: #7AB7FA;
+    color: white;
+    width: 21%;
+    padding-left: 6px;
+    border-radius: 10px;
 }
 
 .user-plus-icon {
@@ -93,6 +102,8 @@ input::placeholder {
     width: 100%;
     min-height: 38px; /* 필요에 따라 최소 높이 조절 */
     height: auto !important;
+    max-height: 300px;
+    overflow-y: auto;
 }
 
 /* 태그가 많아질 때 입력 필드의 높이를 자동으로 늘림 */

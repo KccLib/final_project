@@ -94,6 +94,7 @@ public class ChatRoomService {
             if (chatRoomInfo.getParticipantCount() <= 2) {
                 EmployeeInfo employeeInfo = employeeInfos.get(0);
                 chatRoomInfo.setChatRoomProfileImageUrl(employeeInfo.getProfileUrl());
+                chatRoomInfo.setEmployeeStatus(employeeInfo.getStatus());
                 if (chatRoomInfo.getChatRoomName() == null) {
                     chatRoomInfo.setChatRoomName(employeeInfo.getName());
                 }
@@ -132,6 +133,7 @@ public class ChatRoomService {
         if (chatRoomDetailInfo.getParticipantCount() <= 2) {
             EmployeeInfo employeeInfo = employeeInfos.get(0);
             chatRoomDetailInfo.setChatRoomProfileImageUrl(employeeInfo.getProfileUrl());
+            chatRoomDetailInfo.setEmployeeStatus(employeeInfo.getStatus());
             if (chatRoomDetailInfo.getChatRoomName() == null) {
                 chatRoomDetailInfo.setChatRoomName(employeeInfo.getName());
             }
