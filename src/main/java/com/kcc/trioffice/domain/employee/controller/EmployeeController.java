@@ -51,4 +51,9 @@ public class EmployeeController { // 'Contoller' -> 'Controller' 오타 수정
     return ResponseEntity.ok(positions);
   }
 
+  @GetMapping("/")
+  public String index(Model model) {
+      return "redirect:/login";
+  }
+
 }
