@@ -65,7 +65,7 @@
                 </div>
 
 
-            <div class="add-employee-form" style="display: block;">
+            <div class="add-employee-form" style="display: none;">
                 <p>사원 등록</p>
 
                 <div class="form-row2" style="position: relative;">
@@ -173,9 +173,7 @@
 
 
             <div class="img2">
-                <img src="/static/component/kcc-logo.png" style="
-                                                              display: none;
-                                                          ">
+                <img src="/static/component/kcc-logo.png">
             </div>
 
         </div>
