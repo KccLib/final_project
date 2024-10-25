@@ -13,6 +13,8 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
       rel="stylesheet"
       href="<%= request.getContextPath() %>/static/component/first-side-bar.css"
     />
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
   </head>
 
   <body>

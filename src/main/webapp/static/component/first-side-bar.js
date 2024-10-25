@@ -1,3 +1,4 @@
+
 const currentPath = window.location.pathname;
 console.log("Current Path:", currentPath);
 
@@ -123,6 +124,13 @@ function addServerMessage(message, serverMessageElement) {
   if (message === "") {
     message = " ";
   }
-  addChatMessage.textContent += message;  // 공백이 있는 그대로 추가
+// Markdown 문법 문자들을 이스케이프 처리
+  const escapedMessage = message
+      .replace(/\*/g, "")  // '*'을 이스케이프
+      .replace(/_/g, "")   // '_'을 이스케이프
+      .replace(/`/g, "");  // '`'을 이스케이프  // Markdown을 HTML로 변환
+  addChatMessage.innerHTML += escapedMessage; // 변환된 HTML을 넣어줌
+
+
   chatBotList.scrollTop = chatBotList.scrollHeight;
 }
