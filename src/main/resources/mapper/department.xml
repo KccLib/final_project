@@ -50,6 +50,7 @@
     <select id="getEmployeesByDeptId" resultType="com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo">
         SELECT e.employee_id AS employeeId
                , e.name AS name
+               , e.profile_url
                , e.position AS position
           FROM employee e
          WHERE e.dept_id = #{deptId}

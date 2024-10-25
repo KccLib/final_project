@@ -79,7 +79,7 @@ public class EmployeeRestController {
 
     @GetMapping("/employees/{employeeId}")
     public ResponseEntity<EmployeeInfo> getEmployee(@PathVariable Long employeeId) {
-        EmployeeInfo employeeInfo = employeeService.getEmployeeInfo(employeeId);
+        EmployeeInfo employeeInfo = employeeService.findById(employeeId);
         return ResponseEntity.ok(employeeInfo);
     }
 

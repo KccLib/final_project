@@ -181,7 +181,7 @@
                    $('.contents-1 .employee-name').text(data.name); // 직원 이름
                    $('.contents-1 .dept-emp').text(data.position); // 직원의 부서
                    $('.contents-1 .email').text(data.email); // 직원 이메일
-                   $('.contents-1 .profile2 img').attr('src', 'https://e7.pngegg.com/pngimages/1/723/png-clipart-graphy-business-portrait-business-people-public-relations.png'); // 직원 프로필 이미지
+                   $('.contents-1 .profile2 img').attr('src', data.profileUrl); // 직원 프로필 이미지
 
 
                    // 추가 정보 표시
