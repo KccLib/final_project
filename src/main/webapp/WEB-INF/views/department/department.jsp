@@ -21,9 +21,11 @@
 
 <body>
     <jsp:include page="/WEB-INF/views/component/top-bar.jsp" />
+    <div class="layout-container">
+
     <jsp:include page="/WEB-INF/views/component/first-side-bar.jsp" />
 
-    <div class="fixed-menu">
+    <div class="second-side-bar">
         <ul>
             <p>조직도</p>
             <%
@@ -87,7 +89,7 @@
         </div>
     </div>
 
-
+</div>
 
 
 

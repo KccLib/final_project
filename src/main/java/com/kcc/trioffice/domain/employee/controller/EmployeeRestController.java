@@ -77,4 +77,10 @@ public class EmployeeRestController {
         employeeService.changeEmployeeStatus(principalDetail.getEmployeeId(), updateStatus);
     }
 
+    @GetMapping("/employees/{employeeId}")
+    public ResponseEntity<EmployeeInfo> getEmployee(@PathVariable Long employeeId) {
+        EmployeeInfo employeeInfo = employeeService.getEmployeeInfo(employeeId);
+        return ResponseEntity.ok(employeeInfo);
+    }
+
 }
