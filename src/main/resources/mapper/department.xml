@@ -25,6 +25,7 @@
         , d.name AS departmentName
         , d.upper_dept_id AS upperDeptId
         FROM department d
+        WHERE d.is_deleted = 0
         START WITH d.upper_dept_id IS NULL
         CONNECT BY PRIOR d.dept_id = d.upper_dept_id
         ORDER BY d.dept_id
@@ -39,6 +40,7 @@
         , LEVEL AS deptLevel
         FROM department d
         WHERE d.upper_dept_id = #{parentId}
+        AND d.is_deleted = 0
         START WITH d.upper_dept_id = #{parentId}
         CONNECT BY PRIOR d.dept_id = d.upper_dept_id
         ORDER BY d.dept_id
@@ -50,7 +52,45 @@
                , e.name AS name
                , e.position AS position
           FROM employee e
-          WHERE e.dept_id = #{deptId}
+         WHERE e.dept_id = #{deptId}
+           AND e.is_deleted = 0
+    </select>
+
+    <!-- 부서 추가 쿼리 -->
+    <insert id="insertDepartment" parameterType="com.kcc.trioffice.domain.department.dto.response.Department">
+        INSERT INTO department (dept_id, name, upper_dept_id, dept_level, is_deleted)
+        VALUES (seq_department.nextval, #{departmentName},
+        <if test="upperDeptId != null">#{upperDeptId}</if>
+        <if test="upperDeptId == null">NULL</if>,
+        #{deptLevel}, 0)
+    </insert>
+
+    <!-- 부서 수정 쿼리 -->
+    <update id="updateDepartment" parameterType="com.kcc.trioffice.domain.department.dto.response.Department">
+        UPDATE department
+        SET name = #{departmentName},
+        upper_dept_id = <if test="upperDeptId != null">#{upperDeptId}</if>
+        <if test="upperDeptId == null">NULL</if>,
+        dept_level = #{deptLevel}
+        WHERE dept_id = #{deptId}
+    </update>
+
+    <!-- 부서 삭제 쿼리 -->
+    <update id="deleteDepartment" parameterType="Long">
+        UPDATE department
+        SET is_deleted = 1
+        WHERE dept_id = #{deptId}
+    </update>
+
+    <select id="findDepartmentById" resultMap="DepartmentResultMap">
+        SELECT
+        LEVEL AS deptLevel,
+        d.dept_id AS deptId,
+        d.name AS departmentName,
+        d.upper_dept_id AS upperDeptId
+        FROM department d
+        WHERE d.dept_id = #{deptId}
+        AND d.is_deleted = 0
     </select>
 
     <select id="getDepartments" resultType="com.kcc.trioffice.domain.department.dto.response.DepartmentInfo">

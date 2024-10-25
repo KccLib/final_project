@@ -170,4 +170,28 @@ public class EmployeeService {
     public void changeEmployeeStatus(Long employeeId, UpdateStatus updateStatus) {
         employeeMapper.changeEmployeeStatus(employeeId, StatusType.toEnum(updateStatus.getStatus()).getValue());
     }
+
+    @Transactional
+    public int saveEmployeeFindById(EmployeeInfo employeeInfo) throws EmployeeSaveException {
+        // 비밀번호 인코딩
+        String password = employeeInfo.getPassword();
+        String incodingPassword = passwordEncoder.encode(password);
+        employeeInfo.setPassword(incodingPassword);
+
+        // 회원저장
+        int isSuccess = employeeMapper.saveEmployeeFindById(employeeInfo);
+
+        if (isSuccess == 1) {
+            System.out.println("Employee 등록이 성공하였습니다.");
+            return isSuccess;
+        } else {
+            throw new EmployeeSaveException("Employee 등록이 실패하였습니다.");
+        }
+    }
+
+    // 모든 포지션을 조회하는 메서드 추가
+    public List<String> getAllPositions() {
+        return employeeMapper.getAllPositions(); // EmployeeMapper에서 모든 포지션 정보 조회
+    }
+
 }

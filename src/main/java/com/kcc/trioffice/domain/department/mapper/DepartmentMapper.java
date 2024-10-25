@@ -18,4 +18,16 @@ public interface DepartmentMapper {
     List<Department> getDepartmentDetails();
 
     List<DepartmentInfo> getDepartments(Long companyId);
+
+    // 부서를 저장하는 메서드 추가
+    void insertDepartment(Department department);
+
+    // 부서 수정 메서드 추가
+    void updateDepartment(Department department);
+
+    // 부서 삭제 메서드 추가
+    void deleteDepartment(Long deptId);
+
+    // 특정 부서 정보 조회
+    Department findDepartmentById(Long deptId);
 }
