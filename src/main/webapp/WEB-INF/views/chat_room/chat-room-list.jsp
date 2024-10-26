@@ -27,10 +27,6 @@
     <script src="/static/chat_room/chat-room.js" charset="utf-8"></script>
     <script src="/static/chat_room/chat-room-save.js" charset="utf-8"></script>
 
-    <link
-            href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css"
-            rel="stylesheet"
-    />
     <!-- 소스 다운 -->
     <script src="https://unpkg.com/@yaireo/tagify"></script>
     <!-- 폴리필 (구버젼 브라우저 지원) -->
@@ -42,7 +38,10 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
+    <script type="text/javascript">
+        var initialChatRoomId = "${initialChatRoomId}";
+        initialChatRoomId = parseInt(initialChatRoomId);
+
         messaging.requestPermission()
             .then(function () {
                 return messaging.getToken(); // FCM 토큰을 요청합니다.
@@ -398,56 +397,7 @@
 
             <div class="images">
                 <div class="row">
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
+
                 </div>
             </div>
 
