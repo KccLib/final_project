@@ -1,6 +1,7 @@
 package com.kcc.trioffice.domain.chat_room.controller;
 
 import com.kcc.trioffice.domain.chat_room.dto.request.ChatRoomCreate;
+import com.kcc.trioffice.domain.chat_room.dto.response.ChatInfoAndRedirectNum;
 import com.kcc.trioffice.domain.chat_room.dto.response.ChatRoomInfo;
 import com.kcc.trioffice.domain.chat_room.service.ChatRoomService;
 import com.kcc.trioffice.global.auth.PrincipalDetail;
@@ -13,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -27,10 +29,12 @@ public class ChatRoomController {
 
     @GetMapping("/chatrooms")
     public String chatRoomList(Model model,
-                               @AuthenticationPrincipal PrincipalDetail principalDetail) {
-        List<ChatRoomInfo> chatRoomList = chatRoomService.getChatRoomList(principalDetail.getEmployeeId());
+                               @AuthenticationPrincipal PrincipalDetail principalDetail,
+                               @RequestParam(value = "targetId", required = false) Long targetId) {
+        ChatInfoAndRedirectNum chatInfoAndRedirectNum = chatRoomService.getChatRoomList(principalDetail.getEmployeeId(), targetId);
 
-        model.addAttribute("chatRoomList", chatRoomList);
+        model.addAttribute("chatRoomList", chatInfoAndRedirectNum.getChatRoomInfos());
+        model.addAttribute("initialChatRoomId", chatInfoAndRedirectNum.getRedirectNum() != null ? chatInfoAndRedirectNum.getRedirectNum() : "");
         return "chat_room/chat-room-list";
     }
 

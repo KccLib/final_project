@@ -63,6 +63,8 @@ public class ChatRoomService {
     }
 
     private void saveChatRoom(ChatRoomCreate chatRoomCreate, Long employeeId) {
+        log.info("chatRoomCreate : {}", chatRoomCreate);
+        log.info("employeeId : {}", employeeId);
         int result = chatRoomMapper.saveChatRoom(chatRoomCreate, employeeId);
         if (result == 0) {
             throw new RuntimeException("채팅방 생성에 실패하였습니다.");
@@ -77,12 +79,27 @@ public class ChatRoomService {
         participationEmployeeMapper.saveParticipationEmployee(chatRoomCreate.getChatRoomId(), employeeId, employeeId);
     }
 
-    public List<ChatRoomInfo> getChatRoomList(Long employeeId) {
+    @Transactional
+    public ChatInfoAndRedirectNum getChatRoomList(Long employeeId, Long targetId) {
         List<ChatRoomInfo> chatRoomInfoList = chatRoomMapper.getChatRoomListByEmployeeId(employeeId);
+        Long redirectNum = null;
+        if (targetId != null) {
+            Long chatRoomIdByEmployeeIds = chatRoomMapper.getChatRoomIdByEmployeeIds(employeeId, targetId);
+            log.info("chatRoomIdByEmployeeIds : {}", chatRoomIdByEmployeeIds);
+            if (chatRoomIdByEmployeeIds == null) {
+                ChatRoomCreate chatRoomCreate = ChatRoomCreate.builder()
+                        .chatRoomName("")
+                        .employees(List.of(targetId)).build();
+                createChatRoom(chatRoomCreate, employeeId);
+                redirectNum = chatRoomCreate.getChatRoomId();
+            } else {
+                redirectNum = chatRoomIdByEmployeeIds;
+            }
+        }
 
         setChatRoomNameAndProfile(employeeId, chatRoomInfoList);
 
-        return chatRoomInfoList;
+        return new ChatInfoAndRedirectNum(chatRoomInfoList, redirectNum);
     }
 
 

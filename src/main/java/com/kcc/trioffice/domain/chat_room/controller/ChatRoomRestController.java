@@ -40,7 +40,7 @@ public class ChatRoomRestController {
 
     @GetMapping
     public ResponseEntity<List<ChatRoomInfo>> chatRoomList(@AuthenticationPrincipal PrincipalDetail principalDetail) {
-        return ResponseEntity.ok(chatRoomService.getChatRoomList(principalDetail.getEmployeeId()));
+        return ResponseEntity.ok(chatRoomService.getChatRoomList(principalDetail.getEmployeeId(), null).getChatRoomInfos());
     }
 
     @DeleteMapping("/{chatRoomId}")

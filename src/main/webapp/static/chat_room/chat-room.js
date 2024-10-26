@@ -18,6 +18,7 @@ let maxReconnectAttempts = 10;
 
 
 $(document).ready(function() {
+    handleChatRoomListUpdate();
 
     // 유저 정보 로드
     $.ajax({
@@ -143,6 +144,21 @@ $(document).ready(function() {
             chatRoomsList.append(chatRoomItem);
             addChatRoomActive(chatRoom);
         });
+
+        console.log(initialChatRoomId);
+        console.log("하하");
+
+        if (currentChatRoomId == null && chatRooms.length > 0) {
+            var chatRoomIdToOpen = initialChatRoomId || chatRooms[0].chatRoomId;
+
+            // 해당 chatRoomId를 가진 채팅방 아이템을 찾습니다.
+            var chatRoomItem = $('.chat-room-item[data-chat-room-id="' + chatRoomIdToOpen + '"]');
+            if (chatRoomItem.length > 0) {
+                chatRoomItem.trigger('click');
+                $('.default-contents').hide()
+                $('.chat-contents').show();
+            }
+        }
     }
 
     function addUnReadMessage(chatRoom) {
@@ -1738,8 +1754,7 @@ $(document).ready(function() {
        $('.chat-contents').show();
     });
 
-    $('.chat-room-item').on('click', function () {
-        $('.save-contents').hide()
+    $('.chat-rooms-list').on('click', '.chat-room-item', function() {
         $('.contents').hide();
         $('.chat-contents').show();
         $('.chat-area').show();
@@ -1927,6 +1942,13 @@ $(document).ready(function() {
         });
     }
 
+    function getParameterByName(name) {
+        name = name.replace(/[\\[]/, "\\[").replace(/[\\]]/, "\\]");
+        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+            results = regex.exec(location.search);
+        return results === null ? "" : decodeURIComponent(results[1].replace(/\\+/g, " "));
+    }
+
 });
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -1953,3 +1975,4 @@ function updateDateFormat() {
         }
     });
 }
+

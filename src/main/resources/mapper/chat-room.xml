@@ -280,5 +280,13 @@
       ORDER BY cm.write_dt DESC
   </select>
 
+  <select id="getChatRoomIdByEmployeeIds">
+    SELECT chat_room_id
+      FROM participation_employee
+      GROUP BY chat_room_id
+      HAVING COUNT(DISTINCT employee_id) = 2
+        AND COUNT(DISTINCT CASE WHEN employee_id IN (#{employeeId}, #{targetEmployeeId}) THEN employee_id END) = 2
+  </select>
+
 
 </mapper>
