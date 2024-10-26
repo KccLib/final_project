@@ -397,56 +397,7 @@
 
             <div class="images">
                 <div class="row">
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
+
                 </div>
             </div>
 
