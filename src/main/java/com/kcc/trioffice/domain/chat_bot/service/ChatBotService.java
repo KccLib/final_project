@@ -55,7 +55,7 @@ public class ChatBotService {
       }); //띄어쓰기 검사하기
 
       System.out.println("반환된 메세지는 : " +responseMessage);
-      ChatRoomCreate chatRoomCreate = new ChatRoomCreate();
+      ChatRoomCreate chatRoomCreate = new ChatRoomCreate(null, null, null);
       ChatMessage chatMessage = new ChatMessage(
               chatRoomCreate.getChatRoomId(), principalDetail.getEmployeeId(),  responseMessage, ChatType.CHAT_BOT.getValue(), 0L);
 
