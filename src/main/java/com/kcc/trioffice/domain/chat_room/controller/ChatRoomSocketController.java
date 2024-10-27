@@ -24,15 +24,6 @@ public class ChatRoomSocketController {
     @MessageMapping("/chat/send")
     public void sendChatMessage(ChatMessage chatMessage) {
         log.info("chatMessage: {}", chatMessage);
-        ChatMessageAndParticipants chatMessageAndParticipants = chatRoomService.saveChatMessage(chatMessage);
-
-        List<ParticipantEmployeeInfo> participantEmployeeInfos = chatMessageAndParticipants.getParticipantEmployeeInfos();
-        for (ParticipantEmployeeInfo participantEmployeeInfo : participantEmployeeInfos) {
-                simpMessagingTemplate
-                        .convertAndSend("/sub/chatrooms/employees/" + participantEmployeeInfo.getEmployeeId()
-                                , chatMessageAndParticipants.getChatMessageInfo());
-        }
-
-        simpMessagingTemplate.convertAndSend("/sub/chat/room/" + chatMessage.getRoomId(), chatMessageAndParticipants.getChatMessageInfo());
+        ChatMessageInfo chatMessageInfo = chatRoomService.saveChatMessage(chatMessage);
     }
 }

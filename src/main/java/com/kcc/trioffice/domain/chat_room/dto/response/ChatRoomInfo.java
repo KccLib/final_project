@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 
 @Data
-public class ChatRoomInfo implements Serializable {
+public class ChatRoomInfo implements Serializable, ChatRoomInfoBase {
 
     private Long chatRoomId;
     private String chatRoomName;

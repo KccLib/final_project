@@ -48,11 +48,7 @@ public class ChatRoomController {
                                @AuthenticationPrincipal PrincipalDetail principalDetail) {
         chatRoomService.createChatRoom(chatRoomCreate, principalDetail.getEmployeeId());
 
-        for (Long employId : chatRoomCreate.getEmployees()) {
-            simpMessagingTemplate
-                    .convertAndSend("/sub/chatrooms/employees/" + employId
-                            , chatRoomCreate);
-        }
+
 
         return "redirect:/chatrooms";
     }

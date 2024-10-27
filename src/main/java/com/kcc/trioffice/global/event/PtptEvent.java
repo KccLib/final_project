@@ -1,9 +1,7 @@
 package com.kcc.trioffice.global.event;
 
-import com.kcc.trioffice.domain.chat_room.dto.response.ChatDelete;
-import com.kcc.trioffice.domain.chat_room.dto.response.ChatDetailInfo;
-import com.kcc.trioffice.domain.chat_room.dto.response.ChatRoomEnter;
-import com.kcc.trioffice.domain.chat_room.dto.response.ParticipantEmployeeInfo;
+import com.kcc.trioffice.domain.chat_room.dto.request.ChatRoomCreate;
+import com.kcc.trioffice.domain.chat_room.dto.response.*;
 import com.kcc.trioffice.domain.participation_employee.dto.response.PtptEmpInfos;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,4 +37,23 @@ public class PtptEvent {
     public void handleChatRoomDeleteEvent(ChatDelete chatDelete) {
         simpMessagingTemplate.convertAndSend("/sub/chat/room/" + chatDelete.getRoomId(), chatDelete);
     }
+
+    /**
+     * 채팅방 생성 시 채팅방에 초대된 사람들에게 채팅방 생성 이벤트 전송
+     * @param chatRoomCreate 채팅방 생성 정보
+     */
+    @EventListener
+    public void handleSaveChatRoomEvent(ChatRoomCreate chatRoomCreate) {
+        chatRoomCreate.getEmployees().forEach(empId -> {
+            simpMessagingTemplate
+                    .convertAndSend("/sub/chatrooms/employees/" + empId
+                            , chatRoomCreate);
+        });
+    }
+
+    @EventListener
+    public void handleChatMessageEvent(ChatMessageInfo chatMessageInfo) {
+        simpMessagingTemplate.convertAndSend("/sub/chat/room/" + chatMessageInfo.getRoomId(), chatMessageInfo);
+    }
+
 }

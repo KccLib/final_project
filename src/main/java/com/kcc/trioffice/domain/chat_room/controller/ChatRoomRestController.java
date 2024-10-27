@@ -46,16 +46,7 @@ public class ChatRoomRestController {
     @DeleteMapping("/{chatRoomId}")
     public void deleteChatRoom(@PathVariable Long chatRoomId,
                                @AuthenticationPrincipal PrincipalDetail principalDetail) {
-        ChatMessageInfoAndPtptEmp chatMessageInfoAndPtptEmp = chatRoomService.deleteChatRoom(chatRoomId, principalDetail.getEmployeeId());
-
-        chatMessageInfoAndPtptEmp.getParticipantEmployeeInfos().forEach(participantEmployeeInfo -> {
-            simpMessagingTemplate
-                    .convertAndSend("/sub/chatrooms/employees/" + participantEmployeeInfo.getEmployeeId()
-                            , chatMessageInfoAndPtptEmp.getChatMessageInfo());
-        });
-
-        simpMessagingTemplate.convertAndSend("/sub/chat/room/" + chatRoomId, chatMessageInfoAndPtptEmp.getChatMessageInfo());
-
+        chatRoomService.deleteChatRoom(chatRoomId, principalDetail.getEmployeeId());
     }
 
     @DeleteMapping("/chats/{chatId}")
