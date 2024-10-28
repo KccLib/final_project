@@ -39,6 +39,7 @@
             AND cs.employee_id = #{employeeId}
             AND cs.is_read = 0
         WHERE pe.employee_id = #{employeeId}
+          AND cm.chat_type != 6
           AND cr.is_deleted = 0
         GROUP BY
           cr.chat_room_id
