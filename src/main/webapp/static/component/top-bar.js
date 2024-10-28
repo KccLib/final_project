@@ -46,3 +46,10 @@ document
     document.body.appendChild(logoutForm); // form을 body에 추가
     logoutForm.submit(); // 폼 제출
   });
+
+document
+    .getElementById("logoutLink")
+    .addEventListener("click", function (event) {
+        localStorage.removeItem('Fcmtoken');
+
+    });
