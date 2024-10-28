@@ -6,7 +6,6 @@ import com.kcc.trioffice.domain.chat_room.service.ChatRoomService;
 import com.kcc.trioffice.global.auth.PrincipalDetail;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class ChatRoomController {
 
     private final ChatRoomService chatRoomService;
-    private final SimpMessagingTemplate simpMessagingTemplate;
-
 
     @GetMapping("/chatrooms")
     public String chatRoomList(Model model,

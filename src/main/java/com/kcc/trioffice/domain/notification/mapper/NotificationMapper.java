@@ -9,5 +9,6 @@ import java.util.List;
 public interface NotificationMapper {
 
     int saveNotification(Long employeeId, Long relatedId, Long type, String title, String contents, Long writer);
+
     List<NotificationInfo> getNotification(Long employeeId);
 }

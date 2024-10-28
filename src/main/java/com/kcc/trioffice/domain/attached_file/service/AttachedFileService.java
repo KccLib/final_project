@@ -51,9 +51,8 @@ public class AttachedFileService {
     private final ChatRoomService chatRoomService;
 
     @Transactional
-    public List<ChatMessageInfo> sendAttachedFile(List<MultipartFile> multipartFiles, List<String> tags, Long chatRoomId, Long employeeId) {
+    public void sendAttachedFile(List<MultipartFile> multipartFiles, List<String> tags, Long chatRoomId, Long employeeId) {
         EmployeeInfo employeeInfo = employeeService.getEmployeeInfo(employeeId);
-        log.info("multipartFiles.size : {}", multipartFiles.size());
 
         List<ChatMessageInfo> chatMessageInfos = new ArrayList<>();
         List<ParticipantEmployeeInfo> participantEmployeeInfos = participationEmployeeMapper.getParticipantEmployeeInfoByChatRoomId(chatRoomId);
@@ -88,40 +87,45 @@ public class AttachedFileService {
                 }
             }
 
-            ChatMessageInfo chatMessageInfo = null;
-
-            if(s3UploadFile.getFileType() == 1) {
-                 chatMessageInfo = ChatMessageInfo.builder()
-                        .chatTime(LocalDateTime.now())
-                        .chatContents(s3UploadFile.getFileUrl())
-                        .chatId(chatMessage.getChatId())
-                        .senderName(employeeInfo.getName())
-                        .senderId(employeeId)
-                        .chatType(ChatType.IMAGE.toString())
-                        .roomId(chatRoomId)
-                         .tags(tags)
-                         .unreadMessageCount(unreadCount)
-                        .build();
-            } else {
-                chatMessageInfo = ChatMessageInfo.builder()
-                        .chatTime(LocalDateTime.now())
-                        .chatContents(s3UploadFile.getFileName())
-                        .chatId(chatMessage.getChatId())
-                        .senderName(s3UploadFile.getFileName())
-                        .senderId(employeeId)
-                        .chatType(ChatType.FILE.toString())
-                        .roomId(chatRoomId)
-                        .tags(tags)
-                        .unreadMessageCount(unreadCount)
-                        .build();
-            }
+            ChatMessageInfo chatMessageInfo = getChatMessageInfo(tags, chatRoomId, employeeId, s3UploadFile, chatMessage, employeeInfo, unreadCount);
             chatMessageInfos.add(chatMessageInfo);
         }
 
         String chatRoomName = chatRoomService.handleChatRoomName(chatRoomId, employeeId);
         chatRoomService.sendChatMessageFcm(chatRoomId, chatRoomName, employeeInfo.getProfileUrl(), "파일을 전송했습니다.");
         eventPublisher.publishEvent(new PtptEmpInfos(participantEmployeeInfos));
-        return chatMessageInfos;
+        chatMessageInfos.forEach(eventPublisher::publishEvent);
+    }
+
+    private static ChatMessageInfo getChatMessageInfo(List<String> tags, Long chatRoomId, Long employeeId, S3UploadFile s3UploadFile, ChatMessage chatMessage, EmployeeInfo employeeInfo, int unreadCount) {
+        ChatMessageInfo chatMessageInfo = null;
+
+        if(s3UploadFile.getFileType() == 1) {
+             chatMessageInfo = ChatMessageInfo.builder()
+                    .chatTime(LocalDateTime.now())
+                    .chatContents(s3UploadFile.getFileUrl())
+                    .chatId(chatMessage.getChatId())
+                    .senderName(employeeInfo.getName())
+                    .senderId(employeeId)
+                    .chatType(ChatType.IMAGE.toString())
+                    .roomId(chatRoomId)
+                     .tags(tags)
+                     .unreadMessageCount(unreadCount)
+                    .build();
+        } else {
+            chatMessageInfo = ChatMessageInfo.builder()
+                    .chatTime(LocalDateTime.now())
+                    .chatContents(s3UploadFile.getFileName())
+                    .chatId(chatMessage.getChatId())
+                    .senderName(s3UploadFile.getFileName())
+                    .senderId(employeeId)
+                    .chatType(ChatType.FILE.toString())
+                    .roomId(chatRoomId)
+                    .tags(tags)
+                    .unreadMessageCount(unreadCount)
+                    .build();
+        }
+        return chatMessageInfo;
     }
 
     private void saveTag(List<String> tags, Long employeeId, S3UploadFile s3UploadFile) {

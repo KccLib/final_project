@@ -1,7 +1,5 @@
 package com.kcc.trioffice.domain.chat_bot.service;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import com.kcc.trioffice.domain.chat_room.dto.request.ChatMessage;
 import com.kcc.trioffice.domain.chat_room.dto.request.ChatRoomCreate;
@@ -9,7 +7,6 @@ import com.kcc.trioffice.global.auth.PrincipalDetail;
 import com.kcc.trioffice.global.enums.ChatType;
 import com.kcc.trioffice.global.exception.type.BadRequestException;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.model.ChatResponse;
 
 import org.springframework.stereotype.Service;
 
@@ -66,7 +63,7 @@ public class ChatBotService {
           chatBotMapper.saveChatRoom(chatRoomCreate);
           chatBotMapper.saveParticipationEmployee(chatRoomCreate.getChatRoomId(), principalDetail.getEmployeeId());
           chatBotMapper.saveChatMessage(chatMessage);
-      }catch (Exception e ) {
+      } catch (Exception e ) {
           log.error("chatRoomCreate 관련 insert 중 에러발생 : "+ e);
       }
 

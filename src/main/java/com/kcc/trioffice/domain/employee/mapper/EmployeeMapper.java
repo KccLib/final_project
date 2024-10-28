@@ -5,7 +5,6 @@ import com.kcc.trioffice.domain.employee.dto.response.AdminInfo;
 import com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo;
 import com.kcc.trioffice.domain.employee.dto.response.SearchEmployee;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +13,8 @@ import java.util.Optional;
 public interface EmployeeMapper {
     Optional<EmployeeInfo> getEmployeeInfo(Long employeeId);
 
-    List<SearchEmployee> getEmployeeByCompanyIdExceptOneSelf(@Param("companyId") Long companyId, @Param("employeeId") Long employeeId);
+    List<SearchEmployee> getEmployeeByCompanyIdExceptOneSelf(Long companyId, Long employeeId);
+
     List<EmployeeInfo> getEmployeeInfoList(List<Long> employees);
 
     int saveEmployee(SaveEmployee saveEmployee);
@@ -38,9 +38,9 @@ public interface EmployeeMapper {
 
     List<String> getEmployeeEmailforSend(List<Long> Ids);
 
-    int saveFcmToken(@Param("employeeId") Long employeeId, @Param("fcmToken") String fcmToken);
+    int saveFcmToken(Long employeeId, String fcmToken);
 
-    int changeEmployeeStatus(@Param("employeeId") Long employeeId, @Param("status") Long status);
+    int changeEmployeeStatus(Long employeeId, Long status);
 
     List<String> getAllPositions();
 }

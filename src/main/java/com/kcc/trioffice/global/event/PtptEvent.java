@@ -2,6 +2,7 @@ package com.kcc.trioffice.global.event;
 
 import com.kcc.trioffice.domain.chat_room.dto.request.ChatRoomCreate;
 import com.kcc.trioffice.domain.chat_room.dto.response.*;
+import com.kcc.trioffice.domain.chat_status.dto.response.EmoticonMessage;
 import com.kcc.trioffice.domain.participation_employee.dto.response.PtptEmpInfos;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,12 +19,13 @@ public class PtptEvent {
 
     @EventListener
     public void handleChatRoomEnterEvent(ChatRoomEnter chatRoomEnter) {
+
         simpMessagingTemplate.convertAndSend("/sub/chat/room/" + chatRoomEnter.getRoomId(), chatRoomEnter);
     }
 
     @EventListener
     public void handleChatRoomMessageEvent(PtptEmpInfos ptptEmpInfos) {
-        log.info("채팅 목록 메세지 전송 완료");
+
         ptptEmpInfos.getParticipantEmployeeInfos().forEach(participantEmployeeInfo -> {
             simpMessagingTemplate
                     .convertAndSend("/sub/chatrooms/employees/" + participantEmployeeInfo.getEmployeeId()
@@ -33,6 +35,7 @@ public class PtptEvent {
 
     @EventListener
     public void handleChatRoomDeleteEvent(ChatDelete chatDelete) {
+
         simpMessagingTemplate.convertAndSend("/sub/chat/room/" + chatDelete.getRoomId(), chatDelete);
     }
 
@@ -42,6 +45,7 @@ public class PtptEvent {
      */
     @EventListener
     public void handleSaveChatRoomEvent(ChatRoomCreate chatRoomCreate) {
+
         chatRoomCreate.getEmployees().forEach(empId -> {
             simpMessagingTemplate
                     .convertAndSend("/sub/chatrooms/employees/" + empId
@@ -51,7 +55,14 @@ public class PtptEvent {
 
     @EventListener
     public void handleChatMessageEvent(ChatMessageInfo chatMessageInfo) {
+
         simpMessagingTemplate.convertAndSend("/sub/chat/room/" + chatMessageInfo.getRoomId(), chatMessageInfo);
+    }
+
+    @EventListener
+    public void handleEmoticonEvent(EmoticonMessage emoticonMessage) {
+
+        simpMessagingTemplate.convertAndSend("/sub/chat/room/" + emoticonMessage.getChatRoomId(), emoticonMessage);
     }
 
 }

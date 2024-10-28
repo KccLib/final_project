@@ -10,7 +10,9 @@ import java.util.Optional;
 public interface ChatMapper {
 
     int saveChatMessage(ChatMessage chatMessage);
+
     Optional<ChatDetailInfo> getChatDetailInfo(Long chatId);
+
     int deleteChatMessage(Long chatId, Long employeeId);
 
 }
