@@ -606,10 +606,12 @@ document.getElementById("allDayCheck").addEventListener("change", function (e) {
 function validateDates() {
   const startDateInput = document.getElementById("start-date");
   const endDateInput = document.getElementById("end-date");
+  const isChecked = document.getElementById("allDayCheck");
 
   const startDate = new Date(startDateInput.value);
   const endDate = new Date(endDateInput.value);
 
+  // 끝 날짜가 시작 날짜보다 작을 때
   if (endDate < startDate) {
     endDateInput.value = ""; // 끝 날짜 초기화
     mobiscroll.getInst(endDateInput).setVal(null); // Mobiscroll에서 끝 날짜 필드 초기화
@@ -619,7 +621,36 @@ function validateDates() {
       text: "끝 날짜는 시작 날짜보다 커야 합니다.",
     });
   }
+
+  // 종일 체크박스가 체크되어 있지 않은 경우에만 날짜 비교
+  if (!isChecked.checked) {
+    console.log("Start Date:", startDate);
+    console.log("End Date:", endDate);
+
+    // `startDate`와 `endDate`가 Date 객체인지 확인
+    if (startDate instanceof Date && endDate instanceof Date) {
+      if (endDate.getTime() && endDate.getDate() !== startDate.getDate()) {
+
+        // 날짜가 다르면 끝 날짜 초기화
+        endDateInput.value = ""; // 끝 날짜 입력 필드 초기화
+        mobiscroll.getInst(endDateInput).setVal(null); // Mobiscroll에서 끝 날짜 필드 초기화
+        endDatePicker.close(); // 종료일 선택기 닫기
+
+        // 경고 메시지 표시
+        Swal.fire({
+          text: "시작일과 종료일의 날짜가 같아야 합니다.",
+        });
+      }
+    } else {
+      console.error("Invalid Date: startDate 또는 endDate가 유효하지 않습니다.");
+    }
+  }
+
 }
+
+
+
+
 var inviteEmployee = 0;
 var quill = new Quill("#schedule-contents", {
   theme: "snow", // 또는 'bubble'
