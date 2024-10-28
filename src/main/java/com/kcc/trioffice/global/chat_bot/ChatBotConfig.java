@@ -26,8 +26,8 @@ public class ChatBotConfig {
         return OpenAiChatOptions.builder()
                 .withModel("gpt-3.5-turbo")
                 .withTemperature(0.4)
-                .withMaxTokens(2000)
-                .withMaxCompletionTokens(1000)
+//                .withMaxTokens(2000)
+                .withMaxCompletionTokens(2000)
                 .build();
     }
 

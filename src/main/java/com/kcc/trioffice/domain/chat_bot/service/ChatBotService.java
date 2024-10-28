@@ -1,21 +1,17 @@
 package com.kcc.trioffice.domain.chat_bot.service;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.kcc.trioffice.domain.chat_bot.domain.Document;
 import com.kcc.trioffice.domain.chat_room.dto.request.ChatMessage;
 import com.kcc.trioffice.domain.chat_room.dto.request.ChatRoomCreate;
 import com.kcc.trioffice.global.auth.PrincipalDetail;
 import com.kcc.trioffice.global.chat_bot.ChatBotConfig;
-import com.kcc.trioffice.global.chat_bot.CustomChatBotOptions;
 import com.kcc.trioffice.global.enums.ChatType;
 import com.kcc.trioffice.global.exception.type.BadRequestException;
-import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.ai.chat.model.ChatResponse;
 
 import org.springframework.ai.openai.OpenAiChatModel;
-import org.springframework.ai.openai.OpenAiChatOptions;
+import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.kcc.trioffice.domain.chat_bot.mapper.ChatBotMapper;
@@ -23,10 +19,14 @@ import com.kcc.trioffice.global.exception.type.NotFoundException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 import reactor.core.publisher.Flux;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -37,6 +37,7 @@ public class ChatBotService {
   private final OpenAiChatModel chatModel;
   private final ChatMessage chatMessage = new ChatMessage();
   private final ChatBotConfig  chatBotConfig;
+  private final VectorStoreService vectorStoreService;
 
   @Autowired
   private TransactionTemplate transactionTemplate;
@@ -47,12 +48,27 @@ public class ChatBotService {
       String responseMessage = "";
       // ai 데이터 생성
       try {
-//        responseMessage = chatClient.prompt()
-//            .user(message)
-//            .options(new CustomChatBotOptions("gpt-3.5-turbo", 500))
-//            .call()
-//            .content();
-          responseMessage = chatBotConfig.generatePirateNames(chatModel, message);
+          //employee 정보를 redis에 전송
+          vectorStoreService.addEmployeeInfo(principalDetail.getEmployeeInfo());
+
+          // 유사한 벡터를 찾기 위해 벡터 스토어에 쿼리 전송
+          List<String> similarDocuments = vectorStoreService.similaritySearch(SearchRequest.query(message).withTopK(5));
+
+          // 유사한 문서 내용을 결합
+          StringBuilder combinedMessage = new StringBuilder(message);
+          for (int i=0; i<similarDocuments.size(); i++)  {
+              combinedMessage.append("\n").append(similarDocuments.get(i)); // 유사한 내용 추가
+          }
+
+          System.out.println("결합한 질문 내용 : " + combinedMessage.toString());
+          responseMessage = chatBotConfig.generatePirateNames(chatModel, combinedMessage.toString());
+
+          //답변 내용 vector store에 저장하기
+          Map<String, String> vectorInsert = new HashMap<>();
+          String employeeId =  ""+principalDetail.getEmployeeId();
+          vectorInsert.put("message"+employeeId, responseMessage);
+
+          vectorStoreService.add(vectorInsert);
 
       } catch (Exception e) {
         log.info("ai로부터 응답 response 불가" + e);
