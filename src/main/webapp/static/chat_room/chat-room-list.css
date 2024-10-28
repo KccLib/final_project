@@ -516,3 +516,9 @@ td {
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: auto; /* Pushes content to bottom when not enough messages */
+}

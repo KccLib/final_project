@@ -146,10 +146,9 @@ $(document).ready(function() {
         });
 
         console.log(initialChatRoomId);
-        console.log("하하");
 
-        if (currentChatRoomId == null && chatRooms.length > 0) {
-            var chatRoomIdToOpen = initialChatRoomId || chatRooms[0].chatRoomId;
+        if (currentChatRoomId != null && chatRooms.length > 0) {
+            var chatRoomIdToOpen = initialChatRoomId;
 
             // 해당 chatRoomId를 가진 채팅방 아이템을 찾습니다.
             var chatRoomItem = $('.chat-room-item[data-chat-room-id="' + chatRoomIdToOpen + '"]');
@@ -192,10 +191,6 @@ $(document).ready(function() {
                     </div>`;
         }
         return '';
-    }
-
-    function addStatus(chatRoom) {
-
     }
 
     function addChatRoomActive(chatRoom) {
@@ -301,7 +296,7 @@ $(document).ready(function() {
     }
 
     function updateChatContents(messages) {
-        var chatContainer = $('.chat');
+        var chatContainer = $('.chat-container');
         chatContainer.empty();
         previousSenderId = null;
 
@@ -311,24 +306,27 @@ $(document).ready(function() {
         });
 
         // Scroll to the bottom to show the latest messages
-        chatContainer.scrollTop(chatContainer.prop('scrollHeight'));
+        let chat = $('.chat');
+        chat.scrollTop(chat.prop('scrollHeight'));
     }
 
     function addChatContents(messages) {
-        var chatContainer = $('.chat');
+        var chatContainer = $('.chat-container');
+        var chat = $('.chat');
 
         // 스크롤 위치와 높이를 저장합니다.
-        var previousScrollHeight = chatContainer.prop('scrollHeight');
-        var previousScrollTop = chatContainer.scrollTop();
+        var previousScrollHeight = chat.prop('scrollHeight');
+        var previousScrollTop = chat.scrollTop();
 
-        // 메시지를 추가합니다.
+        // Prepend older messages to the top
         messages.forEach(function (message) {
             var chatRow = generateMessageHtml(message);
             chatContainer.prepend(chatRow);
         });
 
-        var newScrollHeight = chatContainer.prop('scrollHeight');
-        chatContainer.scrollTop(newScrollHeight - previousScrollHeight + previousScrollTop);
+        // Adjust scroll position to maintain view
+        var newScrollHeight = chat.prop('scrollHeight');
+        chat.scrollTop(newScrollHeight - previousScrollHeight + previousScrollTop);
     }
 
     function generateMessageHtml(message) {
@@ -854,15 +852,15 @@ $(document).ready(function() {
     }
 
     function addMessage(chatMessage) {
-        var chatContainer = $('.chat');
-        var isAtBottom = chatContainer.scrollTop() + chatContainer.innerHeight() >= chatContainer[0].scrollHeight - 100;
+        var chatContainer = $('.chat-container');
+        let chat = $('.chat');
+        var isAtBottom = chat.scrollTop() + chat.innerHeight() >= chat[0].scrollHeight - 100;
 
         var chatRow = generateMessageHtml(chatMessage);
-        chatContainer.append(chatRow);
+        chatContainer.append(chatRow); // Append new message at the bottom
 
-        // If the user is at the bottom, scroll to show the new message
         if (isAtBottom) {
-            chatContainer.scrollTop(chatContainer.prop('scrollHeight'));
+            chat.scrollTop(chat.prop('scrollHeight'));
         }
     }
 
