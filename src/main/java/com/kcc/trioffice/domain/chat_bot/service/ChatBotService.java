@@ -6,11 +6,15 @@ import java.util.Map;
 import com.kcc.trioffice.domain.chat_room.dto.request.ChatMessage;
 import com.kcc.trioffice.domain.chat_room.dto.request.ChatRoomCreate;
 import com.kcc.trioffice.global.auth.PrincipalDetail;
+import com.kcc.trioffice.global.chat_bot.ChatBotConfig;
+import com.kcc.trioffice.global.chat_bot.CustomChatBotOptions;
 import com.kcc.trioffice.global.enums.ChatType;
 import com.kcc.trioffice.global.exception.type.BadRequestException;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatResponse;
 
+import org.springframework.ai.openai.OpenAiChatModel;
+import org.springframework.ai.openai.OpenAiChatOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,8 +34,9 @@ import java.time.Duration;
 public class ChatBotService {
 
   private final ChatBotMapper chatBotMapper;
-  private final ChatClient chatClient;
+  private final OpenAiChatModel chatModel;
   private final ChatMessage chatMessage = new ChatMessage();
+  private final ChatBotConfig  chatBotConfig;
 
   @Autowired
   private TransactionTemplate transactionTemplate;
@@ -42,10 +47,13 @@ public class ChatBotService {
       String responseMessage = "";
       // ai 데이터 생성
       try {
-        responseMessage = chatClient.prompt()
-            .user(message)
-            .call()
-            .content();
+//        responseMessage = chatClient.prompt()
+//            .user(message)
+//            .options(new CustomChatBotOptions("gpt-3.5-turbo", 500))
+//            .call()
+//            .content();
+          responseMessage = chatBotConfig.generatePirateNames(chatModel, message);
+
       } catch (Exception e) {
         log.info("ai로부터 응답 response 불가" + e);
         throw new NotFoundException("GPT의 응답을 생성할 수 없습니다." + e);
