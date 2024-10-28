@@ -11,6 +11,7 @@ import com.kcc.trioffice.global.exception.type.BadRequestException;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kcc.trioffice.domain.chat_bot.mapper.ChatBotMapper;
@@ -19,6 +20,7 @@ import com.kcc.trioffice.global.exception.type.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 import reactor.core.publisher.Flux;
 import java.time.Duration;
 
@@ -29,8 +31,11 @@ public class ChatBotService {
 
   private final ChatBotMapper chatBotMapper;
   private final ChatClient chatClient;
+  private final ChatMessage chatMessage = new ChatMessage();
 
-  @Transactional
+  @Autowired
+  private TransactionTemplate transactionTemplate;
+
   public Flux<String> streamChatBotResponse(String message, PrincipalDetail principalDetail) throws BadRequestException {
       System.out.println("서버로 보낸 메세지  " + message);
 
@@ -56,35 +61,45 @@ public class ChatBotService {
 
       System.out.println("반환된 메세지는 : " +responseMessage);
       ChatRoomCreate chatRoomCreate = new ChatRoomCreate();
-      ChatMessage chatMessage = new ChatMessage(
-              chatRoomCreate.getChatRoomId(), principalDetail.getEmployeeId(),  responseMessage, ChatType.CHAT_BOT.getValue(), 0L);
-
       chatRoomCreate.setChatRoomName("chat-bot");
-      chatRoomCreate.setChatRoomId(principalDetail.getEmployeeId());
+      chatRoomCreate.setWriter(principalDetail.getEmployeeId());
 
-      try{
-          chatBotMapper.saveChatRoom(chatRoomCreate);
-          chatBotMapper.saveParticipationEmployee(chatRoomCreate.getChatRoomId(), principalDetail.getEmployeeId());
-          chatBotMapper.saveChatMessage(chatMessage);
-      }catch (Exception e ) {
-          log.error("chatRoomCreate 관련 insert 중 에러발생 : "+ e);
-      }
+      chatMessage.setMessage(responseMessage);
+      chatMessage.setChatId(0L);
+      chatMessage.setChatType(ChatType.CHAT_BOT.getValue());
+      chatMessage.setSenderId(principalDetail.getEmployeeId());
 
-      try {
-          chatBotMapper.saveParticipationEmployee(chatRoomCreate.getChatRoomId(), principalDetail.getEmployeeId());
+// 트랜잭션 처리
+      transactionTemplate.executeWithoutResult(status -> {
+          try {
+              int chatBotRoomCount = chatBotMapper.checkChatBotRoom(ChatType.CHAT_BOT.getValue(), principalDetail.getEmployeeId());
 
-      }catch (Exception e) {
-          log.error("saveParticipationEmployee 관련 insert 중 에러발생 : "+ e);
+              //기존 ChatBotRoom이 없으면 만들어주고 
+              if(chatBotRoomCount == 0) {
+                  chatBotMapper.saveChatRoom(chatRoomCreate);
+                  chatMessage.setRoomId(chatRoomCreate.getChatRoomId());
+                  chatBotMapper.saveParticipationEmployee(chatRoomCreate.getChatRoomId(), principalDetail.getEmployeeId());
 
-      }
+              } else { //있으면 chatBotRoom의 값만 가져와서 setting
+                  Long chatBotRoomNumber = chatBotMapper.employeeRoomNumber(ChatType.CHAT_BOT.getValue(), principalDetail.getEmployeeId());
+                  chatMessage.setRoomId(chatBotRoomNumber);
+              }
+              
+              //채팅저장
+              chatBotMapper.saveChatMessage(chatMessage);
 
-      try {
-          chatBotMapper.saveChatMessage(chatMessage);
-      } catch (Exception e) {
-          log.error("saveParticipationEmployee 관련 insert 중 에러발생 : "+ e);
 
-      }
+          } catch (Exception e) {
+              log.error("데이터 삽입 중 에러 발생 : " , e);
+              status.setRollbackOnly();  // 트랜잭션 롤백
+              throw e;
+          }
+      });
+
+
+
+
+
       return  responseFlux;
     }
-
 }

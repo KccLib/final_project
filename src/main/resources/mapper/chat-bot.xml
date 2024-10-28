@@ -5,13 +5,13 @@
 
 <mapper namespace="com.kcc.trioffice.domain.chat_bot.mapper.ChatBotMapper">
 
-    <insert id="saveChatRoom" >
-        <selectKey keyProperty="chatRoomCreate.chatRoomId" resultType="long" order="BEFORE">
+    <insert id="saveChatRoom" parameterType="com.kcc.trioffice.domain.chat_room.dto.request.ChatRoomCreate">
+        <selectKey keyProperty="chatRoomId" resultType="long" order="BEFORE">
             SELECT SEQ_CHAT_ROOM.NEXTVAL FROM DUAL
         </selectKey>
 
         INSERT INTO chat_room (chat_room_id, name, writer, write_dt, modifier, modified_dt, is_deleted)
-        VALUES (#{chatRoomCreate.chatRoomId}, #{chatRoomCreate.chatRoomName}, #{writer}, SYSDATE, #{writer}, SYSDATE, 0)
+        VALUES (#{chatRoomId}, #{chatRoomName}, #{writer}, SYSDATE, #{writer}, SYSDATE, 0)
     </insert>
 
 
@@ -47,5 +47,22 @@
         , 0
         )
     </insert>
+
+    <select id="checkChatBotRoom" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM chat
+        WHERE chat_type = #{type}
+          AND writer = #{employeeId}
+    </select>
+
+    <select id="employeeRoomNumber" parameterType="map" resultType="Long">
+        SELECT chat_room_id AS chatRoomId
+        FROM chat
+        WHERE chat_type = #{type}
+          AND writer = #{employeeId}
+          AND ROWNUM = 1
+        ORDER BY write_dt DESC
+    </select>
+
 
 </mapper>
