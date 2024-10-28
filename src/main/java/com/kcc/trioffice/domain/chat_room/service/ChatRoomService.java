@@ -6,6 +6,7 @@ import com.kcc.trioffice.domain.chat_room.dto.response.*;
 import com.kcc.trioffice.domain.chat_room.mapper.ChatMapper;
 import com.kcc.trioffice.domain.chat_room.mapper.ChatRoomMapper;
 import com.kcc.trioffice.domain.chat_status.mapper.ChatStatusMapper;
+import com.kcc.trioffice.domain.chat_status.service.ChatStatusService;
 import com.kcc.trioffice.domain.employee.mapper.EmployeeMapper;
 import com.kcc.trioffice.domain.notification.dto.request.SendPushDto;
 import com.kcc.trioffice.domain.notification.service.FcmService;
@@ -40,6 +41,7 @@ public class ChatRoomService {
     private final EmployeeMapper employeeMapper;
     private final FcmService fcmService;
     private final ApplicationEventPublisher eventPublisher;
+    private final ChatStatusService chatStatusService;
 
 
     /**
@@ -185,6 +187,7 @@ public class ChatRoomService {
     public ChatRoomDetailInfo getChatRoomDetailInfo(Long chatRoomId, Long employeeId, int limit, int offset) {
         ChatRoomDetailInfo chatRoomDetailInfo = chatRoomMapper.getChatRoomInfo(chatRoomId, employeeId)
                 .orElseThrow(() -> new NotFoundException("채팅방이 존재하지 않습니다."));
+        chatStatusMapper.updateChatStatusRead(chatRoomId, employeeId);
         List<EmployeeInfo> employeeInfos = participationEmployeeMapper.getEmployeeByChatRoomIdExceptOneSelf(chatRoomId, employeeId);
 
         List<ChatInfo> chatInfos = chatRoomMapper.getChatInfoByPage(chatRoomId, employeeId, chatRoomDetailInfo.getParticipantCount(), limit, offset);
