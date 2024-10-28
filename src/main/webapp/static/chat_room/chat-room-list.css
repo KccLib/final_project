@@ -138,7 +138,7 @@
     overflow-y: auto;
     position: absolute;
     display: flex;
-    flex-direction: column-reverse !important;
+    flex-direction: column !important;
 }
 
 .chat-send-box {
@@ -487,10 +487,14 @@ td {
 
 @media screen and (max-width: 1400px) {
     .chat-room-profile img,
-    .chat-room-profile .status,
+    .chat-room-profile div,
     .chat-room-profile i {
         display: none !important;
     }
+    .chat-profile {
+        display: none !important;
+    }
+
     .chat {
         width: 72%;
     }
@@ -506,4 +510,9 @@ td {
     .chat-send-box {
         width: 65%;
     }
+}
+
+.sub-text p {
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }

@@ -1,5 +1,9 @@
 package com.kcc.trioffice.global.config;
 
+import com.kcc.trioffice.domain.employee.mapper.EmployeeMapper;
+import com.kcc.trioffice.global.handler.CustomLoginSuccessHandler;
+import com.kcc.trioffice.global.handler.CustomLogoutSuccessHandler;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,7 +18,10 @@ import org.springframework.security.web.firewall.StrictHttpFirewall;
 import com.kcc.trioffice.global.auth.PrincipalDetailService;
 
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final EmployeeMapper employeeMapper;
 
   @Bean
   public BCryptPasswordEncoder passwordEncoder() {
@@ -57,18 +64,11 @@ public class SecurityConfig {
             .failureHandler(authenticationFailureHandler()) // 로그인 실패 처리
             .usernameParameter("id")
             .passwordParameter("password")
-            .successHandler((request, response, authentication) -> {
-              // 로그인 성공 후 리디렉션 처리
-              String redirectUrl = "/chatrooms";
-              System.out.println("Authorities: " + authentication.getAuthorities());
-
-              if (authentication.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))) {
-                redirectUrl = "/admin/main"; // ROLE_ADMIN일 경우 관리자 페이지로 리디렉션
-              }
-              response.sendRedirect(redirectUrl); // 로그인 성공 후 리디렉션
-            }))
+            .successHandler(new CustomLoginSuccessHandler(employeeMapper))
+        )
         .logout(logout -> logout
             .logoutUrl("/logout")
+            .logoutSuccessHandler(new CustomLogoutSuccessHandler(employeeMapper))
             .logoutSuccessUrl("/login")
             .deleteCookies("JSESSIONID", "remember-me")
             .invalidateHttpSession(true));

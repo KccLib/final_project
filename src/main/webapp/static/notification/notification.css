@@ -97,6 +97,8 @@
     font-size: 15px;
     border-bottom: 1px solid #d2dae1;
     font-weight: bold;
+    height: 20px;
+    display: flex;
 }
 
 .detail-text {
@@ -172,4 +174,18 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+#detail-text-contents {
+    margin-top: 5px;
+    width: 700px;
+    padding: 5px;
+    height: 200px;
+    border: 1px solid #d2dae1;
+}
+
+#detail-people-tbody {
+    display: block;
+    height: 100px;
+    overflow-y: auto;
 }
