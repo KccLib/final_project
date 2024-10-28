@@ -138,7 +138,7 @@
     overflow-y: auto;
     position: absolute;
     display: flex;
-    flex-direction: column-reverse !important;
+    flex-direction: column !important;
 }
 
 .chat-send-box {

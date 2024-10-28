@@ -269,11 +269,6 @@
                             src="https://e7.pngegg.com/pngimages/1/723/png-clipart-graphy-business-portrait-business-people-public-relations.png"
                             class="chat-room-profile-image"
                     />
-                    <div
-                            class="status d-flex justify-content-center align-items-center"
-                    >
-                        <i class="fa-solid fa-check check-icon"></i>
-                    </div>
                 </div>
             </div>
             <div class="col-4">
@@ -306,6 +301,10 @@
         </div>
         <div class="chat-area" style="display: none;">
             <div class="chat">
+            <div class="loading-indicator" style="display: none;">
+                 <!-- 로딩 스피너 또는 텍스트 -->
+                <p>Loading...</p>
+            </div>
             </div>
             <div class="chat-send-box">
                 <div class="container-fluid">

@@ -114,7 +114,7 @@ $(document).ready(function() {
                 <div class="col-3">
                     <div class="profile">
                         <img src="${chatRoom.chatRoomProfileImageUrl}" />
-                        ` + addProfileStatus(chatRoom) + `
+                        ` + addProfileStatus(chatRoom.employeeStatus) + `
                     </div>
                 </div>
                 <div class="col-8 d-flex align-content-between flex-wrap no-padding-left">
@@ -172,20 +172,21 @@ $(document).ready(function() {
         return ''
     }
 
-    function addProfileStatus(chatRoom) {
-        if (chatRoom.employeeStatus == 1) {
+    function addProfileStatus(status) {
+        console.log(status);
+        if (status == 1) {
             return `<div class="status d-flex justify-content-center align-items-center">
                         <i class="fa-solid fa-check check-icon"></i>
                     </div>`;
-        } else if(chatRoom.employeeStatus == 2) {
+        } else if(status == 2) {
             return `<div class="absent-status d-flex justify-content-center align-items-center">
                         <i class="fa-solid fa-minus"></i>
                     </div>`;
-        } else if (chatRoom.employeeStatus == 3) {
+        } else if (status == 3) {
             return `<div class="inactive-status d-flex justify-content-center align-items-center">
                         <i class="fa-solid fa-minus"></i>
                     </div>`;
-        } else if (chatRoom.employeeStatus == 4) {
+        } else if (status == 4) {
             return `<div class="dnd-status d-flex justify-content-center align-items-center">
                         <i class="fa-solid fa-minus"></i>
                     </div>`;
@@ -293,7 +294,6 @@ $(document).ready(function() {
     function updateChatRoomInfo(data) {
         $('.contents .group-name').text(data.chatRoomName);
         $('.chat-room-profile-image').attr('src', data.chatRoomProfileImageUrl);
-        $('.chat-room-profile div').replaceWith(addProfileStatus(data));
         console.log(data);
 
         console.log(data.participantCount)
@@ -307,33 +307,28 @@ $(document).ready(function() {
 
         messages.reverse().forEach(function (message) {
             var chatRow = generateMessageHtml(message);
-            chatContainer.prepend(chatRow);
+            chatContainer.append(chatRow); // Append messages to the bottom
         });
 
-        chatContainer.scrollTop(chatContainer[0].scrollHeight);
+        // Scroll to the bottom to show the latest messages
+        chatContainer.scrollTop(chatContainer.prop('scrollHeight'));
     }
 
     function addChatContents(messages) {
         var chatContainer = $('.chat');
 
         // 스크롤 위치와 높이를 저장합니다.
-        var oldScrollTop = chatContainer.scrollTop();
-        var oldScrollHeight = chatContainer[0].scrollHeight;
+        var previousScrollHeight = chatContainer.prop('scrollHeight');
+        var previousScrollTop = chatContainer.scrollTop();
 
         // 메시지를 추가합니다.
         messages.forEach(function (message) {
             var chatRow = generateMessageHtml(message);
-            chatContainer.append(chatRow);
+            chatContainer.prepend(chatRow);
         });
 
-        // 새로운 스크롤 높이를 가져옵니다.
-        var newScrollHeight = chatContainer[0].scrollHeight;
-
-        // 스크롤 높이의 변화를 계산합니다.
-        var scrollHeightDiff = newScrollHeight - oldScrollHeight;
-
-        // 스크롤 위치를 조정합니다.
-        chatContainer.scrollTop(oldScrollTop + scrollHeightDiff);
+        var newScrollHeight = chatContainer.prop('scrollHeight');
+        chatContainer.scrollTop(newScrollHeight - previousScrollHeight + previousScrollTop);
     }
 
     function generateMessageHtml(message) {
@@ -378,9 +373,6 @@ $(document).ready(function() {
             <div class="col-1">
                 <div class="chat-profile">
                     <img src="${message.senderProfileUrl}" />
-                    <div class="status d-flex justify-content-center align-items-center">
-                        <i class="fa-solid fa-check check-icon"></i>
-                    </div>
                 </div>
             </div>`;
 
@@ -438,9 +430,6 @@ $(document).ready(function() {
             <div class="col-1">
                 <div class="chat-profile">
                     <img src="${message.senderProfileUrl}" data-chat-id="${message.chatId}" />
-                    <div class="status d-flex justify-content-center align-items-center">
-                        <i class="fa-solid fa-check check-icon"></i>
-                    </div>
                 </div>
             </div>`;
 
@@ -602,9 +591,6 @@ $(document).ready(function() {
             <div class="col-1">
                 <div class="chat-profile">
                     <img src="${message.senderProfileUrl}" />
-                    <div class="status d-flex justify-content-center align-items-center">
-                        <i class="fa-solid fa-check check-icon"></i>
-                    </div>
                 </div>
             </div>`;
 
@@ -868,10 +854,16 @@ $(document).ready(function() {
     }
 
     function addMessage(chatMessage) {
-        console.log(chatMessage);
+        var chatContainer = $('.chat');
+        var isAtBottom = chatContainer.scrollTop() + chatContainer.innerHeight() >= chatContainer[0].scrollHeight - 100;
+
         var chatRow = generateMessageHtml(chatMessage);
-        $('.chat').prepend(chatRow);
-        $('.chat').scrollTop($('.chat')[0].scrollHeight);
+        chatContainer.append(chatRow);
+
+        // If the user is at the bottom, scroll to show the new message
+        if (isAtBottom) {
+            chatContainer.scrollTop(chatContainer.prop('scrollHeight'));
+        }
     }
 
     function showEmoticonBox(event) {
@@ -1062,6 +1054,7 @@ $(document).ready(function() {
     });
 
     function updateEmployeeList(data) {
+        console.log(data);
         var listElement = $('.emp-list');
         $.each(data, function (index, employee) {
             listElement.append(
@@ -1069,9 +1062,7 @@ $(document).ready(function() {
                 <div class="col-5">
                     <div class="profile">
                         <img src="${employee.profileUrl}" />
-                        <div class="status d-flex justify-content-center align-items-center">
-                            <i class="fa-solid fa-check check-icon"></i>
-                        </div>
+                        ` + addProfileStatus(employee.status) + `
                     </div>
                 </div>
                 <div class="col-7 pl-0">
@@ -1263,6 +1254,8 @@ $(document).ready(function() {
         if (loading || !hasMoreData) return;
         loading = true;
 
+        showLoadingIndicator();
+
         $.ajax({
             url: '/api/chatrooms/' + currentChatRoomId,
             method: 'GET',
@@ -1275,6 +1268,8 @@ $(document).ready(function() {
                 offset += data.chatInfoList.length; // 오프셋 업데이트
                 addChatContents(data.chatInfoList);
                 loading = false;
+
+                hideLoadingIndicator();
             },
             error: function (xhr, status, error) {
                 console.error('추가 채팅 데이터 로드 실패:', error);
@@ -1284,15 +1279,12 @@ $(document).ready(function() {
     }
 
     // 스크롤 이벤트 핸들러
-    $('.chat').scroll(function () {
+    $('.chat').on('scroll', function () {
         var $this = $(this);
         var scrollTop = $this.scrollTop();
-        var scrollHeight = $this[0].scrollHeight;
-        var containerHeight = $this.innerHeight();
 
-        // 스크롤 위치가 최상단 근처에 있을 때 데이터 로드
-        // flex-direction: column-reverse로 인해 scrollTop이 음수가 되고, 위로 스크롤할수록 더 큰 음수가 됩니다.
-        if (-scrollTop + containerHeight >= scrollHeight - 100 && !loading && hasMoreData) {
+        // If scrollTop is less than or equal to a threshold (e.g., 100px), load more messages
+        if (scrollTop <= 100 && !loading && hasMoreData) {
             loadChatMessages();
         }
     });
@@ -1940,11 +1932,12 @@ $(document).ready(function() {
         });
     }
 
-    function getParameterByName(name) {
-        name = name.replace(/[\\[]/, "\\[").replace(/[\\]]/, "\\]");
-        var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-            results = regex.exec(location.search);
-        return results === null ? "" : decodeURIComponent(results[1].replace(/\\+/g, " "));
+    function showLoadingIndicator() {
+        $('.loading-indicator').show();
+    }
+
+    function hideLoadingIndicator() {
+        $('.loading-indicator').hide();
     }
 
 });
