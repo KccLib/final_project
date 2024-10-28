@@ -10,6 +10,7 @@ import com.kcc.trioffice.global.auth.PrincipalDetail;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,6 +22,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
+@Slf4j
 public class EmployeeRestController {
 
     private final EmployeeService employeeService;
@@ -44,18 +46,15 @@ public class EmployeeRestController {
     }
     @GetMapping("/find-password/id")
     public HttpStatus findPasswordCheckId(@RequestParam final String email) {
-        System.out.println("요청한 회원 이메일 :" + email);
+        log.info("요청한 회원 이메일 : {}", email);
         employeeService.checkEmployeeEmail(email);
-        // String responseEmail = employeeService.checkEmployeeEmail(email);
-        // Map<String, Object> response = new HashMap<>();
-        // response.put("email", responseEmail);
         return HttpStatus.OK;
     }
 
     @PostMapping("/find-password/email")
     public HttpStatus passwordChange(@RequestParam final String email, @RequestParam final String externalEmail)
             throws MessagingException {
-        System.out.println("요청한 사외 이메일 :" + externalEmail);
+        log.info("요청한 사외 이메일 : {}", externalEmail);
         employeeService.temporaryPassword(email, externalEmail);
         return HttpStatus.OK;
     }

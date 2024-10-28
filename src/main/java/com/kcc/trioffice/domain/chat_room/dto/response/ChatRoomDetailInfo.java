@@ -5,12 +5,13 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class ChatRoomDetailInfo {
+public class ChatRoomDetailInfo implements ChatRoomInfoBase {
 
     private Long chatRoomId;
     private String chatRoomName;
     private String chatRoomProfileImageUrl;
-    private long employeeStatus;
+    private Long employeeStatus;
     private int participantCount;
     private List<ChatInfo> chatInfoList;
+
 }

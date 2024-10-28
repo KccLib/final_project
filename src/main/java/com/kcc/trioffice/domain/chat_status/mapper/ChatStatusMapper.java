@@ -12,10 +12,16 @@ import java.util.Optional;
 public interface ChatStatusMapper {
 
     int saveChatStatus(Long chatRoomId, Long chatId, Long employeeId, Long writer);
+
     int saveChatStatusRead(Long chatRoomId, Long chatId, Long employeeId, Long writer);
+
     Optional<ChatStatusInfo> getChatStatusByChatIdAndEmployeeId(Long chatId, Long employeeId);
+
     int updateEmoticon(Long chatId, Long employeeId, Long emoticonType, boolean isEmoticon);
+
     int updateChatStatusRead(Long chatRoomId, Long employeeId);
+
     Optional<EmoticonStatus> getEmoticonCount(Long chatId, Long employeeId);
-    List<Long> getUnreadMessageId(@Param("chatRoomId") Long chatRoomId, @Param("employeeId") Long employeeId);
+
+    List<Long> getUnreadMessageId(Long chatRoomId, Long employeeId);
 }

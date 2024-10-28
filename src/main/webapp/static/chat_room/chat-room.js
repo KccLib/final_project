@@ -343,8 +343,6 @@ $(document).ready(function() {
         }
         var chatRow;
 
-        console.log(message);
-
         if (message.chatType === "ENTER") {
             console.log('ENTER 메시지');
             chatRow = createEnterAndQuitMessage(message);

@@ -2,12 +2,10 @@ package com.kcc.trioffice.domain.chat_room.controller;
 
 import com.kcc.trioffice.domain.chat_room.dto.request.ChatRoomCreate;
 import com.kcc.trioffice.domain.chat_room.dto.response.ChatInfoAndRedirectNum;
-import com.kcc.trioffice.domain.chat_room.dto.response.ChatRoomInfo;
 import com.kcc.trioffice.domain.chat_room.service.ChatRoomService;
 import com.kcc.trioffice.global.auth.PrincipalDetail;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,16 +14,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
-
 @Controller
 @Slf4j
 @RequiredArgsConstructor
 public class ChatRoomController {
 
     private final ChatRoomService chatRoomService;
-    private final SimpMessagingTemplate simpMessagingTemplate;
-
 
     @GetMapping("/chatrooms")
     public String chatRoomList(Model model,
@@ -48,11 +42,7 @@ public class ChatRoomController {
                                @AuthenticationPrincipal PrincipalDetail principalDetail) {
         chatRoomService.createChatRoom(chatRoomCreate, principalDetail.getEmployeeId());
 
-        for (Long employId : chatRoomCreate.getEmployees()) {
-            simpMessagingTemplate
-                    .convertAndSend("/sub/chatrooms/employees/" + employId
-                            , chatRoomCreate);
-        }
+
 
         return "redirect:/chatrooms";
     }

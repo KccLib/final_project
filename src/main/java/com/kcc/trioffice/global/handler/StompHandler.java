@@ -4,6 +4,7 @@ import com.kcc.trioffice.domain.chat_room.dto.response.ChatRoomEnter;
 import com.kcc.trioffice.domain.chat_status.service.ChatStatusService;
 import com.kcc.trioffice.global.auth.PrincipalDetail;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.Message;
@@ -17,6 +18,7 @@ import org.springframework.security.core.Authentication;
 
 @Configuration
 @RequiredArgsConstructor
+@Slf4j
 public class StompHandler implements ChannelInterceptor {
 
     private final ChatStatusService chatStatusService;
@@ -25,13 +27,15 @@ public class StompHandler implements ChannelInterceptor {
     @Override
     public Message<?> preSend(Message<?> message, MessageChannel channel) {
         StompHeaderAccessor accessor = StompHeaderAccessor.wrap(message);
+        String destination = accessor.getDestination();
+
 
         if(accessor.getCommand() == StompCommand.CONNECT) {
         } else if(accessor.getCommand() == StompCommand.SUBSCRIBE) {
+            log.info("Destination: {}", destination);
 
-            String destination = accessor.getDestination();
+            if (destination != null && destination.contains("/sub/chat/room/")) {
 
-            if (destination.contains("/sub/chat/room/")) {
                 Long chatRoomId = Long.valueOf(destination.split("/")[4]);
                 ChatRoomEnter chatRoomEnter = chatStatusService.enterChatRoom(chatRoomId, getEmployeeId(accessor));
                 eventPublisher.publishEvent(chatRoomEnter);

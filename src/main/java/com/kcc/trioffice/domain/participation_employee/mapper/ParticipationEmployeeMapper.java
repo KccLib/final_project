@@ -12,16 +12,27 @@ import java.util.Optional;
 @Mapper
 public interface ParticipationEmployeeMapper {
 
-    int saveParticipationEmployee(@Param("chatRoomId") Long chatRoomId, @Param("employeeId") Long employeeId, @Param("writer") Long writer);
-    List<EmployeeInfo> getEmployeeByChatRoomIdExceptOneSelf(@Param("chatRoomId") Long chatRoomId, @Param("employeeId") Long employeeId);
-    List<ParticipantEmployeeInfo> getParticipantEmployeeInfoByChatRoomId(@Param("chatRoomId") Long chatRoomId);
-    List<EmployeeInfo> getEmployeeInfoByChatRoomId(@Param("chatRoomId") Long chatRoomId);
-    List<SearchEmployee> getEmployeeByChatRoomIdExceptParticipants(@Param("companyId") Long companyId, @Param("chatRoomId") Long chatRoomId);
-    int deleteParticipationEmployee(@Param("chatRoomId") Long chatRoomId, @Param("employeeId") Long employeeId);
-    int updateIsEntered(@Param("chatRoomId") Long chatRoomId, @Param("employeeId") Long employeeId, @Param("isEntered") boolean isEntered);
-    int disconnectChatRoom(Long employeeId);
-    List<EmployeeInfo> getPtptEmpInfoByChatIdExceptOneself(@Param("chatRoomId") Long chatRoomId, @Param("employeeId") Long employeeId);
-    List<EmployeeInfo> getFcmTokenByChatRoomId(@Param("chatRoomId") Long chatRoomId);
-    Optional<ParticipantEmployeeInfo> getPtptptEmpInfo(@Param("chatRoomId") Long chatRoomId, @Param("employeeId") Long employeeId);
-    int favoriteChatRoom(@Param("chatRoomId") Long chatRoomId, @Param("employeeId") Long employeeId, @Param("isFavorited") boolean isFavorited);
+    int saveParticipationEmployee(Long chatRoomId, Long employeeId, Long writer);
+
+    List<EmployeeInfo> getEmployeeByChatRoomIdExceptOneSelf(Long chatRoomId, Long employeeId);
+
+    List<ParticipantEmployeeInfo> getParticipantEmployeeInfoByChatRoomId(Long chatRoomId);
+
+    List<EmployeeInfo> getEmployeeInfoByChatRoomId(Long chatRoomId);
+
+    List<SearchEmployee> getEmployeeByChatRoomIdExceptParticipants(Long companyId, Long chatRoomId);
+
+    int deleteParticipationEmployee(Long chatRoomId, Long employeeId);
+
+    int updateIsEntered(Long chatRoomId, Long employeeId, boolean isEntered);
+
+    int disconnectAllChatRoom(Long employeeId);
+
+    List<EmployeeInfo> getPtptEmpInfoByChatIdExceptOneself(Long chatRoomId, Long employeeId);
+
+    List<EmployeeInfo> getFcmTokenByChatRoomId(Long chatRoomId);
+
+    Optional<ParticipantEmployeeInfo> getPtptptEmpInfo(Long chatRoomId, Long employeeId);
+
+    int favoriteChatRoom(Long chatRoomId, Long employeeId, boolean isFavorited);
 }

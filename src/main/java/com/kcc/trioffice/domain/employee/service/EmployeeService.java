@@ -74,9 +74,6 @@ public class EmployeeService {
         employeeMapper.findByEmail(email)
                 .orElseThrow(() -> new NotFoundException("일치하는 회원의 아이디가 없습니다."));
 
-        // 사내이메일과 외부이메일 매칭을 위한 값 저장.
-        // employeeInfo.setEmail(email);
-        // return findedEmail;
     }
 
     @Transactional
@@ -88,7 +85,6 @@ public class EmployeeService {
         if (externalEmail.equals(findedExternalEmail)) {
             // 임시비밀번호 발급
             String tmpPassword = generateTempPassword();
-            System.out.println("임시 비밀번호 : " + tmpPassword);
 
             try {
                 // 이메일 메시지 설정
@@ -154,7 +150,6 @@ public class EmployeeService {
 
         return employeeMapper.getEmployeeInfoFindByEmail(email)
                 .orElseThrow(() -> new NotFoundException("해당 직원이 존재하지 않습니다."));
-
     }
 
     public EmployeeInfo findById(Long id) {

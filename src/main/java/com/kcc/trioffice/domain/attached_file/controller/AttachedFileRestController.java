@@ -3,7 +3,6 @@ package com.kcc.trioffice.domain.attached_file.controller;
 import com.kcc.trioffice.domain.attached_file.dto.response.AttachedFileInfo;
 import com.kcc.trioffice.domain.attached_file.dto.response.ImageInfo;
 import com.kcc.trioffice.domain.attached_file.service.AttachedFileService;
-import com.kcc.trioffice.domain.chat_room.dto.response.ChatMessageInfo;
 import com.kcc.trioffice.global.auth.PrincipalDetail;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +23,6 @@ import java.util.List;
 public class AttachedFileRestController {
 
     private final AttachedFileService attachedFileService;
-    private final SimpMessagingTemplate simpMessagingTemplate;
 
     @PostMapping("/api/chatrooms/{chatRoomId}/attached-file/send")
     public void sendAttachedFile(@RequestParam(value = "tags", required = false) List<String> tags,
@@ -34,10 +32,7 @@ public class AttachedFileRestController {
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
         List<MultipartFile> multipartFiles = new ArrayList<>(multipartRequest.getFileMap().values());
 
-        List<ChatMessageInfo> chatMessageInfos = attachedFileService.sendAttachedFile(multipartFiles, tags, chatRoomId, principalDetail.getEmployeeId());
-        for (ChatMessageInfo chatMessageInfo : chatMessageInfos) {
-            simpMessagingTemplate.convertAndSend("/sub/chat/room/" + chatRoomId, chatMessageInfo);
-        }
+        attachedFileService.sendAttachedFile(multipartFiles, tags, chatRoomId, principalDetail.getEmployeeId());
     }
 
     @GetMapping("/api/chatrooms/chats/{chatId}/attached-file/download")
