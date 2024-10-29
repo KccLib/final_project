@@ -158,15 +158,15 @@ function loadNotification(scheduleId) {
             // 사원 정보 출력
             // 테이블 헤더 생성
             var tableHTML = `
-            <table id="detail-table" style="width:100%; border-collapse: collapse;">
-                <thead id="detail-people-header">
-                    <tr>
-                        <th style="width: 120px;">이름</th>
-                        <th style="width: 175px;">부서</th>
-                        <th>참석 여부</th>
-                    </tr>
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">이름</th>
+                    <th scope="col">부서</th>
+                    <th scope="col">참석 여부</th>
+                  </tr>
                 </thead>
-                <tbody id="detail-people-tbody">
+                <tbody>
         `;
 
             // 사원 정보 출력
@@ -177,31 +177,31 @@ function loadNotification(scheduleId) {
                 const participationValue = parseInt(employee.isParticipated, 10); // 문자열을 숫자로 변환
 
                 if (participationValue === 0) {
-                    participationStatus = "💬 대기 중";
+                    participationStatus = "<p class='waiting'>💬 대기 중</p>";
                 } else if (participationValue === 1) {
-                    participationStatus = "❌ 거절";
+                    participationStatus = "<p class='reject'>❌ 거절</p>";
                 } else if (participationValue === 2) {
-                    participationStatus = "✔ 승인";
+                    participationStatus = "<p class='approve'>✔ 승인</p>";
                 } else {
                     participationStatus = "상태 불명"; // 예외 처리
                 }
                 tableHTML += `
                           <tr>
-                              <td style="width: 125px; border-right: 1px solid #d2dae1;">${employee.employeeName}</td>
-                              <td style="width: 179px; border-right: 1px solid #d2dae1;">${employee.deptName}</td>
-                              <td style="width: 155px;">${participationStatus}</td>
+                              <td>${employee.employeeName}</td>
+                              <td>${employee.deptName}</td>
+                              <td>${participationStatus}</td>
                           </tr>
                       `;
             });
 
             // 테이블 닫기
             tableHTML += `
-                              </tbody id="detail-table-body">
+                              </tbody">
                           </table>
                       `;
 
             // 테이블을 add-people-table div에 추가
-            document.getElementById("add-people-table").innerHTML = tableHTML;
+            document.getElementById("table-container").innerHTML = tableHTML;
 
             const quillDeltaString = scheduleDetail.contents; // Quill Delta 형식의 JSON 문자열
 

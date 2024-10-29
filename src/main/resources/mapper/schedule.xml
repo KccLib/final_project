@@ -134,6 +134,7 @@
       INNER JOIN department d
         ON e.dept_id = d.dept_id
     WHERE schedule_id = #{schedule_id} and s.is_deleted = 0
+    ORDER BY i.is_participated DESC
 </select>
 
 <update id="deleteMyScheduleInviteTable" parameterType="map">
