@@ -1,6 +1,4 @@
-package com.kcc.trioffice.domain.chat_bot.service;
-
-import com.kcc.trioffice.domain.chat_bot.domain.Document;
+package com.kcc.trioffice.domain.common.service;
 
 import com.kcc.trioffice.domain.chat_room.dto.request.ChatMessage;
 import com.kcc.trioffice.domain.chat_room.dto.request.ChatRoomCreate;
@@ -13,10 +11,9 @@ import com.kcc.trioffice.global.exception.type.BadRequestException;
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.vectorstore.SearchRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
-import com.kcc.trioffice.domain.chat_bot.mapper.ChatBotMapper;
+import com.kcc.trioffice.domain.common.mapper.ChatBotMapper;
 import com.kcc.trioffice.global.exception.type.NotFoundException;
 
 import lombok.RequiredArgsConstructor;
@@ -24,8 +21,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.support.TransactionTemplate;
 import reactor.core.publisher.Flux;
 import java.time.Duration;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

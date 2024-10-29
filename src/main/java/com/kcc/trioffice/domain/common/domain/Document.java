@@ -1,4 +1,4 @@
-package com.kcc.trioffice.domain.chat_bot.domain;
+package com.kcc.trioffice.domain.common.domain;
 
 
 import lombok.AllArgsConstructor;
@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Map;
 
 @Data

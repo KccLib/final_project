@@ -10,4 +10,5 @@ public class SearchEmployee {
     private String deptName;
     private Long deptId;
     private String position;
+    private String profileURL;
 }

@@ -120,30 +120,20 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
     </div>
 
     <div id="search-bar-container" class="hidden">
-      <div id="search-bar-contents" >
+      <div id="search-bar-contents">
         <div id="search-people-title">사원</div>
-        <div id="search-people-contents">
-          <div class="search-peoples">
-            <div class="search-profile-img">
-              1231
-            </div>
-            <p class="search-profile-name">홍길동</p>
-            <p class="search-profile-dept">금융1팀</p>
-          </div>
-          <div class="search-peoples">people1</div>
-          <div class="search-peoples">people1</div>
-          <div class="search-peoples">people1</div>
-          <div class="search-peoples">people1</div>
-          </div>
+        <div id="search-people-contents"><%-- 검색된 직원들 js로 추가 --%></div>
         <div id="search-group-title">그룹 채팅</div>
-        <div class="search-group-contents">
-          <div class="search-chat-profile-img">
+        <div id="search-group-chat-rooms">
+          <div class="search-group-contents">
+            <div class="search-chat-profile-img"></div>
+            <p class="search-chatroom-name">그룹채팅방</p>
           </div>
-          <p class="search-chatroom-name">그룹채팅방</p>
-        <div class="search-group-contents">123123</div>
-        <div class  ="search-group-contents">123123</div>
-      </div>
 
+          <div class="search-group-contents">123123</div>
+          <div class="search-group-contents">123123</div>
+        </div>
+      </div>
     </div>
   </body>
 

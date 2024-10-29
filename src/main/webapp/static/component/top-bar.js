@@ -59,13 +59,50 @@ const searchBar = document.getElementById("search-bar");
 const searchContainer = document.getElementById("search-bar-container");
 let searchBarCount = 0;
 
+const searchContentsPeople = document.getElementById("search-people-contents");
+const searchContentsChatRooms = document.getElementById("search-group-chat-rooms");
+
 searchBar.addEventListener("click", function () {
     if(searchBarCount % 2 === 0) {
         searchContainer.classList.remove("hidden");
+        //열렸을 때 load 시키기
+        $.ajax({
+            method: "GET",
+            url: "/api/search",
+            dataType: "json",
+            success: function (responseSearch) {
+                console.log("검색된 개체 개수 :" + responseSearch.searchEmployeeList + responseSearch.searchChatRoomList);
+
+
+                // searchContentsPeople 요소를 초기화
+                searchContentsPeople.innerHTML = "";
+
+                // searchEmployeeList에서 각 직원 정보를 가져와서 HTML 생성
+                responseSearch.searchEmployeeList.forEach(function (employee) {
+                    searchContentsPeople.innerHTML +=
+                        "<div class=\"search-peoples\" style=\"cursor: pointer;\">" +
+                        "    <div class=\"search-profile-img\">" +
+                        "        <img src=\"" + employee.profileURL + "\" alt=\"프로필 이미지\" />" +
+                        "    </div>" +
+                        "    <p class=\"search-profile-name\">" + employee.name + "</p>" +
+                        "    <p class=\"search-profile-dept\">" + employee.deptName + "</p>" +
+                        "    <p class=\"search-profile-position\">" + employee.position + "</p>" +
+                        "</div>";
+                });
+
+                searchContentsChatRooms.innerHTML = "";
+
+
+            },
+            error: function (result) {}
+        });
+
+
+
     } else {
         searchContainer.classList.add("hidden");
     }
-    console.log(searchBarCount);
+    // console.log(searchBarCount);
         searchBarCount++;
 });
 

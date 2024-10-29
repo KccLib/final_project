@@ -1,4 +1,4 @@
-package com.kcc.trioffice.domain.chat_bot.mapper;
+package com.kcc.trioffice.domain.common.mapper;
 
 import com.kcc.trioffice.domain.chat_room.dto.request.ChatMessage;
 import com.kcc.trioffice.domain.chat_room.dto.request.ChatRoomCreate;

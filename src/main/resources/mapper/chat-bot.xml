@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.kcc.trioffice.domain.chat_bot.mapper.ChatBotMapper">
+<mapper namespace="com.kcc.trioffice.domain.common.mapper.ChatBotMapper">
 
     <insert id="saveChatRoom" parameterType="com.kcc.trioffice.domain.chat_room.dto.request.ChatRoomCreate">
         <selectKey keyProperty="chatRoomId" resultType="long" order="BEFORE">
