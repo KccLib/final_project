@@ -45,10 +45,11 @@
         messaging.onMessage(function(payload) {
             console.log('Message received. ', payload);
             // 알림 표시
-            const notificationTitle = payload.notification.title;
+            const data = payload.data;
+            const notificationTitle = data.title;
             const notificationOptions = {
-                body: payload.notification.body,
-                icon: payload.notification.image || '/default-icon.png',
+                body: data.body,
+                icon: data.profileUrl || '/default-icon.png',
             };
 
             // 페이지가 활성화된 상태에서는 브라우저 알림을 직접 표시해야 합니다.
