@@ -5,6 +5,9 @@ $(document).ready(function () {
 
     $(document).on('click', '.notification-list .notification-item', function() {
 
+        $('.notification-item').removeClass('active');
+        $(this).addClass('active');
+
         $('.default-contents').hide();
         $('.notification-contents').show();
 
@@ -139,7 +142,8 @@ function loadNotification(scheduleId) {
                 " " +
                 scheduleDetail.scheduleMaster.deptName);
 
-            $('.detail-title').text(scheduleDetail.name);
+            $('.detail-title').empty();
+            $('.detail-title').append('<p>' + scheduleDetail.name + '</p>');
 
             var startDate = scheduleDetail.startedDt
             var endDate = scheduleDetail.endedDt

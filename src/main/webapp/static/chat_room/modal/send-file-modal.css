@@ -60,9 +60,13 @@ button {
 
 .tagify{
     width: 100%;
-    max-width: 700px;
+    max-width: 100%;
 }
 
+#send-file-modal .tagify{
+    max-height: 50px;
+    overflow-y: auto;
+}
 
 .tagify--outside{
     border: 0;
