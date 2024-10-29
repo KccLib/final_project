@@ -1,14 +1,11 @@
 package com.kcc.trioffice.domain.chat_room.controller;
 
 import com.kcc.trioffice.domain.chat_room.dto.request.ChatMessage;
-import com.kcc.trioffice.domain.chat_room.dto.response.ChatMessageAndParticipants;
 import com.kcc.trioffice.domain.chat_room.dto.response.ChatMessageInfo;
-import com.kcc.trioffice.domain.chat_room.dto.response.ParticipantEmployeeInfo;
 import com.kcc.trioffice.domain.chat_room.service.ChatRoomService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
 import java.util.List;
@@ -18,21 +15,10 @@ import java.util.List;
 @Slf4j
 public class ChatRoomSocketController {
 
-    private final SimpMessagingTemplate simpMessagingTemplate;
     private final ChatRoomService chatRoomService;
 
     @MessageMapping("/chat/send")
     public void sendChatMessage(ChatMessage chatMessage) {
-        log.info("chatMessage: {}", chatMessage);
-        ChatMessageAndParticipants chatMessageAndParticipants = chatRoomService.saveChatMessage(chatMessage);
-
-        List<ParticipantEmployeeInfo> participantEmployeeInfos = chatMessageAndParticipants.getParticipantEmployeeInfos();
-        for (ParticipantEmployeeInfo participantEmployeeInfo : participantEmployeeInfos) {
-                simpMessagingTemplate
-                        .convertAndSend("/sub/chatrooms/employees/" + participantEmployeeInfo.getEmployeeId()
-                                , chatMessageAndParticipants.getChatMessageInfo());
-        }
-
-        simpMessagingTemplate.convertAndSend("/sub/chat/room/" + chatMessage.getRoomId(), chatMessageAndParticipants.getChatMessageInfo());
+        ChatMessageInfo chatMessageInfo = chatRoomService.saveChatMessage(chatMessage);
     }
 }

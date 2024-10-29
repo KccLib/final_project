@@ -6,7 +6,7 @@
 
 .category {
     padding: 30px 10px;
-    border-bottom: 2px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .category .fa-pen-to-square {
@@ -29,6 +29,10 @@
 
 .inactive-box {
     background-color: #D9D9D9;
+}
+
+.fa-minus {
+    color: #FFFFFF;
 }
 
 .chat-room-type > div {
@@ -69,6 +73,45 @@
     border: 1px solid #FFFFFF;
     margin-left: 300px;
     margin-top: 30px;
+}
+
+.absent-status {
+    width: 20px;
+    height: 20px;
+    border-radius: 70%;
+    background-color: #eaa300;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border: 1px solid #FFFFFF;
+    margin-left: 300px;
+    margin-top: 30px;
+}
+
+.inactive-status {
+    width: 20px;
+    height: 20px;
+    border-radius: 70%;
+    background-color: #d9d9d9;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border: 1px solid #FFFFFF;
+    margin-left: 300px;
+    margin-top: 30px;
+}
+
+.dnd-status {
+     width: 20px;
+     height: 20px;
+     border-radius: 70%;
+     background-color: #ea0000;
+     position: absolute;
+     bottom: 0;
+     right: 0;
+     border: 1px solid #FFFFFF;
+     margin-left: 300px;
+     margin-top: 30px;
 }
 
 .check-icon {

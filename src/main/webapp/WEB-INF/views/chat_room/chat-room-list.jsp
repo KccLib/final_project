@@ -27,10 +27,6 @@
     <script src="/static/chat_room/chat-room.js" charset="utf-8"></script>
     <script src="/static/chat_room/chat-room-save.js" charset="utf-8"></script>
 
-    <link
-            href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css"
-            rel="stylesheet"
-    />
     <!-- 소스 다운 -->
     <script src="https://unpkg.com/@yaireo/tagify"></script>
     <!-- 폴리필 (구버젼 브라우저 지원) -->
@@ -42,15 +38,25 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 
-    <script>
+    <script type="text/javascript">
+        var initialChatRoomId = "${initialChatRoomId}";
+        initialChatRoomId = parseInt(initialChatRoomId);
+
         messaging.requestPermission()
             .then(function () {
-                return messaging.getToken();
+                return messaging.getToken(); // FCM 토큰을 요청합니다.
             })
-            .then(async function (token) {
-                localStorage.setItem('Fcmtoken', token);
+            .then(function (token) {
+                console.log(token); // 토큰을 콘솔에 출력합니다.
+                localStorage.setItem('Fcmtoken', token); // 토큰을 로컬 스토리지에 저장합니다.
+                console.log(localStorage.getItem('Fcmtoken')); // 저장된 토큰을 콘솔에 출력합니다.
+            })
+            .catch(function (error) {
+                // 오류 발생 시 콘솔에 오류를 출력합니다.
+                console.error('Unable to get permission to notify.', error);
+                // 여기서 추가적인 오류 처리 로직을 구현할 수 있습니다.
+                // 예를 들어, 사용자에게 오류 메시지를 표시하거나, 특정 기능의 접근을 제한할 수 있습니다.
             });
-        console.log(localStorage.getItem('Fcmtoken'));
 
         $.ajax({
             url: '/api/employees/fcm-token',
@@ -109,11 +115,35 @@
                                 <img
                                         src="${chatRoom.chatRoomProfileImageUrl}"
                                 />
-                                <div
-                                        class="status d-flex justify-content-center align-items-center"
-                                >
-                                    <i class="fa-solid fa-check check-icon"></i>
-                                </div>
+                                <c:choose>
+                                    <c:when test="${chatRoom.employeeStatus == null}">
+                                    </c:when>
+                                    <c:when test="${chatRoom.employeeStatus == 1}">
+                                        <div class="status d-flex justify-content-center align-items-center">
+                                            <i class="fa-solid fa-check check-icon"></i>
+                                        </div>
+                                    </c:when>
+                                    <c:when test="${chatRoom.employeeStatus == 2}">
+                                        <div class="absent-status d-flex justify-content-center align-items-center">
+                                            <i class="fa-solid fa-minus"></i>
+                                        </div>
+                                    </c:when>
+                                    <c:when test="${chatRoom.employeeStatus == 3}">
+                                        <div class="inactive-status d-flex justify-content-center align-items-center">
+                                            <i class="fa-solid fa-minus"></i>
+                                        </div>
+                                    </c:when>
+                                    <c:when test="${chatRoom.employeeStatus == 4}">
+                                        <div class="dnd-status d-flex justify-content-center align-items-center">
+                                            <i class="fa-solid fa-minus"></i>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="status d-flex justify-content-center align-items-center">
+                                            <i class="fa-solid fa-question"></i>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </div>
                         <div class="col-8 d-flex align-content-between flex-wrap no-padding-left ">
@@ -165,8 +195,10 @@
             <div class="create-input-box">
                 <div class="create-add-emp-box">
                     <div class="row add-dept-box">
-                        <i class="fa-solid fa-plus plus-icon"></i>
-                        <span>조직도로 추가하기</span>
+                        <div class="add-dept-button">
+                            <i class="fa-solid fa-plus plus-icon"></i>
+                            <span>조직도로 추가하기</span>
+                        </div>
                     </div>
                     <div class="row create-input-add-emp-box">
                         <div class="col-1">
@@ -237,11 +269,6 @@
                             src="https://e7.pngegg.com/pngimages/1/723/png-clipart-graphy-business-portrait-business-people-public-relations.png"
                             class="chat-room-profile-image"
                     />
-                    <div
-                            class="status d-flex justify-content-center align-items-center"
-                    >
-                        <i class="fa-solid fa-check check-icon"></i>
-                    </div>
                 </div>
             </div>
             <div class="col-4">
@@ -274,6 +301,8 @@
         </div>
         <div class="chat-area" style="display: none;">
             <div class="chat">
+                <div class="chat-container">
+                </div>
             </div>
             <div class="chat-send-box">
                 <div class="container-fluid">
@@ -365,56 +394,7 @@
 
             <div class="images">
                 <div class="row">
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
-                    <div class="col-3">
-                        <div class="image-box">
-                            <img src="https://www.jwps.co.kr/images/nose/gp/03_01_bg_m.jpg">
-                        </div>
-                    </div>
+
                 </div>
             </div>
 
@@ -436,6 +416,7 @@
 <%@ include file="/WEB-INF/views/chat_room/modal/chat-delete-dropdown.jsp" %>
 <%@ include file="/WEB-INF/views/chat_room/modal/send-file-modal.jsp" %>
 <%@ include file="/WEB-INF/views/chat_room/modal/image-detail-modal.jsp" %>
+<%@ include file="/WEB-INF/views/chat_room/modal/add-department-chat-modal.jsp" %>
 
 </body>
 

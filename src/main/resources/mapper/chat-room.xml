@@ -39,6 +39,7 @@
             AND cs.employee_id = #{employeeId}
             AND cs.is_read = 0
         WHERE pe.employee_id = #{employeeId}
+          AND cm.chat_type != 6
           AND cr.is_deleted = 0
         GROUP BY
           cr.chat_room_id
@@ -278,6 +279,14 @@
         , cm.write_dt
         , pe.is_favorited
       ORDER BY cm.write_dt DESC
+  </select>
+
+  <select id="getChatRoomIdByEmployeeIds">
+    SELECT chat_room_id
+      FROM participation_employee
+      GROUP BY chat_room_id
+      HAVING COUNT(DISTINCT employee_id) = 2
+        AND COUNT(DISTINCT CASE WHEN employee_id IN (#{employeeId}, #{targetEmployeeId}) THEN employee_id END) = 2
   </select>
 
 

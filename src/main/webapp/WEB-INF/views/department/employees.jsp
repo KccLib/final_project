@@ -17,7 +17,7 @@
                 .append("\"employeeId\":").append(emp.getEmployeeId()).append(",")
                 .append("\"name\":\"").append(emp.getName()).append("\",")
                 .append("\"position\":\"").append(emp.getPosition()).append("\",")
-                .append("\"profileUrl\":\"https://e7.pngegg.com/pngimages/1/723/png-clipart-graphy-business-portrait-business-people-public-relations.png\"") // 고정된 프로필 이미지 URL
+                .append("\"profileUrl\":\"").append(emp.getProfileUrl()).append("\"")
                 .append("}");
 
             // 마지막 직원이 아닐 경우 쉼표 추가

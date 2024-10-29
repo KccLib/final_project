@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kcc.trioffice.domain.notification.mapper.NotificationMapper">
+
+    <insert id="saveNotification">
+        INSERT INTO notification
+          (notification_id, employee_id, notification_checked, related_id, type, title, contents, writer, write_dt, modifier, modified_dt, is_deleted)
+        VALUES (SEQ_NOTIFICATION.NEXTVAL
+                , #{employeeId}
+                , 0
+                , #{relatedId}
+                , #{type}
+                , #{title}
+                , #{contents}
+                , #{writer}
+                , sysdate
+                , #{writer}
+                , sysdate
+                , 0)
+    </insert>
+
+    <select id="getNotification" resultType="com.kcc.trioffice.domain.notification.dto.response.NotificationInfo">
+      SELECT
+        notification_id
+        , employee_id
+        , notification_checked
+        , related_id
+        , type
+        , title
+        , contents
+        , writer
+        , write_dt
+        FROM notification
+        WHERE employee_id = #{employeeId}
+          AND is_deleted = 0
+        ORDER BY write_dt DESC
+    </select>
+
+</mapper>

@@ -1,6 +1,9 @@
+let tagify;
+let whitelist = [];
+
 $(document).ready(function() {
     // 화이트리스트 초기화
-    let whitelist = [];
+
 
     // AJAX를 통해 직원 목록 가져오기
     $.ajax({
@@ -21,7 +24,7 @@ $(document).ready(function() {
             let inputElm = document.querySelector("input[name='employees[]']");
 
             // initialize Tagify
-            var tagify = new Tagify(inputElm, {
+            tagify = new Tagify(inputElm, {
                 enforceWhitelist: true, // 화이트리스트에서 허용된 태그만 사용
                 whitelist: whitelist, // 화이트 리스트 배열. 화이트 리스트를 등록하면 자동으로 드롭다운 메뉴가 생긴다
                 autogrow: true, // 태그 입력창이 자동으로 늘어난다
@@ -130,5 +133,115 @@ $(document).ready(function() {
         }
     });
 
-    // AJAX 호출과 무관한 다른 코드가 있다면 여기에 추가
+    $('.add-dept-button').click(function() {
+        $('#add-department-chat-modal').modal('show');
+
+        function fSch() {
+            console.log("검색할께요");
+            $('#jstree').jstree(true).search($("#schName").val());
+        }
+
+        $.jstree.defaults.core.themes.variant = "large";
+
+        // JSTree가 이미 초기화되었는지 확인
+        if (!$.jstree.reference('#jstree')) {
+            // JSTree 초기화
+            $("#jstree").jstree({
+                "plugins": ["search", "checkbox", "types"],
+                'core': {
+                    'data': {
+                        'url': '/api/departments/tree',
+                        'dataType': 'json'
+                    },
+                    'themes': {
+                        'dots': false,
+                    }
+                },
+                'types': {
+                    'department': {
+                        'icon': 'fa fa-building', // 부서 아이콘
+                    },
+                    'employee': {
+                        'icon': 'fa fa-user' // 사람 아이콘
+                    }
+                },
+            });
+
+            // JSTree가 로드된 후 이벤트 핸들러 등록
+            $('#jstree').on('loaded.jstree', function(e, data) {
+                // 현재 Tagify에 있는 직원들의 ID를 가져오기
+                var existingTagValues = tagify.value.map(function(tag) {
+                    return tag.value;
+                });
+
+                // JSTree에서 해당 노드들을 선택
+                data.instance.select_node(existingTagValues);
+            });
+        } else {
+            // 이미 초기화된 경우
+            // 모든 노드를 비선택 상태로 만듦
+            $('#jstree').jstree(true).deselect_all();
+
+            // 현재 Tagify에 있는 직원들의 ID를 가져오기
+            var existingTagValues = tagify.value.map(function(tag) {
+                return tag.value;
+            });
+
+            // JSTree에서 해당 노드들을 선택
+            $('#jstree').jstree(true).select_node(existingTagValues);
+        }
+    });
+
+    // "선택" 버튼 클릭 시 이벤트 처리
+    $('#add-department-employee').click(function() {
+        // 선택된 노드 가져오기 (전체 정보 포함)
+        var selectedNodes = $('#jstree').jstree("get_selected", true);
+
+        // 부서 노드를 제외하고 직원 노드만 필터링
+        var employeeNodes = selectedNodes.filter(function(node) {
+            return !node.id.startsWith('dept_');
+        });
+
+        // 선택된 직원들의 ID 목록 생성
+        var selectedEmployeeIds = employeeNodes.map(function(node) {
+            return node.id;
+        });
+
+        // 현재 Tagify에 추가된 직원들의 ID 가져오기
+        var existingTagValues = tagify.value.map(function(tag) {
+            return tag.value;
+        });
+
+        // Tagify에 추가해야 할 직원들 (새로 선택된 직원들)
+        var employeesToAdd = selectedEmployeeIds.filter(function(empId) {
+            return !existingTagValues.includes(empId);
+        });
+
+        // Tagify에서 제거해야 할 직원들 (선택 해제된 직원들)
+        var employeesToRemove = existingTagValues.filter(function(empId) {
+            return !selectedEmployeeIds.includes(empId);
+        });
+
+        // 화이트리스트에서 해당 직원 정보를 찾아 태그 추가
+        employeesToAdd.forEach(function(empId) {
+            var employeeData = whitelist.find(function(emp) {
+                return emp.value === empId;
+            });
+
+            if (employeeData) {
+                // Tagify에 태그 추가
+                tagify.addTags([employeeData]);
+            }
+        });
+
+        // Tagify에서 해당 직원 태그 제거
+        employeesToRemove.forEach(function(empId) {
+            // Tagify에서 태그 제거
+            tagify.removeTag(empId);
+        });
+
+        // 모달 닫기
+        $('#add-department-chat-modal').modal('hide');
+    });
+
 });

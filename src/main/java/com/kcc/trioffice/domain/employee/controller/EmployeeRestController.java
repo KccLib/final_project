@@ -1,6 +1,7 @@
 package com.kcc.trioffice.domain.employee.controller;
 
 import com.kcc.trioffice.domain.employee.dto.request.SaveFcmToken;
+import com.kcc.trioffice.domain.employee.dto.request.UpdateStatus;
 import com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo;
 import com.kcc.trioffice.domain.employee.dto.response.SearchEmployee;
 import com.kcc.trioffice.domain.employee.service.EmployeeService;
@@ -9,6 +10,7 @@ import com.kcc.trioffice.global.auth.PrincipalDetail;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,6 +22,7 @@ import java.util.Map;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
+@Slf4j
 public class EmployeeRestController {
 
     private final EmployeeService employeeService;
@@ -43,18 +46,15 @@ public class EmployeeRestController {
     }
     @GetMapping("/find-password/id")
     public HttpStatus findPasswordCheckId(@RequestParam final String email) {
-        System.out.println("요청한 회원 이메일 :" + email);
+        log.info("요청한 회원 이메일 : {}", email);
         employeeService.checkEmployeeEmail(email);
-        // String responseEmail = employeeService.checkEmployeeEmail(email);
-        // Map<String, Object> response = new HashMap<>();
-        // response.put("email", responseEmail);
         return HttpStatus.OK;
     }
 
     @PostMapping("/find-password/email")
     public HttpStatus passwordChange(@RequestParam final String email, @RequestParam final String externalEmail)
             throws MessagingException {
-        System.out.println("요청한 사외 이메일 :" + externalEmail);
+        log.info("요청한 사외 이메일 : {}", externalEmail);
         employeeService.temporaryPassword(email, externalEmail);
         return HttpStatus.OK;
     }
@@ -68,6 +68,17 @@ public class EmployeeRestController {
     @PostMapping("/employees/fcm-token")
     public void saveFcmToken(@RequestBody SaveFcmToken saveFcmToken, @AuthenticationPrincipal PrincipalDetail principalDetail) {
         employeeService.saveFcmToken(saveFcmToken, principalDetail.getEmployeeId());
+    }
+
+    @PostMapping("/employees/status")
+    public void changeEmployeeStatus(@AuthenticationPrincipal PrincipalDetail principalDetail, @RequestBody UpdateStatus updateStatus) {
+        employeeService.changeEmployeeStatus(principalDetail.getEmployeeId(), updateStatus);
+    }
+
+    @GetMapping("/employees/{employeeId}")
+    public ResponseEntity<EmployeeInfo> getEmployee(@PathVariable Long employeeId) {
+        EmployeeInfo employeeInfo = employeeService.findById(employeeId);
+        return ResponseEntity.ok(employeeInfo);
     }
 
 }

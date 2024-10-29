@@ -119,12 +119,12 @@
           AND employee_id = #{employeeId}
     </update>
 
-    <update id="disconnectChatRoom" parameterType="map">
+    <update id="disconnectAllChatRoom" parameterType="map">
       UPDATE participation_employee
         SET is_entered = 0
             , modifier = #{employeeId}
             , modified_dt = SYSDATE
-        WHERE is_entered = 1
+        WHERE is_entered = 1 AND employee_id = #{employeeId}
     </update>
 
     <select id="getPtptEmpInfoByChatIdExceptOneself" resultType="com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo">

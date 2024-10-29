@@ -74,22 +74,10 @@ uri="http://www.springframework.org/security/tags" %>
     <!-- tagify -->
     <!-- 소스 다운 -->
     <!-- <script src="https://unpkg.com/@yaireo/tagify"></script> -->
-    <script
-      async
-      src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@3.20.0/dist/tagify.polyfills.min.js"
-    ></script>
-    <script
-      async
-      src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@3.20.0/dist/tagify.min.js"
-    ></script>
-
+    <script src="https://unpkg.com/@yaireo/tagify"></script>
     <!-- 폴리필 (구버젼 브라우저 지원) -->
     <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
-    <link
-      href="https://unpkg.com/@yaireo/tagify/dist/tagify.css"
-      rel="stylesheet"
-      type="text/css"
-    />
+    <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 
     <%-- FCM --%>
     <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
@@ -100,6 +88,8 @@ uri="http://www.springframework.org/security/tags" %>
     />
     <%-- markdown --%>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+    <script src="<%= request.getContextPath() %>/static/component/common.js"></script>
 
     <style>
       /* NanumSquare_ac 폰트 정의 */

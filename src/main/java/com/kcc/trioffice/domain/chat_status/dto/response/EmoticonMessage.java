@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EmoticonMessage {
     private String chatType;
+    private Long chatRoomId;
     private Long chatId;
     private Long chatterId;
     private Long senderId;

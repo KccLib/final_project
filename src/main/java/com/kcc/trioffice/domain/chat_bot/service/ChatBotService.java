@@ -1,12 +1,14 @@
 package com.kcc.trioffice.domain.chat_bot.service;
 
 import com.kcc.trioffice.domain.chat_bot.domain.Document;
+
 import com.kcc.trioffice.domain.chat_room.dto.request.ChatMessage;
 import com.kcc.trioffice.domain.chat_room.dto.request.ChatRoomCreate;
 import com.kcc.trioffice.global.auth.PrincipalDetail;
 import com.kcc.trioffice.global.chat_bot.ChatBotConfig;
 import com.kcc.trioffice.global.enums.ChatType;
 import com.kcc.trioffice.global.exception.type.BadRequestException;
+
 
 import org.springframework.ai.openai.OpenAiChatModel;
 import org.springframework.ai.vectorstore.SearchRequest;
@@ -84,7 +86,7 @@ public class ChatBotService {
       }); //띄어쓰기 검사하기
 
       System.out.println("반환된 메세지는 : " +responseMessage);
-      ChatRoomCreate chatRoomCreate = new ChatRoomCreate();
+      ChatRoomCreate chatRoomCreate = new ChatRoomCreate(null, null, null);
       chatRoomCreate.setChatRoomName("chat-bot");
       chatRoomCreate.setWriter(principalDetail.getEmployeeId());
 
@@ -119,7 +121,6 @@ public class ChatBotService {
               throw e;
           }
       });
-
 
 
 

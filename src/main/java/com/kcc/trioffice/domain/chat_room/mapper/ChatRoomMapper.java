@@ -5,7 +5,6 @@ import com.kcc.trioffice.domain.chat_room.dto.response.ChatInfo;
 import com.kcc.trioffice.domain.chat_room.dto.response.ChatRoomDetailInfo;
 import com.kcc.trioffice.domain.chat_room.dto.response.ChatRoomInfo;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -13,11 +12,17 @@ import java.util.Optional;
 @Mapper
 public interface ChatRoomMapper {
 
-    int saveChatRoom(@Param("chatRoomCreate") ChatRoomCreate chatRoomCreate, @Param("writer") Long writer);
+    int saveChatRoom(ChatRoomCreate chatRoomCreate, Long writer);
+
     List<ChatRoomInfo> getChatRoomListByEmployeeId(Long employeeId);
-    Optional<ChatRoomDetailInfo> getChatRoomInfo(@Param("chatRoomId") Long chatRoomId, @Param("employeeId") Long employeeId);
-    List<ChatInfo> getChatInfoByPage(@Param("chatRoomId") Long chatRoomId, @Param("employeeId") Long employeeId, @Param("participantCount") int participantCount, @Param("limit") int limit, @Param("offset") int offset);
-    int updateChatRoomLastMessage(@Param("chatRoomId") Long chatRoomId, @Param("chatId") Long chatId);
+
+    Optional<ChatRoomDetailInfo> getChatRoomInfo(Long chatRoomId, Long employeeId);
+
+    List<ChatInfo> getChatInfoByPage(Long chatRoomId, Long employeeId, int participantCount, int limit, int offset);
+
+    int updateChatRoomLastMessage(Long chatRoomId, Long chatId);
+
     List<ChatRoomInfo> getFavoriteChatRooms(Long employeeId);
 
+    Long getChatRoomIdByEmployeeIds(Long employeeId, Long targetEmployeeId);
 }

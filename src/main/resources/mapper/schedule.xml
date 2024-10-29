@@ -51,9 +51,24 @@
 <insert id="saveScheduleInvite" parameterType="com.kcc.trioffice.domain.schedule.dto.SaveSchedule">
     <foreach collection="employeeIds" item="employeeId" separator=";" open="DECLARE BEGIN" close="; END;">
         <if test="employeeId != null">
-            INSERT INTO schedule_invite 
+            INSERT INTO schedule_invite
             (schedule_invite_id, employee_id, is_participated, writer, created_dt, modifier, modified_dt, is_deleted)
-            VALUES (#{scheduleId}, #{employeeId}, 2, #{writer}, sysdate, #{modifier}, sysdate, #{isDeleted})
+            VALUES (#{scheduleId}
+                    , #{employeeId}
+                    , <choose>
+                        <when test="writer == employeeId">
+                            2
+                        </when>
+                        <otherwise>
+                            0
+                        </otherwise>
+                     </choose>
+                    , #{writer}
+                    , sysdate
+                    , #{modifier}
+                    , sysdate
+                    , #{isDeleted}
+            )
         </if>
     </foreach>
 </insert>
@@ -62,7 +77,10 @@
  <resultMap id="ScheduleDetailResultMap" type="ScheduleDetail">
     <!-- 단일 schedule 정보 -->
     <result property="writer" column="writer"/>
+    <result property="name" column="name"/>
     <result property="contents" column="contents"/>
+    <result property="startedDt" column="started_dt"/>
+    <result property="endedDt" column="ended_dt"/>
 
     <!-- 직원 정보 리스트로 매핑 -->
     <collection property="scheduleDetailEmployees" ofType="ScheduleDetailEmployees">
@@ -99,12 +117,15 @@
 <select id="getScheduleDetail" parameterType="String"  resultMap="ScheduleDetailResultMap">
   SELECT 
     s.writer
+    , s.name
     , s.contents
     , i.is_participated as isParticipated
     , e.employee_id 
     , e.name as employeeName
     , d.name as deptName
     , e.position
+    , s.started_dt
+    , s.ended_dt
     FROM schedule s
       LEFT OUTER JOIN schedule_invite i
         ON s.schedule_id = i.schedule_invite_id
@@ -149,5 +170,11 @@
         USING (dept_id)
         WHERE employee_id = #{writer}
 </select>
+
+  <update id="updateScheduleInviteParticipate" parameterType="map">
+    UPDATE schedule_invite
+      SET is_participated = #{isParticipated}
+      WHERE schedule_invite_id = #{scheduleId} AND employee_id = #{employeeId}
+  </update>
   
 </mapper>

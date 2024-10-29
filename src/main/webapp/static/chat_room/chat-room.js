@@ -18,6 +18,7 @@ let maxReconnectAttempts = 10;
 
 
 $(document).ready(function() {
+    handleChatRoomListUpdate();
 
     // 유저 정보 로드
     $.ajax({
@@ -47,10 +48,22 @@ $(document).ready(function() {
             console.log("WebSocket 연결 성공");
             reconnectAttempts = 0; // 재연결 성공 시 재연결 횟수 초기화
             subscribeToChatRoomList();
+
+            // 재연결 후 현재 채팅방이 열려 있으면 다시 구독
+            if (currentChatRoomId) {
+                console.log("재연결 후 채팅방 구독을 재설정합니다:", currentChatRoomId);
+                subscribeToChatRoom(currentChatRoomId);
+            }
         }, function (error) {
             console.error("WebSocket 연결 에러:", error);
             reconnectWebSocket();
         });
+
+        // 연결 종료 이벤트 처리
+        stompClient.ws.onclose = function() {
+            console.log("WebSocket 연결이 종료되었습니다.");
+            reconnectWebSocket();
+        };
     }
 
     function reconnectWebSocket() {
@@ -101,7 +114,7 @@ $(document).ready(function() {
                 <div class="col-3">
                     <div class="profile">
                         <img src="${chatRoom.chatRoomProfileImageUrl}" />
-                        ` + addProfileStatus(chatRoom) + `
+                        ` + addProfileStatus(chatRoom.employeeStatus) + `
                     </div>
                 </div>
                 <div class="col-8 d-flex align-content-between flex-wrap no-padding-left">
@@ -131,6 +144,20 @@ $(document).ready(function() {
             chatRoomsList.append(chatRoomItem);
             addChatRoomActive(chatRoom);
         });
+
+        console.log(initialChatRoomId);
+
+        if (currentChatRoomId != null && chatRooms.length > 0) {
+            var chatRoomIdToOpen = initialChatRoomId;
+
+            // 해당 chatRoomId를 가진 채팅방 아이템을 찾습니다.
+            var chatRoomItem = $('.chat-room-item[data-chat-room-id="' + chatRoomIdToOpen + '"]');
+            if (chatRoomItem.length > 0) {
+                chatRoomItem.trigger('click');
+                $('.default-contents').hide()
+                $('.chat-contents').show();
+            }
+        }
     }
 
     function addUnReadMessage(chatRoom) {
@@ -144,11 +171,24 @@ $(document).ready(function() {
         return ''
     }
 
-    function addProfileStatus(chatRoom) {
-        if (chatRoom.participantCount == 2) {
+    function addProfileStatus(status) {
+        console.log(status);
+        if (status == 1) {
             return `<div class="status d-flex justify-content-center align-items-center">
-                            <i class="fa-solid fa-check check-icon"></i>
-                        </div>`;
+                        <i class="fa-solid fa-check check-icon"></i>
+                    </div>`;
+        } else if(status == 2) {
+            return `<div class="absent-status d-flex justify-content-center align-items-center">
+                        <i class="fa-solid fa-minus"></i>
+                    </div>`;
+        } else if (status == 3) {
+            return `<div class="inactive-status d-flex justify-content-center align-items-center">
+                        <i class="fa-solid fa-minus"></i>
+                    </div>`;
+        } else if (status == 4) {
+            return `<div class="dnd-status d-flex justify-content-center align-items-center">
+                        <i class="fa-solid fa-minus"></i>
+                    </div>`;
         }
         return '';
     }
@@ -249,44 +289,44 @@ $(document).ready(function() {
     function updateChatRoomInfo(data) {
         $('.contents .group-name').text(data.chatRoomName);
         $('.chat-room-profile-image').attr('src', data.chatRoomProfileImageUrl);
+        console.log(data);
+
         console.log(data.participantCount)
         $('.emp-count').text(data.participantCount);
     }
 
     function updateChatContents(messages) {
-        var chatContainer = $('.chat');
+        var chatContainer = $('.chat-container');
         chatContainer.empty();
         previousSenderId = null;
 
         messages.reverse().forEach(function (message) {
             var chatRow = generateMessageHtml(message);
-            chatContainer.prepend(chatRow);
+            chatContainer.append(chatRow); // Append messages to the bottom
         });
 
-        chatContainer.scrollTop(chatContainer[0].scrollHeight);
+        // Scroll to the bottom to show the latest messages
+        let chat = $('.chat');
+        chat.scrollTop(chat.prop('scrollHeight'));
     }
 
     function addChatContents(messages) {
-        var chatContainer = $('.chat');
+        var chatContainer = $('.chat-container');
+        var chat = $('.chat');
 
         // 스크롤 위치와 높이를 저장합니다.
-        var oldScrollTop = chatContainer.scrollTop();
-        var oldScrollHeight = chatContainer[0].scrollHeight;
+        var previousScrollHeight = chat.prop('scrollHeight');
+        var previousScrollTop = chat.scrollTop();
 
-        // 메시지를 추가합니다.
+        // Prepend older messages to the top
         messages.forEach(function (message) {
             var chatRow = generateMessageHtml(message);
-            chatContainer.append(chatRow);
+            chatContainer.prepend(chatRow);
         });
 
-        // 새로운 스크롤 높이를 가져옵니다.
-        var newScrollHeight = chatContainer[0].scrollHeight;
-
-        // 스크롤 높이의 변화를 계산합니다.
-        var scrollHeightDiff = newScrollHeight - oldScrollHeight;
-
-        // 스크롤 위치를 조정합니다.
-        chatContainer.scrollTop(oldScrollTop + scrollHeightDiff);
+        // Adjust scroll position to maintain view
+        var newScrollHeight = chat.prop('scrollHeight');
+        chat.scrollTop(newScrollHeight - previousScrollHeight + previousScrollTop);
     }
 
     function generateMessageHtml(message) {
@@ -295,8 +335,6 @@ $(document).ready(function() {
             previousSenderId = message.senderId;
         }
         var chatRow;
-
-        console.log(message);
 
         if (message.chatType === "ENTER") {
             console.log('ENTER 메시지');
@@ -333,9 +371,6 @@ $(document).ready(function() {
             <div class="col-1">
                 <div class="chat-profile">
                     <img src="${message.senderProfileUrl}" />
-                    <div class="status d-flex justify-content-center align-items-center">
-                        <i class="fa-solid fa-check check-icon"></i>
-                    </div>
                 </div>
             </div>`;
 
@@ -393,9 +428,6 @@ $(document).ready(function() {
             <div class="col-1">
                 <div class="chat-profile">
                     <img src="${message.senderProfileUrl}" data-chat-id="${message.chatId}" />
-                    <div class="status d-flex justify-content-center align-items-center">
-                        <i class="fa-solid fa-check check-icon"></i>
-                    </div>
                 </div>
             </div>`;
 
@@ -557,9 +589,6 @@ $(document).ready(function() {
             <div class="col-1">
                 <div class="chat-profile">
                     <img src="${message.senderProfileUrl}" />
-                    <div class="status d-flex justify-content-center align-items-center">
-                        <i class="fa-solid fa-check check-icon"></i>
-                    </div>
                 </div>
             </div>`;
 
@@ -664,6 +693,8 @@ $(document).ready(function() {
     }
 
     function connectWebSocket(chatRoomId) {
+        currentChatRoomId = chatRoomId; // 현재 채팅방 ID 저장
+
         if (!stompClient || !stompClient.connected) {
             console.error("STOMP 클라이언트가 연결되어 있지 않습니다. 재연결을 시도합니다...");
             reconnectWebSocket();
@@ -682,7 +713,6 @@ $(document).ready(function() {
 
         subscribeToChatRoom(chatRoomId);
         console.log("채팅방에 연결되었습니다:", chatRoomId);
-        currentChatRoomId = chatRoomId;
     }
 
     function subscribeToChatRoom(chatRoomId) {
@@ -714,7 +744,12 @@ $(document).ready(function() {
             }
         }, function (error) {
             console.error("채팅방 구독 중 에러 발생:", error);
-            reconnectWebSocket();
+            if (stompClient && stompClient.connected) {
+                console.log("채팅방에 재구독을 시도합니다...");
+                subscribeToChatRoom(chatRoomId);
+            } else {
+                reconnectWebSocket();
+            }
         });
     }
 
@@ -817,10 +852,16 @@ $(document).ready(function() {
     }
 
     function addMessage(chatMessage) {
-        console.log(chatMessage);
+        var chatContainer = $('.chat-container');
+        let chat = $('.chat');
+        var isAtBottom = chat.scrollTop() + chat.innerHeight() >= chat[0].scrollHeight - 100;
+
         var chatRow = generateMessageHtml(chatMessage);
-        $('.chat').prepend(chatRow);
-        $('.chat').scrollTop($('.chat')[0].scrollHeight);
+        chatContainer.append(chatRow); // Append new message at the bottom
+
+        if (isAtBottom) {
+            chat.scrollTop(chat.prop('scrollHeight'));
+        }
     }
 
     function showEmoticonBox(event) {
@@ -1011,6 +1052,7 @@ $(document).ready(function() {
     });
 
     function updateEmployeeList(data) {
+        console.log(data);
         var listElement = $('.emp-list');
         $.each(data, function (index, employee) {
             listElement.append(
@@ -1018,9 +1060,7 @@ $(document).ready(function() {
                 <div class="col-5">
                     <div class="profile">
                         <img src="${employee.profileUrl}" />
-                        <div class="status d-flex justify-content-center align-items-center">
-                            <i class="fa-solid fa-check check-icon"></i>
-                        </div>
+                        ` + addProfileStatus(employee.status) + `
                     </div>
                 </div>
                 <div class="col-7 pl-0">
@@ -1212,6 +1252,8 @@ $(document).ready(function() {
         if (loading || !hasMoreData) return;
         loading = true;
 
+        showLoadingIndicator();
+
         $.ajax({
             url: '/api/chatrooms/' + currentChatRoomId,
             method: 'GET',
@@ -1224,6 +1266,8 @@ $(document).ready(function() {
                 offset += data.chatInfoList.length; // 오프셋 업데이트
                 addChatContents(data.chatInfoList);
                 loading = false;
+
+                hideLoadingIndicator();
             },
             error: function (xhr, status, error) {
                 console.error('추가 채팅 데이터 로드 실패:', error);
@@ -1233,15 +1277,12 @@ $(document).ready(function() {
     }
 
     // 스크롤 이벤트 핸들러
-    $('.chat').scroll(function () {
+    $('.chat').on('scroll', function () {
         var $this = $(this);
         var scrollTop = $this.scrollTop();
-        var scrollHeight = $this[0].scrollHeight;
-        var containerHeight = $this.innerHeight();
 
-        // 스크롤 위치가 최상단 근처에 있을 때 데이터 로드
-        // flex-direction: column-reverse로 인해 scrollTop이 음수가 되고, 위로 스크롤할수록 더 큰 음수가 됩니다.
-        if (-scrollTop + containerHeight >= scrollHeight - 100 && !loading && hasMoreData) {
+        // If scrollTop is less than or equal to a threshold (e.g., 100px), load more messages
+        if (scrollTop <= 100 && !loading && hasMoreData) {
             loadChatMessages();
         }
     });
@@ -1701,8 +1742,7 @@ $(document).ready(function() {
        $('.chat-contents').show();
     });
 
-    $('.chat-room-item').on('click', function () {
-        $('.save-contents').hide()
+    $('.chat-rooms-list').on('click', '.chat-room-item', function() {
         $('.contents').hide();
         $('.chat-contents').show();
         $('.chat-area').show();
@@ -1890,6 +1930,14 @@ $(document).ready(function() {
         });
     }
 
+    function showLoadingIndicator() {
+        $('.loading-indicator').show();
+    }
+
+    function hideLoadingIndicator() {
+        $('.loading-indicator').hide();
+    }
+
 });
 
 document.addEventListener("DOMContentLoaded", function() {
@@ -1916,3 +1964,4 @@ function updateDateFormat() {
         }
     });
 }
+

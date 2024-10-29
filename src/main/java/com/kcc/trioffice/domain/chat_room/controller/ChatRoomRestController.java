@@ -10,7 +10,6 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -40,22 +39,13 @@ public class ChatRoomRestController {
 
     @GetMapping
     public ResponseEntity<List<ChatRoomInfo>> chatRoomList(@AuthenticationPrincipal PrincipalDetail principalDetail) {
-        return ResponseEntity.ok(chatRoomService.getChatRoomList(principalDetail.getEmployeeId()));
+        return ResponseEntity.ok(chatRoomService.getChatRoomList(principalDetail.getEmployeeId(), null).getChatRoomInfos());
     }
 
     @DeleteMapping("/{chatRoomId}")
     public void deleteChatRoom(@PathVariable Long chatRoomId,
                                @AuthenticationPrincipal PrincipalDetail principalDetail) {
-        ChatMessageInfoAndPtptEmp chatMessageInfoAndPtptEmp = chatRoomService.deleteChatRoom(chatRoomId, principalDetail.getEmployeeId());
-
-        chatMessageInfoAndPtptEmp.getParticipantEmployeeInfos().forEach(participantEmployeeInfo -> {
-            simpMessagingTemplate
-                    .convertAndSend("/sub/chatrooms/employees/" + participantEmployeeInfo.getEmployeeId()
-                            , chatMessageInfoAndPtptEmp.getChatMessageInfo());
-        });
-
-        simpMessagingTemplate.convertAndSend("/sub/chat/room/" + chatRoomId, chatMessageInfoAndPtptEmp.getChatMessageInfo());
-
+        chatRoomService.deleteChatRoom(chatRoomId, principalDetail.getEmployeeId());
     }
 
     @DeleteMapping("/chats/{chatId}")

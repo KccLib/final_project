@@ -17,7 +17,6 @@ public class NotificationRestController {
     private final FcmService fcmService;
 
     @PostMapping("/notifications")
-    @ResponseBody
     public void sendNotification(@RequestBody SendPushDto sendPushDto, @AuthenticationPrincipal PrincipalDetail principalDetail) {
         fcmService.sendPush(sendPushDto, principalDetail.getEmployeeId());
     }
