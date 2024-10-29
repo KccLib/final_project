@@ -52,7 +52,7 @@ public class ChatBotService {
           vectorStoreService.addEmployeeInfo(principalDetail.getEmployeeInfo());
 
           // 유사한 벡터를 찾기 위해 벡터 스토어에 쿼리 전송
-          List<String> similarDocuments = vectorStoreService.similaritySearch(SearchRequest.query(message).withTopK(5));
+          List<String> similarDocuments = vectorStoreService.similaritySearch(SearchRequest.query(message));
 
           // 유사한 문서 내용을 결합
           StringBuilder combinedMessage = new StringBuilder(message);

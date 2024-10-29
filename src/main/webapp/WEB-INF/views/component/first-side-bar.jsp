@@ -108,7 +108,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
             ></textarea>
             <i class="fa-solid fa-location-arrow"></i>
           </div>
-        </div>
+        </div>ㅌ
       </div>
     </div>
     <script src="<%= request.getContextPath() %>/static/component/first-side-bar.js"></script>
