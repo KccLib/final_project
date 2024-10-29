@@ -85,23 +85,22 @@
                         </div>
                     </div>
                     <div class="row writer-box">
-                        <div class="col-5">
-                            주최자
-                        </div>
-                    </div>
-                    <div class="row pt-2">
                         <div class="col-3">
+                            <i class="fa-solid fa-user-tie"></i>
+                            주최자
                             <input
                                     type="text"
                                     value="SI영업 1팀/김길동 부장"
                                     id="writer-detail"
                                     name="writer"
+                                    class="ml-1"
                                     readonly
                             />
                         </div>
                     </div>
                     <div class="row detail-dates">
-                        <div class="start-date-box">
+                        <div class="start-date-box col-4">
+                            <i class="fa-regular fa-calendar-check"></i>
                             <label for="start-date">시작일:</label>
                             <input
                                     type="text"
@@ -112,6 +111,7 @@
                             />
                         </div>
                         <div class="col-4">
+                            <i class="fa-regular fa-calendar-check"></i>
                             <label for="end-date" id="end-date-label">종료일:</label>
                             <input
                                     type="text"
@@ -123,16 +123,25 @@
                         </div>
                     </div>
                     <div class="row add-people">
-                        <div id="add-people-text" class="col-12">참석 인원</div>
+                        <div id="add-people-text" class="col-12">
+                            <i class="fa-solid fa-user-clock"></i>
+                            참석 인원
+                        </div>
                     </div>
                     <div class="row">
-                        <div class="col-12">
-                            <div id="add-people-table"></div>
+                        <div class="col-10">
+                            <div class="notification-table">
+                                <div id="table-container">
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12 detail-text">
-                            <div id="detail-text-title" data-schduleid="1">일정 내용</div>
+                            <div id="detail-text-title" data-schduleid="1">
+                                <i class="fa-solid fa-clipboard"></i>
+                                일정 내용
+                            </div>
                             <!-- 임시 Quill 컨테이너 -->
                             <div id="temp-quill-container" style="display: none"></div>
                             <div id="detail-text-contents"></div>

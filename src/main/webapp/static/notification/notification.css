@@ -150,6 +150,9 @@
 .detail-inner {
     padding: 40px;
     width: 80%;
+    border: 1px solid #7AB7FA;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,.25);
 }
 
 .start-date-box {
@@ -189,3 +192,38 @@
     height: 100px;
     overflow-y: auto;
 }
+
+
+.notification-table {
+    position: relative;
+    border: 1px solid #7AB7FA;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: auto;
+}
+
+#table-container {
+    max-height: 11rem; /* 원하는 높이로 설정 */
+    overflow-y: auto;
+    position: relative;
+}
+
+.table thead th {
+    position: sticky;
+    top: 0;
+    background-color: #7AB7FA;
+    color: #fff;
+    z-index: 1;
+}
+
+.approve {
+    color: green;
+}
+
+.reject {
+    color: red;
+}
+
