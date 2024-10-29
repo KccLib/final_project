@@ -64,8 +64,12 @@
             , t.tags AS tags
             FROM
             attached_file af
-            JOIN chat c ON af.chat_id = c.chat_id
-            JOIN employee e ON af.writer = e.employee_id
+            JOIN chat c
+              ON af.chat_id = c.chat_id
+                AND c.is_deleted = 0
+            JOIN employee e
+              ON af.writer = e.employee_id
+                AND e.is_deleted = 0
             LEFT JOIN (
               SELECT
                 file_id
@@ -119,8 +123,12 @@
     , af.file_url
     , t.tags
       FROM attached_file af
-      JOIN chat c ON af.chat_id = c.chat_id
-      JOIN employee e ON af.writer = e.employee_id
+      JOIN chat c
+        ON af.chat_id = c.chat_id
+          AND c.is_deleted = 0
+      JOIN employee e
+        ON af.writer = e.employee_id
+          AND e.is_deleted = 0
       LEFT JOIN (
         SELECT
           file_id

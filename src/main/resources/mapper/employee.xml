@@ -7,11 +7,12 @@
 
     <select id="getEmployeeByCompanyIdExceptOneSelf" parameterType="map"
             resultType="com.kcc.trioffice.domain.employee.dto.response.SearchEmployee">
-      SELECT e.employee_id as id
-             , e.name
-             , d.name as deptName
-             , d.dept_id
-             , e.position
+      SELECT
+        e.employee_id as id
+        , e.name
+        , d.name as deptName
+        , d.dept_id
+        , e.position
         FROM employee e
         LEFT JOIN department d
           ON e.dept_id = d.dept_id AND d.is_deleted = 0
@@ -23,43 +24,45 @@
 
     <select id="getAllEmployeesInfo"
             resultType="com.kcc.trioffice.domain.employee.dto.response.SearchEmployee">
-        SELECT e.employee_id as id
-             , e.name
-             , d.name as deptName
-             , e.position
-            FROM employee e
+        SELECT
+          e.employee_id as id
+          , e.name
+          , d.name as deptName
+          , e.position
+          FROM employee e
             LEFT JOIN department d
-                ON e.dept_id = d.dept_id AND d.is_deleted = 0
+              ON e.dept_id = d.dept_id AND d.is_deleted = 0
             WHERE
-                e.is_deleted = 0
+              e.is_deleted = 0
             ORDER BY
-                e.name
+              e.name
     </select>
 
     <select id="getEmployeeInfo" parameterType="Long"
             resultType="com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo">
-      SELECT employee_id
-             , dept_id
-             , company_id
-             , email
-             , password
-             , phone_num
-             , external_email
-             , name
-             , birth
-             , profile_url
-             , fax
-             , location
-             , is_receive_notification
-             , position
-             , status
-             , status_message
-             , fcm_token
-             , writer
-             , write_dt
-             , modifier
-             , modified_dt
-             , is_deleted
+      SELECT
+        employee_id
+        , dept_id
+        , company_id
+        , email
+        , password
+        , phone_num
+        , external_email
+        , name
+        , birth
+        , profile_url
+        , fax
+        , location
+        , is_receive_notification
+        , position
+        , status
+        , status_message
+        , fcm_token
+        , writer
+        , write_dt
+        , modifier
+        , modified_dt
+        , is_deleted
         FROM employee e
         WHERE employee_id = #{employee_id}
           AND is_deleted = 0
@@ -67,27 +70,28 @@
 
     <select id="getEmployeeInfoFindById" parameterType="String"
         resultType="com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo">
-           SELECT employee_id as employeeId
-               ,dept_id as deptId
-               ,company_id as companyId
-               ,email
-               ,password
-               ,phone_num as phoneNum
-               ,external_email as externalEmail
-               ,name
-               ,birth
-               ,profile_url as profileUrl
-               ,fax
-               ,location
-               ,is_receive_notification as isReceiveNotification
-               ,position
-               ,status
-               ,status_message as statusMessage
-               ,writer
-               ,write_dt as writeDt
-               ,modifier
-               ,modified_dt as modifiedDt
-               ,is_deleted as isDeleted
+           SELECT
+             employee_id as employeeId
+             , dept_id as deptId
+             , company_id as companyId
+             , email
+             , password
+             , phone_num as phoneNum
+             , external_email as externalEmail
+             , name
+             , birth
+             , profile_url as profileUrl
+             , fax
+             , location
+             , is_receive_notification as isReceiveNotification
+             , position
+             , status
+             , status_message as statusMessage
+             , writer
+             , write_dt as writeDt
+             , modifier
+             , modified_dt as modifiedDt
+             , is_deleted as isDeleted
             FROM employee e
             WHERE email = #{id}
                 AND is_deleted = 0
@@ -96,28 +100,29 @@
 
     <select id="getEmployeeInfoList" parameterType="java.util.List"
             resultType="com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo">
-      SELECT employee_id
-             ,dept_id
-             ,company_id
-             ,email
-             ,password
-             ,phone_num
-             ,external_email
-             ,name
-             ,birth
-             ,profile_url
-             ,fax
-             ,location
-             ,is_receive_notification
-             ,position
-             ,status
-             ,status_message
-             ,fcm_token
-             ,writer
-             ,write_dt
-             ,modifier
-             ,modified_dt
-             ,is_deleted as isDeleted
+      SELECT
+        employee_id
+        , dept_id
+        , company_id
+        , email
+        , password
+        , phone_num
+        , external_email
+        , name
+        , birth
+        , profile_url
+        , fax
+        , location
+        , is_receive_notification
+        , position
+        , status
+        , status_message
+        , fcm_token
+        , writer
+        , write_dt
+        , modifier
+        , modified_dt
+        , is_deleted as isDeleted
         FROM employee
         WHERE employee_id IN
           <foreach item="id" collection="list" open="(" separator="," close=")">
@@ -128,30 +133,31 @@
 
     <select id="getEmployeeInfoFindByEmail" parameterType="String"
             resultType="com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo">
-        SELECT employee_id as employeeId
-               , dept_id as deptId
-               , company_id as companyId
-               , email
-               , password
-               , phone_num as phoneNum
-               , external_email as externalEmail
-               , name
-               , birth
-               , profile_url as profileUrl
-               , fax
-               , location
-               , is_receive_notification as isReceiveNotification
-               , position
-               , status
-               , status_message as statusMessage
-               , writer
-               , write_dt as writeDt
-               , modifier
-               , modified_dt as modifiedDt
-               , is_deleted as isDeleted
-            FROM employee
-            WHERE email = #{email}
-            AND is_deleted = 0
+        SELECT
+          employee_id as employeeId
+          , dept_id as deptId
+          , company_id as companyId
+          , email
+          , password
+          , phone_num as phoneNum
+          , external_email as externalEmail
+          , name
+          , birth
+          , profile_url as profileUrl
+          , fax
+          , location
+          , is_receive_notification as isReceiveNotification
+          , position
+          , status
+          , status_message as statusMessage
+          , writer
+          , write_dt as writeDt
+          , modifier
+          , modified_dt as modifiedDt
+          , is_deleted as isDeleted
+          FROM employee
+          WHERE email = #{email}
+          AND is_deleted = 0
     </select>
 
     <select id="findByEmail" parameterType="String" resultType="String">

@@ -7,7 +7,7 @@
 
     <insert id="saveChatRoom">
       <selectKey keyProperty="chatRoomCreate.chatRoomId" resultType="long" order="BEFORE">
-          SELECT SEQ_CHAT_ROOM.NEXTVAL FROM DUAL
+        SELECT SEQ_CHAT_ROOM.NEXTVAL FROM DUAL
       </selectKey>
 
       INSERT INTO chat_room (chat_room_id, name, writer, write_dt, modifier, modified_dt, is_deleted)
@@ -93,7 +93,7 @@
                 , e.profile_url AS senderProfileUrl
                 -- 이모티콘 개수 계산
                 , (
-                    SELECT COUNT(*)
+                    SELECT COUNT(1)
                       FROM chat_status cs
                       WHERE cs.chat_id = c.chat_id
                         AND cs.emoticon_type = 1
@@ -101,7 +101,7 @@
                         AND cs.is_deleted = 0
                    ) AS checkEmoticonCount
                 , (
-                    SELECT COUNT(*)
+                    SELECT COUNT(1)
                       FROM chat_status cs
                       WHERE cs.chat_id = c.chat_id
                         AND cs.emoticon_type = 2
@@ -109,7 +109,7 @@
                         AND cs.is_deleted = 0
                   ) AS heartEmoticonCount
                 , (
-                    SELECT COUNT(*)
+                    SELECT COUNT(1)
                       FROM chat_status cs
                       WHERE cs.chat_id = c.chat_id
                         AND cs.emoticon_type = 3
@@ -117,14 +117,14 @@
                         AND cs.is_deleted = 0
                   ) AS thumbsUpEmoticonCount
                 , (
-                    SELECT COUNT(*)
+                    SELECT COUNT(1)
                       FROM chat_status cs
                       WHERE cs.chat_id = c.chat_id
                         AND cs.emoticon_type = 4
                         AND cs.is_emoticon = 1
                         AND cs.is_deleted = 0) AS smileEmoticonCount
                 , (
-                    SELECT COUNT(*)
+                    SELECT COUNT(1)
                       FROM chat_status cs
                       WHERE cs.chat_id = c.chat_id
                         AND cs.emoticon_type = 5

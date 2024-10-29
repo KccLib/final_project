@@ -6,25 +6,27 @@
 <mapper namespace="com.kcc.trioffice.domain.chat_status.mapper.ChatStatusMapper">
 
     <insert id="saveChatStatus" parameterType="map">
-        INSERT INTO chat_status (chat_room_id, employee_id, chat_id, is_read, is_emoticon, writer, write_dt, modifier, modified_dt, is_deleted)
-          VALUES (#{chatRoomId}, #{employeeId}, #{chatId}, 0, 0, #{writer}, SYSDATE, #{writer}, SYSDATE, 0)
+      INSERT INTO chat_status (chat_room_id, employee_id, chat_id, is_read, is_emoticon, writer, write_dt, modifier, modified_dt, is_deleted)
+        VALUES (#{chatRoomId}, #{employeeId}, #{chatId}, 0, 0, #{writer}, SYSDATE, #{writer}, SYSDATE, 0)
     </insert>
 
     <insert id="saveChatStatusRead" parameterType="map">
-        INSERT INTO chat_status (chat_room_id, employee_id, chat_id, is_read, is_emoticon, writer, write_dt, modifier, modified_dt, is_deleted)
-          VALUES (#{chatRoomId}, #{employeeId}, #{chatId}, 1, 0, #{writer}, SYSDATE, #{writer}, SYSDATE, 0)
+      INSERT INTO chat_status (chat_room_id, employee_id, chat_id, is_read, is_emoticon, writer, write_dt, modifier, modified_dt, is_deleted)
+        VALUES (#{chatRoomId}, #{employeeId}, #{chatId}, 1, 0, #{writer}, SYSDATE, #{writer}, SYSDATE, 0)
     </insert>
     
     <select id="getChatStatusByChatIdAndEmployeeId" parameterType="map" resultType="com.kcc.trioffice.domain.chat_status.dto.response.ChatStatusInfo">
-      SELECT chat_room_id
-             , employee_id
-             , chat_id
-             , is_read
-             , emoticon_type
-             , is_emoticon
+      SELECT
+        chat_room_id
+        , employee_id
+        , chat_id
+        , is_read
+        , emoticon_type
+        , is_emoticon
         FROM chat_status
         WHERE chat_id = #{chatId}
           AND employee_id = #{employeeId}
+          AND is_deleted = 0
     </select>
 
     <update id="updateEmoticon" parameterType="map">
@@ -49,16 +51,17 @@
 
     <select id="getEmoticonCount" resultType="com.kcc.trioffice.domain.chat_status.dto.response.EmoticonStatus">
 
-        SELECT SUM(CASE WHEN cs.emoticon_type = 1 AND cs.is_emoticon = 1 THEN 1 ELSE 0 END) AS checkEmoticonCount
-               , SUM(CASE WHEN cs.emoticon_type = 2 AND cs.is_emoticon = 1 THEN 1 ELSE 0 END) AS heartEmoticonCount
-               , SUM(CASE WHEN cs.emoticon_type = 3 AND cs.is_emoticon = 1 THEN 1 ELSE 0 END) AS thumbsUpEmoticonCount
-               , SUM(CASE WHEN cs.emoticon_type = 4 AND cs.is_emoticon = 1 THEN 1 ELSE 0 END) AS smileEmoticonCount
-               , SUM(CASE WHEN cs.emoticon_type = 5 AND cs.is_emoticon = 1 THEN 1 ELSE 0 END) AS sadEmoticonCount
-               , MAX(CASE WHEN cs.emoticon_type = 1 AND cs.employee_id = #{employeeId} AND cs.is_emoticon = 1 THEN 1 ELSE 0 END) AS isClickedCheckEmoticon
-               , MAX(CASE WHEN cs.emoticon_type = 2 AND cs.employee_id = #{employeeId} AND cs.is_emoticon = 1 THEN 1 ELSE 0 END) AS isClickedHeartEmoticon
-               , MAX(CASE WHEN cs.emoticon_type = 3 AND cs.employee_id = #{employeeId} AND cs.is_emoticon = 1 THEN 1 ELSE 0 END) AS isClickedThumbsUpEmoticon
-               , MAX(CASE WHEN cs.emoticon_type = 4 AND cs.employee_id = #{employeeId} AND cs.is_emoticon = 1 THEN 1 ELSE 0 END) AS isClickedSmileEmoticon
-               , MAX(CASE WHEN cs.emoticon_type = 5 AND cs.employee_id = #{employeeId} AND cs.is_emoticon = 1 THEN 1 ELSE 0 END) AS isClickedSadEmoticon
+        SELECT
+          SUM(CASE WHEN cs.emoticon_type = 1 AND cs.is_emoticon = 1 THEN 1 ELSE 0 END) AS checkEmoticonCount
+          , SUM(CASE WHEN cs.emoticon_type = 2 AND cs.is_emoticon = 1 THEN 1 ELSE 0 END) AS heartEmoticonCount
+          , SUM(CASE WHEN cs.emoticon_type = 3 AND cs.is_emoticon = 1 THEN 1 ELSE 0 END) AS thumbsUpEmoticonCount
+          , SUM(CASE WHEN cs.emoticon_type = 4 AND cs.is_emoticon = 1 THEN 1 ELSE 0 END) AS smileEmoticonCount
+          , SUM(CASE WHEN cs.emoticon_type = 5 AND cs.is_emoticon = 1 THEN 1 ELSE 0 END) AS sadEmoticonCount
+          , MAX(CASE WHEN cs.emoticon_type = 1 AND cs.employee_id = #{employeeId} AND cs.is_emoticon = 1 THEN 1 ELSE 0 END) AS isClickedCheckEmoticon
+          , MAX(CASE WHEN cs.emoticon_type = 2 AND cs.employee_id = #{employeeId} AND cs.is_emoticon = 1 THEN 1 ELSE 0 END) AS isClickedHeartEmoticon
+          , MAX(CASE WHEN cs.emoticon_type = 3 AND cs.employee_id = #{employeeId} AND cs.is_emoticon = 1 THEN 1 ELSE 0 END) AS isClickedThumbsUpEmoticon
+          , MAX(CASE WHEN cs.emoticon_type = 4 AND cs.employee_id = #{employeeId} AND cs.is_emoticon = 1 THEN 1 ELSE 0 END) AS isClickedSmileEmoticon
+          , MAX(CASE WHEN cs.emoticon_type = 5 AND cs.employee_id = #{employeeId} AND cs.is_emoticon = 1 THEN 1 ELSE 0 END) AS isClickedSadEmoticon
           FROM chat_status cs
           WHERE cs.chat_id = #{chatId}
             AND cs.is_deleted = 0
