@@ -21,6 +21,16 @@ public class ChatRoomController {
 
     private final ChatRoomService chatRoomService;
 
+    /**
+     * 채팅방 목록 조회
+     *
+     * targetId가 있을 경우 해당 채팅방으로 바로 이동
+     *
+     * @param model
+     * @param principalDetail
+     * @param targetId 대화하고자 하는 사원 번호
+     * @return
+     */
     @GetMapping("/chatrooms")
     public String chatRoomList(Model model,
                                @AuthenticationPrincipal PrincipalDetail principalDetail,
@@ -32,17 +42,17 @@ public class ChatRoomController {
         return "chat_room/chat-room-list";
     }
 
-    @GetMapping("/chatrooms/save")
-    public String chatRooms() {
-        return "chat_room/chat-room-save";
-    }
-
+    /**
+     * 채팅방 생성 페이지
+     *
+     * @param chatRoomCreate 채팅방 생성 정보
+     * @param principalDetail 로그인한 사용자 정보
+     * @return 리다이렉트 URL
+     */
     @PostMapping("/chatrooms/save")
     public String saveChatRoom(@ModelAttribute ChatRoomCreate chatRoomCreate,
                                @AuthenticationPrincipal PrincipalDetail principalDetail) {
         chatRoomService.createChatRoom(chatRoomCreate, principalDetail.getEmployeeId());
-
-
 
         return "redirect:/chatrooms";
     }

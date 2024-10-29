@@ -15,6 +15,12 @@ public class NotificationService {
 
     private final NotificationMapper notificationMapper;
 
+    /**
+     * 알림 조회
+     *
+     * @param employeeId 직원 번호
+     * @return 알림 목록
+     */
     public List<NotificationInfo> getNotification(Long employeeId) {
         return notificationMapper.getNotification(employeeId);
     }

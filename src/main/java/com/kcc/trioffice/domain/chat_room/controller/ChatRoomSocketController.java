@@ -17,6 +17,11 @@ public class ChatRoomSocketController {
 
     private final ChatRoomService chatRoomService;
 
+    /**
+     * 채팅 메세지 전송
+     *
+     * @param chatMessage 채팅 메세지 정보
+     */
     @MessageMapping("/chat/send")
     public void sendChatMessage(ChatMessage chatMessage) {
         ChatMessageInfo chatMessageInfo = chatRoomService.saveChatMessage(chatMessage);

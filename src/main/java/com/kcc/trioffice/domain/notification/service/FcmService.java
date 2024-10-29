@@ -47,6 +47,15 @@ public class FcmService {
         }
     }
 
+    /**
+     * 푸시 알림 전송
+     *
+     * 알림을 보냈는지 확인하는 데에 시간이 오래 걸려비동기로 이루어졌습니다.
+     * 추후에 알림 전송이 실패했을 때 exception 잡는 로직이 필요할 것 같습니다.
+     *
+     * @param sendPushDto 푸시 알림 전송할 데이터
+     * @param targetEmployeeId 푸시 알림을 받을 직원 번호
+     */
     @Transactional
     @Async(value = "AsyncBean")
     public void sendPush(SendPushDto sendPushDto, Long targetEmployeeId) {
