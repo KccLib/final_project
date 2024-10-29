@@ -16,6 +16,7 @@ import com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo;
 import com.kcc.trioffice.domain.employee.service.EmployeeService;
 import com.kcc.trioffice.global.enums.ChatType;
 import com.kcc.trioffice.global.exception.type.NotFoundException;
+import com.kcc.trioffice.global.redis.RedisService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
@@ -42,6 +43,7 @@ public class ChatRoomService {
     private final FcmService fcmService;
     private final ApplicationEventPublisher eventPublisher;
     private final ChatStatusService chatStatusService;
+    private final RedisService redisService;
 
 
     /**
@@ -276,9 +278,10 @@ public class ChatRoomService {
     public void sendChatMessageFcm(Long chatRoomId, String chatRoomName, String chatProfileImageUrl, String message) {
         List<EmployeeInfo> employeeInfos = participationEmployeeMapper.getFcmTokenByChatRoomId(chatRoomId);
         employeeInfos.forEach(e -> {
-            fcmService.sendPush(SendPushDto.of(chatRoomName, message, chatProfileImageUrl), e.getEmployeeId());
+            log.info("fcm token : {}", e.getFcmToken());
+            redisService.collectMessage(e.getEmployeeId().toString(), SendPushDto.of(chatRoomName, message, chatProfileImageUrl));
+//            fcmService.sendPush(SendPushDto.of(chatRoomName, message, chatProfileImageUrl), e.getEmployeeId());
         });
-
     }
 
     /**

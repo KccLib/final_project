@@ -301,10 +301,8 @@
         </div>
         <div class="chat-area" style="display: none;">
             <div class="chat">
-            <div class="loading-indicator" style="display: none;">
-                 <!-- 로딩 스피너 또는 텍스트 -->
-                <p>Loading...</p>
-            </div>
+                <div class="chat-container">
+                </div>
             </div>
             <div class="chat-send-box">
                 <div class="container-fluid">

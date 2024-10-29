@@ -55,18 +55,15 @@ public class FcmService {
 
         // 메시지 객체 생성
         try {
-            Notification notification = Notification.builder()
-                    .setTitle(sendPushDto.getTitle())
-                    .setBody(sendPushDto.getContent())
-                    .setImage(sendPushDto.getImage())
-                    .build();
             Message message = Message.builder()
-                    .setNotification(notification)
+                    .putData("title", sendPushDto.getTitle())
+                    .putData("body", sendPushDto.getContent())
+                    .putData("profileUrl", sendPushDto.getImage())
                     .setToken(employeeInfo.getFcmToken())
                     .build();
 
-            String send = FirebaseMessaging.getInstance().send(message);
-            log.info(send);
+            String response = FirebaseMessaging.getInstance().send(message);
+            log.info("Successfully sent message: " + response);
         } catch (FirebaseMessagingException e) {
             throw new ServerException("푸시 알림 전송에 실패하였습니다.");
         }
