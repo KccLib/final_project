@@ -237,7 +237,7 @@ public class ChatRoomService {
         String chatRoomName = handleChatRoomName(chatMessage.getRoomId(), chatMessage.getSenderId());
         String chatProfileImageUrl = senderEmpInfo.getProfileUrl();
 
-        sendChatMessageFcm(chatMessage.getRoomId(), chatRoomName, chatProfileImageUrl, chatMessage.getMessage());
+        sendChatMessageFcm(chatMessage.getRoomId(), senderEmpInfo.getName(), chatProfileImageUrl, chatMessage.getMessage());
 
         EmployeeInfo employeeInfo = employeeService.getEmployeeInfo(chatMessage.getSenderId());
 
