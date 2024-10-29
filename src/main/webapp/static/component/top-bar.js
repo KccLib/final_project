@@ -53,3 +53,24 @@ document
         localStorage.removeItem('Fcmtoken');
 
     });
+
+
+const searchBar = document.getElementById("search-bar");
+const searchContainer = document.getElementById("search-bar-container");
+let searchBarCount = 0;
+
+searchBar.addEventListener("click", function () {
+    if(searchBarCount % 2 === 0) {
+        searchContainer.classList.remove("hidden");
+    } else {
+        searchContainer.classList.add("hidden");
+    }
+    console.log(searchBarCount);
+        searchBarCount++;
+});
+
+window.addEventListener("click", function (event) {
+    if (event.target === searchContainer) {
+        searchContainer.classList.add("hidden");
+    }
+});

@@ -25,7 +25,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
       </div>
       <!-- 검색창 -->
       <div class="search">
-        <input type="text" placeholder="사원 및 채팅방 검색" />
+        <input type="text" id="search-bar" placeholder="사원 및 채팅방 검색" />
         <img
           src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png"
         />
@@ -117,6 +117,33 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
           </div>
         </div>
       </div>
+    </div>
+
+    <div id="search-bar-container" class="hidden">
+      <div id="search-bar-contents" >
+        <div id="search-people-title">사원</div>
+        <div id="search-people-contents">
+          <div class="search-peoples">
+            <div class="search-profile-img">
+              1231
+            </div>
+            <p class="search-profile-name">홍길동</p>
+            <p class="search-profile-dept">금융1팀</p>
+          </div>
+          <div class="search-peoples">people1</div>
+          <div class="search-peoples">people1</div>
+          <div class="search-peoples">people1</div>
+          <div class="search-peoples">people1</div>
+          </div>
+        <div id="search-group-title">그룹 채팅</div>
+        <div class="search-group-contents">
+          <div class="search-chat-profile-img">
+          </div>
+          <p class="search-chatroom-name">그룹채팅방</p>
+        <div class="search-group-contents">123123</div>
+        <div class  ="search-group-contents">123123</div>
+      </div>
+
     </div>
   </body>
 

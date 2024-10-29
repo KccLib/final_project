@@ -16,7 +16,7 @@
 .search {
   position: relative;
   margin-top: 3px;
-  width: 20rem;
+  width: 30rem;
 }
 
 .search > input {
@@ -413,4 +413,94 @@
 
 #status-reset-icon {
   margin-top: 2px;
+}
+
+#search-bar-container.hidden{
+  display: none;
+}
+
+#search-bar-container {
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  z-index: 20000;
+  display: flex;
+  justify-content: center;
+}
+
+#search-bar-contents {
+  height: 320px;
+  width: 30rem;
+  background-color: white;
+  border: 1px solid gainsboro;
+  border-radius: 3px;
+  z-index: 20001;
+  margin-left: 70px;
+  box-shadow: 0px 1px 3px 0 darkgray;
+  padding: 3px;
+
+}
+
+#search-bar-contents * {
+  color: #676767;
+}
+#search-people-title{
+  margin-top: 15px;
+  }
+
+#search-people-contents {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  margin-top: 5px;
+  justify-content: space-between;
+}
+
+#search-group-title,
+#search-people-contents,
+#search-people-title,
+.search-group-contents{
+  padding-left: 7px;
+  padding-right: 8px;
+}
+
+#search-group-title{
+  margin-top: 3px;
+}
+
+.search-peoples {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  border: 1.5px solid #5a5a5a;
+  width: 90px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.search-peoples > p {
+  margin-top: 2px;
+}
+
+.search-profile-img{
+  width: 50px;
+  height: 50px;
+  padding-left: 2px;
+  padding-right: 2px;
+  border-radius: 100%;
+  border: 1px solid #0b93ff;
+
+}
+
+
+.search-group-contents{
+  padding-top: 3px;
+  padding-bottom: 3px;
+  height: 50px;
+  border: 1px solid #ccc;
+  margin-top: 3px;
+  /* justify-content: center; */
+  display: flex;
+  align-items: center;
 }
