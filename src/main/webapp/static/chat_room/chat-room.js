@@ -215,6 +215,7 @@ $(document).ready(function() {
         $('.chat-room-item').removeClass('active');
         $(this).addClass('active');
 
+
         $('.chat-area').show();
         $('.file-area').hide();
         $('.image-area').hide();
@@ -228,6 +229,8 @@ $(document).ready(function() {
 
         // 채팅방 아이템 클릭 시 클릭한 .chat-room-item의 unreadMessageCount 초기화
         $(this).find('.unread-count-box').remove();
+        initFileTagify()
+        initializeDropzone();
 
     });
 
@@ -1048,6 +1051,7 @@ $(document).ready(function() {
     // 모달 닫기 버튼 클릭 시 닫기
     $('.send-cancel-button').on('click', function () {
         $('#send-file-modal').hide();
+        initializeDropzone();
         sendFileModalVisible = false;
     });
 
@@ -1341,91 +1345,9 @@ $(document).ready(function() {
         sendFileModalVisible = true;
 
 
-        if (tagify2) {
-            tagify2.destroy();
-            // 태그 input 초기화
-            document.querySelector('input[name=tag]').value = '';
-        }
 
 
-        let inputElm = document.querySelector('input[name=tag]');
-
-        // 화이트 리스트 : 해당 문자만 태그로 추가 가능
-        let whitelist = ["서류","계획서","제안서","발표자료","ppt"];
-
-        // initialize Tagify
-        tagify2 = new Tagify(inputElm, {
-            enforceWhitelist: false, // 화이트리스트에서 허용된 태그만 사용
-            whitelist: whitelist // 화이트 리스트 배열. 화이트 리스트를 등록하면 자동으로 드롭다운 메뉴가 생긴다
-        })
-
-        // tagify 전용 이벤트 리스터. 참조 : https://github.com/yairEO/tagify#events
-        tagify2.on('add', onAddTag) // 태그가 추가되면
-            .on('remove', onRemoveTag) // 태그가 제거되면
-            .on('input', onInput) // 태그가 입력되고 있을 경우
-            .on('invalid', onInvalidTag) // 허용되지 않는 태그일 경우
-            .on('click', onTagClick) // 해시 태그 블럭을 클릭할 경우
-            .on('focus', onTagifyFocusBlur) // 포커스 될 경우
-            .on('blur', onTagifyFocusBlur) // 반대로 포커스를 잃을 경우
-
-            .on('edit:start', onTagEdit) // 입력된 태그 수정을 할 경우
-
-            .on('dropdown:hide dropdown:show', e => console.log(e.type)) // 드롭다운 메뉴가 사라질경우
-            .on('dropdown:select', onDropdownSelect) // 드롭다운 메뉴에서 아이템을 선택할 경우
-
-
-        // tagify 전용 이벤트 리스너 제거 할떄
-        tagify2.off('add', onAddTag);
-
-
-        // 이벤트 리스너 콜백 메소드
-        function onAddTag(e){
-            console.log("onAddTag: ", e.detail);
-            console.log("original input value: ", inputElm.value)
-        }
-
-        // tag remvoed callback
-        function onRemoveTag(e){
-            console.log("onRemoveTag:", e.detail, "tagify instance value:", tagify.value)
-        }
-
-        function onTagEdit(e){
-            console.log("onTagEdit: ", e.detail);
-        }
-
-        // invalid tag added callback
-        function onInvalidTag(e){
-            console.log("onInvalidTag: ", e.detail);
-        }
-
-        // invalid tag added callback
-        function onTagClick(e){
-            console.log(e.detail);
-            console.log("onTagClick: ", e.detail);
-        }
-
-        function onTagifyFocusBlur(e){
-            console.log(e.type, "event fired")
-        }
-
-        function onDropdownSelect(e){
-            console.log("onDropdownSelect: ", e.detail)
-        }
-
-        function onInput(e){
-            console.log("onInput: ", e.detail);
-
-            tagify2.loading(true) // 태그 입력하는데 우측에 loader 애니메이션 추가
-            tagify2.loading(false) // loader 애니메이션 제거
-
-            tagify2.dropdown.show(e.detail.value); // 드롭다운 메뉴 보여주기
-            tagify2.dropdown.hide(); // // 드롭다운 제거
-        }
-
-        // Ensure the modal content is loaded before initializing
-        setTimeout(function() {
-            initializeDropzone();
-        }, 0); // Using setTimeout to defer execution
+        initFileTagify();
     });
 
     function initializeDropzone() {
@@ -1443,7 +1365,7 @@ $(document).ready(function() {
         Dropzone.autoDiscover = false;
 
         // Initialize Dropzone
-        let myDropzone = new Dropzone(dropzoneElement, {
+        myDropzone = new Dropzone(dropzoneElement, {
             url: "/api/chatrooms/" + currentChatRoomId + "/attached-file/send",
             method: 'post',
             autoProcessQueue: false,
@@ -1936,6 +1858,139 @@ $(document).ready(function() {
 
     function hideLoadingIndicator() {
         $('.loading-indicator').hide();
+    }
+
+    $('.chat-input').on('paste', function (event) {
+        var items = (event.originalEvent.clipboardData || event.clipboardData).items;
+        var blob = null;
+
+        for (var i = 0; i < items.length; i++) {
+            if (items[i].type.indexOf("image") !== -1) {
+                blob = items[i].getAsFile();
+                break;
+            }
+        }
+
+        if (blob !== null) {
+            event.preventDefault(); // 기본 붙여넣기 동작 방지
+            handleImagePaste(blob);
+        }
+    });
+
+    function handleImagePaste(blob) {
+        // 파일 이름 설정 (예: clipboard_image.png)
+        blob.name = "clipboard_image.png";
+
+        // Dropzone에 파일 추가
+        console.log(myDropzone);
+        myDropzone.addFile(blob);
+
+        // 파일 전송 모달을 표시하여 사용자가 확인할 수 있도록 합니다.
+        if (!sendFileModalVisible) {
+            var modal = document.getElementById("send-file-modal");
+            var fileIcon = document.querySelector(".fa-file");
+
+            var rect = fileIcon.getBoundingClientRect();
+            var modalWidth = modal.offsetWidth;
+            var modalHeight = modal.offsetHeight;
+
+            var leftPosition = window.scrollX + rect.left - modalWidth - 400;
+            var topPosition = window.scrollY + rect.top - modalHeight - 360; // 모달 높이와 추가적인 간격을 빼서 위로 이동
+
+            modal.style.top = topPosition + "px";
+            modal.style.left = leftPosition + "px";
+            modal.style.display = "block";
+            $('#send-file-modal').show();
+            sendFileModalVisible = true;
+        }
+    }
+
+    function initFileTagify() {
+        if (tagify2) {
+            tagify2.destroy();
+            // 태그 input 초기화
+            document.querySelector('input[name=tag]').value = '';
+        }
+
+
+        let inputElm = document.querySelector('input[name=tag]');
+
+        // 화이트 리스트 : 해당 문자만 태그로 추가 가능
+        let whitelist = ["서류", "계획서", "제안서", "발표자료", "ppt"];
+
+        // initialize Tagify
+        tagify2 = new Tagify(inputElm, {
+            enforceWhitelist: false, // 화이트리스트에서 허용된 태그만 사용
+            whitelist: whitelist // 화이트 리스트 배열. 화이트 리스트를 등록하면 자동으로 드롭다운 메뉴가 생긴다
+        })
+
+        // tagify 전용 이벤트 리스터. 참조 : https://github.com/yairEO/tagify#events
+        tagify2.on('add', onAddTag) // 태그가 추가되면
+            .on('remove', onRemoveTag) // 태그가 제거되면
+            .on('input', onInput) // 태그가 입력되고 있을 경우
+            .on('invalid', onInvalidTag) // 허용되지 않는 태그일 경우
+            .on('click', onTagClick) // 해시 태그 블럭을 클릭할 경우
+            .on('focus', onTagifyFocusBlur) // 포커스 될 경우
+            .on('blur', onTagifyFocusBlur) // 반대로 포커스를 잃을 경우
+
+            .on('edit:start', onTagEdit) // 입력된 태그 수정을 할 경우
+
+            .on('dropdown:hide dropdown:show', e => console.log(e.type)) // 드롭다운 메뉴가 사라질경우
+            .on('dropdown:select', onDropdownSelect) // 드롭다운 메뉴에서 아이템을 선택할 경우
+
+
+        // tagify 전용 이벤트 리스너 제거 할떄
+        tagify2.off('add', onAddTag);
+
+
+        // 이벤트 리스너 콜백 메소드
+        function onAddTag(e) {
+            console.log("onAddTag: ", e.detail);
+            console.log("original input value: ", inputElm.value)
+        }
+
+        // tag remvoed callback
+        function onRemoveTag(e) {
+            console.log("onRemoveTag:", e.detail, "tagify instance value:", tagify.value)
+        }
+
+        function onTagEdit(e) {
+            console.log("onTagEdit: ", e.detail);
+        }
+
+        // invalid tag added callback
+        function onInvalidTag(e) {
+            console.log("onInvalidTag: ", e.detail);
+        }
+
+        // invalid tag added callback
+        function onTagClick(e) {
+            console.log(e.detail);
+            console.log("onTagClick: ", e.detail);
+        }
+
+        function onTagifyFocusBlur(e) {
+            console.log(e.type, "event fired")
+        }
+
+        function onDropdownSelect(e) {
+            console.log("onDropdownSelect: ", e.detail)
+        }
+
+        function onInput(e) {
+            console.log("onInput: ", e.detail);
+
+            tagify2.loading(true) // 태그 입력하는데 우측에 loader 애니메이션 추가
+            tagify2.loading(false) // loader 애니메이션 제거
+
+            tagify2.dropdown.show(e.detail.value); // 드롭다운 메뉴 보여주기
+            tagify2.dropdown.hide(); // // 드롭다운 제거
+        }
+
+        // Ensure the modal content is loaded before initializing
+        setTimeout(function () {
+            initializeDropzone();
+        }, 0); // Using setTimeout to defer execution
     }
 
 });
