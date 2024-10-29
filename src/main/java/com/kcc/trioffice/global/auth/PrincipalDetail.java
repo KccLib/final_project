@@ -1,5 +1,6 @@
 package com.kcc.trioffice.global.auth;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -13,11 +14,19 @@ import lombok.Data;
 @Data
 public class PrincipalDetail implements UserDetails {
   private EmployeeInfo employeeInfo;
+  private List<GrantedAuthority> authorities;
 
   public PrincipalDetail(EmployeeInfo employeeInfo) {
     this.employeeInfo = employeeInfo;
   }
 
+
+  public PrincipalDetail() {
+    // 권한이 비어있는지 확인 후 초기화
+    if (this.authorities == null) {
+      this.authorities = new ArrayList<>();
+    }
+  }
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
     return List.of();

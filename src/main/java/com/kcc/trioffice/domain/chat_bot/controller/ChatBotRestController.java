@@ -33,7 +33,6 @@ public class ChatBotRestController {
     Flux<String> responseMessage = chatBotService.streamChatBotResponse(clientMessage, principalDetail);
     //공백 정상 출력
 //            .doOnNext(ch -> System.out.println("보내는 메세지 : " + ch + "공백 체크")
-
     return responseMessage;
   }
 }

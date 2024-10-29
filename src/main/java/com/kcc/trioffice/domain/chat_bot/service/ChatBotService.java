@@ -1,13 +1,19 @@
 package com.kcc.trioffice.domain.chat_bot.service;
 
+import com.kcc.trioffice.domain.chat_bot.domain.Document;
 
 import com.kcc.trioffice.domain.chat_room.dto.request.ChatMessage;
 import com.kcc.trioffice.domain.chat_room.dto.request.ChatRoomCreate;
 import com.kcc.trioffice.global.auth.PrincipalDetail;
+import com.kcc.trioffice.global.chat_bot.ChatBotConfig;
 import com.kcc.trioffice.global.enums.ChatType;
 import com.kcc.trioffice.global.exception.type.BadRequestException;
-import org.springframework.ai.chat.client.ChatClient;
 
+
+import org.springframework.ai.openai.OpenAiChatModel;
+import org.springframework.ai.vectorstore.SearchRequest;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.kcc.trioffice.domain.chat_bot.mapper.ChatBotMapper;
@@ -15,9 +21,14 @@ import com.kcc.trioffice.global.exception.type.NotFoundException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
 import reactor.core.publisher.Flux;
 import java.time.Duration;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Service
 @Slf4j
@@ -25,19 +36,42 @@ import java.time.Duration;
 public class ChatBotService {
 
   private final ChatBotMapper chatBotMapper;
-  private final ChatClient chatClient;
+  private final OpenAiChatModel chatModel;
+  private final ChatMessage chatMessage = new ChatMessage();
+  private final ChatBotConfig  chatBotConfig;
+  private final VectorStoreService vectorStoreService;
 
-  @Transactional
+  @Autowired
+  private TransactionTemplate transactionTemplate;
+
   public Flux<String> streamChatBotResponse(String message, PrincipalDetail principalDetail) throws BadRequestException {
       System.out.println("서버로 보낸 메세지  " + message);
 
       String responseMessage = "";
       // ai 데이터 생성
       try {
-        responseMessage = chatClient.prompt()
-            .user(message)
-            .call()
-            .content();
+          //employee 정보를 redis에 전송
+          vectorStoreService.addEmployeeInfo(principalDetail.getEmployeeInfo());
+
+          // 유사한 벡터를 찾기 위해 벡터 스토어에 쿼리 전송
+          List<String> similarDocuments = vectorStoreService.similaritySearch(SearchRequest.query(message));
+
+          // 유사한 문서 내용을 결합
+          StringBuilder combinedMessage = new StringBuilder(message);
+          for (int i=0; i<similarDocuments.size(); i++)  {
+              combinedMessage.append("\n").append(similarDocuments.get(i)); // 유사한 내용 추가
+          }
+
+          System.out.println("결합한 질문 내용 : " + combinedMessage.toString());
+          responseMessage = chatBotConfig.generatePirateNames(chatModel, combinedMessage.toString());
+
+          //답변 내용 vector store에 저장하기
+          Map<String, String> vectorInsert = new HashMap<>();
+          String employeeId =  ""+principalDetail.getEmployeeId();
+          vectorInsert.put("message"+employeeId, responseMessage);
+
+          vectorStoreService.add(vectorInsert);
+
       } catch (Exception e) {
         log.info("ai로부터 응답 response 불가" + e);
         throw new NotFoundException("GPT의 응답을 생성할 수 없습니다." + e);
@@ -53,35 +87,44 @@ public class ChatBotService {
 
       System.out.println("반환된 메세지는 : " +responseMessage);
       ChatRoomCreate chatRoomCreate = new ChatRoomCreate(null, null, null);
-      ChatMessage chatMessage = new ChatMessage(
-              chatRoomCreate.getChatRoomId(), principalDetail.getEmployeeId(),  responseMessage, ChatType.CHAT_BOT.getValue(), 0L);
-
       chatRoomCreate.setChatRoomName("chat-bot");
-      chatRoomCreate.setChatRoomId(principalDetail.getEmployeeId());
+      chatRoomCreate.setWriter(principalDetail.getEmployeeId());
 
-      try{
-          chatBotMapper.saveChatRoom(chatRoomCreate);
-          chatBotMapper.saveParticipationEmployee(chatRoomCreate.getChatRoomId(), principalDetail.getEmployeeId());
-          chatBotMapper.saveChatMessage(chatMessage);
-      } catch (Exception e ) {
-          log.error("chatRoomCreate 관련 insert 중 에러발생 : "+ e);
-      }
+      chatMessage.setMessage(responseMessage);
+      chatMessage.setChatId(0L);
+      chatMessage.setChatType(ChatType.CHAT_BOT.getValue());
+      chatMessage.setSenderId(principalDetail.getEmployeeId());
 
-      try {
-          chatBotMapper.saveParticipationEmployee(chatRoomCreate.getChatRoomId(), principalDetail.getEmployeeId());
+// 트랜잭션 처리
+      transactionTemplate.executeWithoutResult(status -> {
+          try {
+              int chatBotRoomCount = chatBotMapper.checkChatBotRoom(ChatType.CHAT_BOT.getValue(), principalDetail.getEmployeeId());
 
-      }catch (Exception e) {
-          log.error("saveParticipationEmployee 관련 insert 중 에러발생 : "+ e);
+              //기존 ChatBotRoom이 없으면 만들어주고 
+              if(chatBotRoomCount == 0) {
+                  chatBotMapper.saveChatRoom(chatRoomCreate);
+                  chatMessage.setRoomId(chatRoomCreate.getChatRoomId());
+                  chatBotMapper.saveParticipationEmployee(chatRoomCreate.getChatRoomId(), principalDetail.getEmployeeId());
 
-      }
+              } else { //있으면 chatBotRoom의 값만 가져와서 setting
+                  Long chatBotRoomNumber = chatBotMapper.employeeRoomNumber(ChatType.CHAT_BOT.getValue(), principalDetail.getEmployeeId());
+                  chatMessage.setRoomId(chatBotRoomNumber);
+              }
+              
+              //채팅저장
+              chatBotMapper.saveChatMessage(chatMessage);
 
-      try {
-          chatBotMapper.saveChatMessage(chatMessage);
-      } catch (Exception e) {
-          log.error("saveParticipationEmployee 관련 insert 중 에러발생 : "+ e);
 
-      }
+          } catch (Exception e) {
+              log.error("데이터 삽입 중 에러 발생 : " , e);
+              status.setRollbackOnly();  // 트랜잭션 롤백
+              throw e;
+          }
+      });
+
+
+
+
       return  responseFlux;
     }
-
 }

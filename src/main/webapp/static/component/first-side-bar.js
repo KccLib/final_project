@@ -40,6 +40,20 @@ chatBotCloseButton.addEventListener("click", function () {
 
 chatBotListRemoveButton.addEventListener("click", function () {
   chatBotList.innerHTML = ""; // 내용 지우기
+  const eventSource = new EventSource(
+      `/api/chat-bot?clientMessage="지금까지 질문내용 초기화 해줘"`
+  );
+
+  eventSource.onmessage = function (event) {
+
+    // addServerMessage(event.data, serverMessageElement);
+
+  };
+
+  eventSource.onerror = function (event) {
+    console.error("Error occurred", event);
+    eventSource.close();
+  };
 });
 
 //client 채팅 submit 3개 하기
@@ -140,3 +154,36 @@ function addServerMessage(message, serverMessageElement) {
 
   chatBotList.scrollTop = chatBotList.scrollHeight;
 }
+
+//가이드 답변
+
+$(".chat-bot-guides").on("click", function() {
+  const chatBotInput = document.getElementById("chat-bot-input");
+  const selectedText = $(this).text().trim(); // 클릭된 요소의 텍스트 추출 및 공백 제거
+
+  console.log( "선택된 요소 " + selectedText);
+
+  // "✅맞춤법 검사를 부탁해요"일 경우 chatBotInput의 내용을 추가
+  const clientMessage = selectedText === "✅맞춤법 검사를 부탁해요"
+      ? `${selectedText} ${chatBotInput.value}`
+      : selectedText;
+  displayClientChatBotMessage(clientMessage);
+
+  const serverMessageElement = addServerMessageBox(); // 서버 메시지 박스 생성 및 반환값 저장
+
+
+  const eventSource = new EventSource(
+      `/api/chat-bot?clientMessage=${encodeURIComponent(clientMessage)}`
+  );
+
+  eventSource.onmessage = function (event) {
+
+    addServerMessage(event.data, serverMessageElement);
+
+  };
+
+  eventSource.onerror = function (event) {
+    console.error("Error occurred", event);
+    eventSource.close();
+  };
+});

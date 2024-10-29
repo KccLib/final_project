@@ -12,4 +12,8 @@ public interface ChatBotMapper {
     int saveParticipationEmployee(Long chatRoomId, Long employeeId);
 
     int saveChatMessage(ChatMessage chatMessage);
+
+    int checkChatBotRoom(Long type, Long employeeId);
+
+    Long employeeRoomNumber(Long type, Long employeeId);
 }
