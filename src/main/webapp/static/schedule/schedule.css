@@ -21,6 +21,13 @@
   font-weight: bold;
 }
 
+#add-schedule-name {
+  display: flex;
+  align-items: center;
+  margin-top: 6px;
+  margin-right: 4px;
+}
+
 #add-schedule-button {
   width: 150px;
   height: 40px;
@@ -207,8 +214,9 @@
 }
 
 .add-sche-text {
-  margin-left: 56px;
+  margin-left: 55px;
   margin-top: 20px;
+  display: flex;
 }
 
 .add-sche-date {
@@ -217,7 +225,7 @@
 }
 
 #schedule-name {
-  width: 29rem;
+  width: 26.6rem;
   height: 2rem;
   margin-top: 3px;
   padding: 0.5rem;
