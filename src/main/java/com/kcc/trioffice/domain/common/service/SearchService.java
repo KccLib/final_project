@@ -43,7 +43,7 @@ public class SearchService {
         StringBuilder participationEmployees = new StringBuilder();
 
         chatRoomList.forEach(chatRoomId -> {
-            List<Long> employeeIds = searchMapper.participationEmployeefindByChatRoomId(chatRoomId);
+            List<Long> employeeIds = searchMapper.participationEmployeeFindByChatRoomId(chatRoomId);
 
             List<String> names = new ArrayList<>();
 
@@ -79,8 +79,43 @@ public class SearchService {
     }
 
     public List<SearchChatRoom> getChangeSearchChatRoom(Long employeeId, String keyword) {
-
         List<SearchChatRoom> searchChatRoomList = new ArrayList<>();
+
+        List<Long> chatRoomList =  searchMapper.getChangeMyChatRooms(employeeId);
+        StringBuilder participationEmployees = new StringBuilder();
+
+        chatRoomList.forEach(chatRoomId -> {
+            List<Long> employeeIds = searchMapper.participationEmployeeFindByChatRoomId(chatRoomId);
+
+            List<String> names = new ArrayList<>();
+
+            employeeIds.forEach(id -> {
+                EmployeeInfo employeeInfo = employeeMapper.getEmployeeInfo(id).orElseThrow( () -> new NotFoundException("회원의 아이디를 가져올 수 없습니다."));
+                names.add(employeeInfo.getName());
+            });
+
+            // 이름 목록을 문자열로 변환하여 participationEmployees에 추가
+            if (names != null && !names.isEmpty()) {
+                names.forEach(name -> {
+                    participationEmployees.append(name).append(", "); // 각 이름 뒤에 쉼표 추가
+                });
+            }
+
+            if (participationEmployees.length() > 0) {
+                participationEmployees.setLength(participationEmployees.length() - 2); // 마지막 쉼표 및 공백 제거
+            }
+
+            if(participationEmployees.toString().contains(keyword)) {
+                participationEmployees.append("님과의 채팅");
+                searchChatRoomList.add(new SearchChatRoom(participationEmployees.toString(), DEFAULT_GROUP_IMAGE));
+                participationEmployees.delete(0, participationEmployees.length());
+
+            }else {
+                participationEmployees.delete(0, participationEmployees.length());
+
+            }
+        });
+
 
         return searchChatRoomList;
     }

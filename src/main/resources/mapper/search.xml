@@ -48,7 +48,7 @@
         WHERE ROWNUM <![CDATA[<=]]> 3
     </select>
 
-    <select id="participationEmployeefindByChatRoomId" parameterType="long"
+    <select id="participationEmployeeFindByChatRoomId" parameterType="long"
             resultType="long">
         SELECT employee_id
         FROM participation_employee
@@ -76,5 +76,27 @@
             e.name
     </select>
 
+
+    <select id="getChangeMyChatRooms" parameterType="Long"
+            resultType="Long">
+        SELECT *
+        FROM (
+                 SELECT chat_room_id
+                 FROM (
+                          SELECT chat_room_id
+                               , COUNT(employee_id) AS countMember
+                          FROM participation_employee
+                          WHERE is_deleted = 0
+                            AND chat_room_id IN (
+                              SELECT chat_room_id
+                              FROM participation_employee
+                              WHERE employee_id = #{employeeId} AND is_deleted = 0
+                          )
+                          GROUP BY chat_room_id
+                          HAVING COUNT(employee_id) >= 2
+                      )
+                 ORDER BY chat_room_id DESC
+             )
+    </select>
 
 </mapper>

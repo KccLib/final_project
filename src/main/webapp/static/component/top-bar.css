@@ -454,7 +454,6 @@
   height: 100px;
   display: flex;
   margin-top: 5px;
-  justify-content: space-between;
 }
 
 #search-group-title,
@@ -496,6 +495,7 @@
 #search-group-chat-rooms{
   height: 150px;
   width: 100%;
+  overflow-y: auto;
 }
 
 

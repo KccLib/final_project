@@ -21,6 +21,7 @@ window.addEventListener("click", function (event) {
     modal.classList.add("hidden");
     statusModel.classList.add("hidden");
   }
+    searchBar.value = "";
 });
 
 // 사용자 상태 변경 js
@@ -111,6 +112,8 @@ searchBar.addEventListener("click", function () {
 
     } else {
         searchContainer.classList.add("hidden");
+        searchBar.value = "";
+
     }
     // console.log(searchBarCount);
         searchBarCount++;
@@ -152,18 +155,18 @@ searchBar.addEventListener("input", function (event) {
                     "</div>";
             });
 
-            // searchContentsChatRooms.innerHTML = "";
-            //
-            // responseSearch.searchChatRoomList.forEach(function (chatroom) {
-            //     // 새로운 HTML 요소 생성
-            //     searchContentsChatRooms.innerHTML +=
-            //         "<div class='search-group-contents'>" +
-            //         "<div class='search-chat-profile-img'>" +
-            //         "<img src='" + chatroom.imageURL + "' alt='그룹 채팅방 이미지' />" +
-            //         "</div>" +
-            //         "<p class='search-chatroom-name'>" + chatroom.name + "</p>" +
-            //         "</div>";
-            // });
+            searchContentsChatRooms.innerHTML = "";
+
+            responseSearch.searchChatRoomList.forEach(function (chatroom) {
+                // 새로운 HTML 요소 생성
+                searchContentsChatRooms.innerHTML +=
+                    "<div class='search-group-contents'>" +
+                    "<div class='search-chat-profile-img'>" +
+                    "<img src='" + chatroom.imageURL + "' alt='그룹 채팅방 이미지' />" +
+                    "</div>" +
+                    "<p class='search-chatroom-name'>" + chatroom.name + "</p>" +
+                    "</div>";
+            });
 
         },
         error: function (result) {}
