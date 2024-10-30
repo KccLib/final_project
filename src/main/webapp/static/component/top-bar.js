@@ -130,6 +130,8 @@ window.addEventListener("click", function (event) {
 
 searchBar.addEventListener("input", function (event) {
     let searchBarValue = event.target.value;
+    searchContainer.classList.remove("hidden");
+
     console.log("변경된 값이 있습니다");
 
     $.ajax({
