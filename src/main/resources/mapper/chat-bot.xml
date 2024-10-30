@@ -53,6 +53,7 @@
         FROM chat
         WHERE chat_type = #{type}
           AND writer = #{employeeId}
+          AND is_deleted = 0
     </select>
 
     <select id="employeeRoomNumber" parameterType="map" resultType="Long">
@@ -61,6 +62,7 @@
         WHERE chat_type = #{type}
           AND writer = #{employeeId}
           AND ROWNUM = 1
+          AND is_deleted = 0
         ORDER BY write_dt DESC
     </select>
 

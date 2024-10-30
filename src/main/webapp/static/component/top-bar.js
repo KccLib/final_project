@@ -92,6 +92,16 @@ searchBar.addEventListener("click", function () {
 
                 searchContentsChatRooms.innerHTML = "";
 
+                responseSearch.searchChatRoomList.forEach(function (chatroom) {
+                    // 새로운 HTML 요소 생성
+                    searchContentsChatRooms.innerHTML +=
+                        "<div class='search-group-contents'>" +
+                        "<div class='search-chat-profile-img'>" +
+                        "<img src='" + chatroom.imageURL + "' alt='그룹 채팅방 이미지' />" +
+                        "</div>" +
+                        "<p class='search-chatroom-name'>" + chatroom.name + "</p>" +
+                        "</div>";
+                });
 
             },
             error: function (result) {}

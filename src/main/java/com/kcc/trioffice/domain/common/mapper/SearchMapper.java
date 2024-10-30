@@ -12,5 +12,8 @@ import java.util.Optional;
 public interface SearchMapper {
 
     List<SearchEmployee> getAllEmployeesInfo(Long employeeId);
-    List<SearchChatRoom> getMyChatRooms(Long employeeId);
+
+    List<Long> getMyChatRooms(Long employeeId);
+
+    List<Long> participationEmployeefindByChatRoomId(Long chatRoomId);
 }

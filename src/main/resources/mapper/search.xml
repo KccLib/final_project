@@ -26,7 +26,7 @@
 
 
     <select id="getMyChatRooms" parameterType="Long"
-            resultType="com.kcc.trioffice.domain.common.domain.SearchChatRoom">
+            resultType="Long">
         SELECT *
         FROM (
             SELECT chat_room_id
@@ -45,7 +45,15 @@
                 )
                 ORDER BY chat_room_id DESC
             )
-        WHERE ROWNUM <![CDATA[<=]]> 5
+        WHERE ROWNUM <![CDATA[<=]]> 3
+    </select>
+
+    <select id="participationEmployeefindByChatRoomId" parameterType="long"
+            resultType="long">
+        SELECT employee_id
+        FROM participation_employee
+        WHERE is_deleted = 0
+          AND chat_room_id = #{chatRoomId}
     </select>
 
 
