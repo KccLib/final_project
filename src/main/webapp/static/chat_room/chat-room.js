@@ -731,6 +731,10 @@ $(document).ready(function() {
             } else if (receivedMessage.chatType === "ENTER") {
                 // 채팅방 참여자 처리
                 $('.emp-count').text(parseInt($('.emp-count').text()) + 1);
+
+                // 채팅방 이미지 변경
+                $('.chat-room-profile-image').attr('src', "https://us.123rf.com/450wm/siamimages/siamimages1703/siamimages170303374/74232239-%EA%B7%B8%EB%A3%B9-%EC%82%AC%EB%9E%8C-%EC%95%84%EC%9D%B4%EC%BD%98.jpg");
+
                 addEnterMessage(receivedMessage);
             } else if (receivedMessage.chatType === "QUIT") {
                 // 채팅방 나간 참여자 처리
@@ -811,7 +815,7 @@ $(document).ready(function() {
                 </div>
             </div>`;
 
-        $('.chat').prepend(chatRow);
+        $('.chat').append(chatRow);
     }
 
     function updateEmoticon(emoticonMessage) {
@@ -1579,7 +1583,7 @@ $(document).ready(function() {
 
         // 파일 다운로드 요청
         $.ajax({
-            url: `/api/chatrooms/${chatRoomId}/chats/${messageId}/attached-file/download`,
+            url: `/api/chatrooms/chats/${messageId}/attached-file/download`,
             method: 'GET',
             xhrFields: {
                 responseType: 'blob' // 바이너리 데이터 수신을 위해 필요합니다.

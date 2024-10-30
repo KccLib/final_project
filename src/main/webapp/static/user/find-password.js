@@ -89,7 +89,7 @@ $("#find-password-button").click(function (event) {
       },
       error: function () {
         $("#checkedId").html(
-          '<p class="text-danger">일치하는 회원정보가 없습니다.</p>'
+          '<p class="text-danger" style="margin-top: 3px">일치하는 회원정보가 없습니다.</p>'
         );
       },
     });
@@ -104,14 +104,13 @@ $("#find-password-email-button").click(function (event) {
 
   if (externalEmailVal === null || externalEmailVal === "") {
     $("#checkedId").html(
-      '<p class="text-danger">아이디(이메일)을 입력해주세요.</p>'
+      '<p class="text-danger" style="margin-top: 3px">아이디(이메일)을 입력해주세요.</p>'
     );
   } else {
     $("#checkedId").html("");
     Swal.fire({
       title: "확인",
       text: "해당 이메일로 임시 비밀번호를 발급 받으시겠습니까?",
-      icon: "info",
       showCancelButton: true,
       confirmButtonText: "예",
       cancelButtonText: "아니요",
@@ -132,7 +131,7 @@ $("#find-password-email-button").click(function (event) {
           },
           error: function () {
             $("#checkedId").html(
-              '<p class="text-danger">등록하신 사외 이메일을 입력해주세요.</p>'
+              '<p class="text-danger" style="margin-top: 3px">등록하신 사외 이메일을 입력해주세요.</p>'
             );
           },
         });
