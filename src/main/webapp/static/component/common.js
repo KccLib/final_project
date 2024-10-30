@@ -13,7 +13,7 @@ $(document).on('mousemove keypress mousedown scroll touchstart', function() {
 
 function timerIncrement() {
     idleTime++;
-    if (idleTime >= 10 && !isAway) { // 10분 비활동 시
+    if (idleTime >= 30 && !isAway) { // 10분 비활동 시
         isAway = true;
         updateUserStatus('ABSENT'); // 상태가 '자리비움'으로 변경될 때만 호출
     }
