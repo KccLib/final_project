@@ -66,7 +66,7 @@ public class ChatStatusService {
      * 채팅방의 바꿔야 할 이모티콘 상태를 반환
      * @param chatStatusInfo 채팅 상태 정보
      * @param emoticonTypeNumber 이모티콘 타입
-     * @return
+     * @return 바꿔야 할 이모티콘 상태
      */
     private boolean getIsEmoticon(ChatStatusInfo chatStatusInfo, long emoticonTypeNumber) {
         if (chatStatusInfo.getEmoticonType() == null || chatStatusInfo.getEmoticonType() != emoticonTypeNumber ||
@@ -99,6 +99,9 @@ public class ChatStatusService {
 
     /**
      * 채팅방의 이모티콘 상태 정보를 반환
+     *
+     * 특정 채팅의 이모티콘 개수와 직원이 클릭한 이모티콘 정보를 반환
+     *
      * @param chatId 채팅 아이디
      * @param employeeId 로그인한 직원 아이디
      * @return EmoticonStatus 이모티콘 상태 정보
@@ -111,7 +114,8 @@ public class ChatStatusService {
     /**
      * 채팅방 연결 해제
      *
-     * @param employeeId
+     * 연결 해제 시 해당 직원의 모든 chatRoom 연결을 해제한다.
+     * @param employeeId 로그인한 직원 아이디
      */
     @Transactional
     public void disconnectChatRoom(Long employeeId) {

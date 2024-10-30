@@ -17,6 +17,13 @@ public class NotificationController {
 
     private final NotificationService notificationService;
 
+    /**
+     * 알림 조회
+     *
+     * @param principalDetail 로그인한 사용자 정보
+     * @param model 뷰에 전달할 데이터
+     * @return 알림 페이지
+     */
     @GetMapping("/notifications")
     public String getNotification(@AuthenticationPrincipal PrincipalDetail principalDetail,
                                   Model model) {

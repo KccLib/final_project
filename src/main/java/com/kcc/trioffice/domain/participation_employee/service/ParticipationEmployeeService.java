@@ -30,6 +30,13 @@ public class ParticipationEmployeeService {
     private final ChatRoomMapper chatRoomMapper;
     private final ApplicationEventPublisher eventPublisher;
 
+    /**
+     * 채팅방 참여자 조회(이미 참여한 직원들 제외)
+     *
+     * @param chatroomId 채팅방 번호
+     * @param employeeId 로그인한 사용자 번호
+     * @return 참여자 목록
+     */
     public List<SearchEmployee> getEmployeesExceptParticipants(Long chatroomId, Long employeeId) {
 
         EmployeeInfo employeeInfo = employeeMapper.getEmployeeInfo(employeeId).orElseThrow(() -> new NotFoundException("해당 직원이 존재하지 않습니다."));
@@ -37,6 +44,17 @@ public class ParticipationEmployeeService {
         return participationEmployeeMapper.getEmployeeByChatRoomIdExceptParticipants(employeeInfo.getCompanyId(), chatroomId);
     }
 
+    /**
+     * 채팅방 참여자 추가
+     *
+     * 소켓
+     * - 채팅방에 참여자 추가됐다는 이벤트 발생
+     * - 채팅 목록에도 추가된 참여자가 보이도록 이벤트 발생
+     *
+     * @param chatRoomId 채팅방 번호
+     * @param employees 추가할 참여자 목록
+     * @param employeeId 로그인한 사용자 번호
+     */
     @Transactional
     public void addParticipants(Long chatRoomId, List<Long> employees, Long employeeId) {
 

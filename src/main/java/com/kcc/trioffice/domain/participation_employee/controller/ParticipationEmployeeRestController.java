@@ -22,6 +22,13 @@ public class ParticipationEmployeeRestController {
     private final ParticipationEmployeeService participationEmployeeService;
     private final SimpMessagingTemplate simpMessagingTemplate;
 
+    /**
+     * 채팅방 참여자 조회(이미 참여한 직원들 제외)
+     *
+     * @param chatRoomId 채팅방 번호
+     * @param principalDetail 로그인한 사용자 정보
+     * @return
+     */
     @GetMapping("/{chatRoomId}/except-participants")
     public ResponseEntity<List<SearchEmployee>> getEmployeesExceptParticipants(@PathVariable Long chatRoomId,
                                                                                @AuthenticationPrincipal PrincipalDetail principalDetail) {
@@ -30,6 +37,13 @@ public class ParticipationEmployeeRestController {
                         .getEmployeesExceptParticipants(chatRoomId, principalDetail.getEmployeeId()));
     }
 
+    /**
+     * 채팅방 참여자 추가
+     *
+     * @param chatRoomId 채팅방 번호
+     * @param addParticipants 추가할 참여자 정보
+     * @param principalDetail 로그인한 사용자 정보
+     */
     @PostMapping("/{chatRoomId}/participants")
     public void addChatRoomEmployee(@PathVariable Long chatRoomId,
                                     @RequestBody AddParticipants addParticipants,

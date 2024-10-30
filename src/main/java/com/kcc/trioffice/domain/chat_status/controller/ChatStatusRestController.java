@@ -19,6 +19,14 @@ public class ChatStatusRestController {
 
     private final ChatStatusService chatStatusService;
 
+    /**
+     * 채팅방 이모티콘 업데이트
+     *
+     * @param chatRoomId 접속한 채팅방 번호
+     * @param chatId 이모티콘 업데이트할 채팅
+     * @param updateEmoticon 업데이트할 이모티콘 정보
+     * @param principalDetail 로그인한 사용자 정보
+     */
     @PostMapping("/chatrooms/{chatRoomId}/chats/{chatId}/emoticon")
     public void updateEmoticon(@PathVariable Long chatRoomId,
                                @PathVariable Long chatId,
@@ -28,6 +36,14 @@ public class ChatStatusRestController {
         chatStatusService.updateEmoticon(chatId, chatRoomId, updateEmoticon.getEmoticonType(), principalDetail.getEmployeeId());
     }
 
+    /**
+     * 채팅방 이모티콘 정보 조회
+     *
+     * @param chatRoomId 접속한 채팅방 번호
+     * @param chatId 이모티콘 정보 조회할 채팅
+     * @param principalDetail 로그인한 사용자 정보
+     * @return
+     */
     @GetMapping("/chatrooms/{chatRoomId}/chats/{chatId}/emoticon")
     public ResponseEntity<EmoticonStatus> getEmoticonStatus(@PathVariable Long chatRoomId,
                                                             @PathVariable Long chatId,

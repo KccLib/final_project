@@ -76,6 +76,10 @@
     font-weight: bold;
 }
 
+#add-people-text {
+    margin-bottom: 10px;
+}
+
 .detail-dates {
     margin-top: 40px !important;
 }
@@ -103,14 +107,6 @@
 
 .detail-text {
     margin-top: 40px !important;
-}
-
-#detail-text-contents {
-    margin-top: 5px;
-    width: 100%;
-    padding: 5px;
-    height: 200px;
-    border: 1px solid #d2dae1;
 }
 
 #detail-table td,
@@ -181,7 +177,7 @@
 
 #detail-text-contents {
     margin-top: 5px;
-    width: 700px;
+    width: 82.8%;
     padding: 5px;
     height: 200px;
     border: 1px solid #d2dae1;
@@ -206,7 +202,7 @@
 }
 
 #table-container {
-    max-height: 11rem; /* 원하는 높이로 설정 */
+    max-height: 10rem; /* 원하는 높이로 설정 */
     overflow-y: auto;
     position: relative;
 }
@@ -227,3 +223,14 @@
     color: red;
 }
 
+.contents {
+    height: 98% !important;
+}
+
+.detail-title p {
+    padding-bottom: 10px;
+}
+
+.notification-item.active {
+    background-color: rgba(0, 123, 255, 0.5)
+}

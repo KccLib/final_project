@@ -50,6 +50,20 @@ public class AttachedFileService {
     private final ApplicationEventPublisher eventPublisher;
     private final ChatRoomService chatRoomService;
 
+    /**
+     * 채팅방에 파일 전송
+     *
+     * 여러개의 파일을 받을 수 있고, 파일 하나당 여러개의 태그, 하나의 채팅을 가짐
+     *
+     * 알림
+     * - 채팅방에 파일을 전송하면 채팅방에 참여중인 사람들에게 파일을 전송
+     * - 채팅 목록 최신화하라는 알림 전송
+     *
+     * @param multipartFiles
+     * @param tags
+     * @param chatRoomId
+     * @param employeeId
+     */
     @Transactional
     public void sendAttachedFile(List<MultipartFile> multipartFiles, List<String> tags, Long chatRoomId, Long employeeId) {
         EmployeeInfo employeeInfo = employeeService.getEmployeeInfo(employeeId);
@@ -97,8 +111,23 @@ public class AttachedFileService {
         chatMessageInfos.forEach(eventPublisher::publishEvent);
     }
 
+    /**
+     * 채팅 메세지 정보 생성
+     *
+     * 파일인지, 이미지인지에 따라 다르게 DTO 생성
+     *
+     * @param tags
+     * @param chatRoomId
+     * @param employeeId
+     * @param s3UploadFile
+     * @param chatMessage
+     * @param employeeInfo
+     * @param unreadCount
+     * @return
+     */
     private static ChatMessageInfo getChatMessageInfo(List<String> tags, Long chatRoomId, Long employeeId, S3UploadFile s3UploadFile, ChatMessage chatMessage, EmployeeInfo employeeInfo, int unreadCount) {
         ChatMessageInfo chatMessageInfo = null;
+
 
         if(s3UploadFile.getFileType() == 1) {
              chatMessageInfo = ChatMessageInfo.builder()
@@ -128,6 +157,13 @@ public class AttachedFileService {
         return chatMessageInfo;
     }
 
+    /**
+     * 태그 저장
+     *
+     * @param tags 저장할 태그 목록
+     * @param employeeId 저장한 직원 아이디
+     * @param s3UploadFile 저장한 파일 정보
+     */
     private void saveTag(List<String> tags, Long employeeId, S3UploadFile s3UploadFile) {
         if (tags != null) {
             tags.forEach(
@@ -136,20 +172,54 @@ public class AttachedFileService {
         }
     }
 
+    /**
+     * 채팅방에 파일 다운로드
+     *
+     * @param chatId 다운로드할 파일이 있는 채팅 번호
+     * @param employeeId 로그인한 사용자 정보
+     * @return 다운로드할 파일
+     */
     public ResponseEntity<byte[]> downloadAttachedFile(Long chatId, Long employeeId) {
         S3UploadFile s3UploadFile = attachedFileMapper.getAttachedFileByChatId(chatId).orElseThrow(
                 () -> new NotFoundException("해당 파일이 존재하지 않습니다."));
         return s3FileService.download(s3UploadFile.getFileUrl(), s3UploadFile.getFileName());
     }
 
+    /**
+     * 채팅방에 파일 정보 조회
+     *
+     * @param chatRoomId
+     * @param employeeId
+     * @param limit
+     * @param offset
+     * @param searchType
+     * @param tags
+     * @return
+     */
     public List<AttachedFileInfo> getAttachedFile(Long chatRoomId, Long employeeId, int limit, int offset, String searchType, List<String> tags) {
         return attachedFileMapper.getAttachedFile(chatRoomId, limit, offset, searchType, tags);
     }
 
+    /**
+     * 채팅방에 이미지 조회
+     *
+     * @param chatRoomId
+     * @param employeeId
+     * @param searchType
+     * @param tags
+     * @return
+     */
     public List<ImageInfo> getImage(Long chatRoomId, Long employeeId, String searchType, List<String> tags) {
         return attachedFileMapper.getImages(chatRoomId, searchType, tags);
     }
 
+    /**
+     * 이미지 다운로드
+     *
+     * @param fileId
+     * @param employeeId
+     * @return
+     */
     public ResponseEntity<byte[]> downloadImage(Long fileId, Long employeeId) {
         S3UploadFile s3UploadFile = attachedFileMapper.getAttachedFileByFileId(fileId).orElseThrow(
                 () -> new NotFoundException("해당 파일이 존재하지 않습니다."));
