@@ -31,7 +31,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
                 id="employeeId"
                 type="email"
                 name="email"
-                placeholder=""
+                placeholder="(예시: user@example.com)"
                 required
               />
             </div>

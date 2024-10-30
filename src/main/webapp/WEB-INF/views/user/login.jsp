@@ -38,7 +38,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
           </div>
           <div id="checkedId">
             <% if (request.getParameter("error") != null) { %>
-            <div class="error-message">
+            <div class="error-message" style="margin-top: 3px">
               아이디나 비밀번호가 일치하지 않습니다.
             </div>
             <% } %>

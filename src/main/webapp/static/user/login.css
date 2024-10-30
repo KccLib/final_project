@@ -67,7 +67,7 @@
   margin-top: 3px;
   justify-content: left;
   margin-right: 8.9rem;
-  margin-left: 27px;
+  margin-left: 5px;
 }
 
 #login-options > * {
@@ -148,10 +148,11 @@
 #find-id-text {
   margin-top: 20px;
   font-size: 25px;
+  line-height: 1.2;
 }
 
 .error-message {
   color: red;
   font-weight: bold;
-  font-size: 10px;
+  font-size: 12px;
 }
