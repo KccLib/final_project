@@ -433,7 +433,7 @@ input[name="employees[]"] {
 }
 
 #detail-people-header {
-  background-color: #d2dae1;
+  background-color: lightskyblue;
   font-size: 15px;
   border-bottom: 1px solid #d2dae1;
   font-weight: bold;
@@ -446,9 +446,10 @@ input[name="employees[]"] {
 #detail-text-contents {
   margin-top: 5px;
   width: 700px;
-  padding: 5px;
+  padding: 7px;
   height: 200px;
   border: 1px solid #d2dae1;
+  border-radius: 5px;
 }
 
 #detail-table td,
