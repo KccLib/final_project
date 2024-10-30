@@ -121,3 +121,7 @@ window.addEventListener("click", function (event) {
         searchContainer.classList.add("hidden");
     }
 });
+
+searchBar.addEventListener("input", function (event) {
+    console.log("변경된 값이 있습니다");
+})  ;

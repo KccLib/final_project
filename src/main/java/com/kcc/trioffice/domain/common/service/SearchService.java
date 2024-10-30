@@ -62,7 +62,9 @@ public class SearchService {
             if (participationEmployees.length() > 0) {
                 participationEmployees.setLength(participationEmployees.length() - 2); // 마지막 쉼표 및 공백 제거
             }
+            participationEmployees.append("님과의 채팅");
             searchChatRoomList.add(new SearchChatRoom(participationEmployees.toString(), DEFAULT_GROUP_IMAGE));
+            participationEmployees.delete(0, participationEmployees.length());
         });
 
 
@@ -70,4 +72,12 @@ public class SearchService {
     }
 
 
+    public List<SearchEmployee> getChangeEmployeeList(Long employeeId) {
+        List<SearchEmployee> employeeList = searchMapper.getAllEmployeesInfo(employeeId);
+        
+        return employeeList;
+    }
+
+    public List<SearchChatRoom> getChangeSearchChatRoom(Long employeeId) {
+    }
 }

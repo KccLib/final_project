@@ -444,9 +444,10 @@
 #search-bar-contents * {
   color: #676767;
 }
+
 #search-people-title{
-  margin-top: 15px;
-  }
+  margin-top: 10px;
+}
 
 #search-people-contents {
   width: 100%;
@@ -465,7 +466,7 @@
 }
 
 #search-group-title{
-  margin-top: 5px;}
+  margin-top: 10px;}
 
 .search-peoples {
   padding-top: 3px;
@@ -539,3 +540,12 @@
   font-size: 12px;
 }
 
+#search-people-contents > div:hover,
+#search-group-chat-rooms > div:hover
+{
+  background-color: aliceblue; /* 포커스 시 배경 색상 변경 */
+}
+#search-people-contents > div,
+#search-group-chat-rooms > div {
+  border-radius: 5px;
+}

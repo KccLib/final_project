@@ -6,7 +6,6 @@ import com.kcc.trioffice.domain.common.domain.SearchChatRoom;
 import com.kcc.trioffice.domain.common.service.SearchService;
 import com.kcc.trioffice.domain.employee.dto.response.SearchEmployee;
 import com.kcc.trioffice.global.auth.PrincipalDetail;
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -19,7 +18,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
-public class SearchController {
+public class SearchRestController {
 
     private final SearchService searchService;
 
@@ -27,6 +26,19 @@ public class SearchController {
     public ResponseEntity<ResponseSearch> search(@AuthenticationPrincipal PrincipalDetail principalDetail) {
         List<SearchEmployee> searchEmployee =  searchService.getEmployeeList(principalDetail.getEmployeeId());
         List<SearchChatRoom> searchChatRoom = searchService.getSearchChatRoom(principalDetail.getEmployeeId());
+
+        ResponseSearch responseSearch = ResponseSearch.builder()
+                .searchEmployeeList(searchEmployee)
+                .searchChatRoomList(searchChatRoom)
+                .build();
+
+        return ResponseEntity.ok(responseSearch);
+    }
+
+    @GetMapping("/search/change")
+    public ResponseEntity<ResponseSearch> searchChange(@AuthenticationPrincipal PrincipalDetail principalDetail) {
+        List<SearchEmployee> searchEmployee =  searchService.getChangeEmployeeList(principalDetail.getEmployeeId());
+        List<SearchChatRoom> searchChatRoom = searchService.getChangeSearchChatRoom(principalDetail.getEmployeeId());
 
         ResponseSearch responseSearch = ResponseSearch.builder()
                 .searchEmployeeList(searchEmployee)
