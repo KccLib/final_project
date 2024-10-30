@@ -25,7 +25,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
       </div>
       <!-- 검색창 -->
       <div class="search">
-        <input type="text" placeholder="사원 및 채팅방 검색" />
+        <input type="text" id="search-bar" placeholder="사원 및 채팅방 검색" />
         <img
           src="https://s3.ap-northeast-2.amazonaws.com/cdn.wecode.co.kr/icon/search.png"
         />
@@ -115,6 +115,23 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
             <button id="modify-status">정보 수정</button>
             <button id="modalCloseButton">닫기</button>
           </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="search-bar-container" class="hidden">
+      <div id="search-bar-contents">
+        <div id="search-people-title">사원</div>
+        <div id="search-people-contents"><%-- 검색된 직원들 js로 추가 --%></div>
+        <div id="search-group-title">그룹 채팅</div>
+        <div id="search-group-chat-rooms">
+          <div class="search-group-contents">
+            <div class="search-chat-profile-img"></div>
+            <p class="search-chatroom-name">그룹채팅방</p>
+          </div>
+
+          <div class="search-group-contents">123123</div>
+          <div class="search-group-contents">123123</div>
         </div>
       </div>
     </div>

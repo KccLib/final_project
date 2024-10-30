@@ -1,6 +1,5 @@
-package com.kcc.trioffice.domain.chat_bot.service;
+package com.kcc.trioffice.domain.common.service;
 
-import com.kcc.trioffice.domain.chat_bot.domain.Document;
 import com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo;
 import com.kcc.trioffice.domain.employee.mapper.EmployeeMapper;
 import org.springframework.ai.vectorstore.SearchRequest;

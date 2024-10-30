@@ -1,4 +1,4 @@
-package com.kcc.trioffice.domain.chat_bot.controller;
+package com.kcc.trioffice.domain.common.controller;
 
 import com.kcc.trioffice.global.auth.PrincipalDetail;
 import lombok.extern.slf4j.Slf4j;
@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.kcc.trioffice.domain.chat_bot.service.ChatBotService;
+import com.kcc.trioffice.domain.common.service.ChatBotService;
 
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
