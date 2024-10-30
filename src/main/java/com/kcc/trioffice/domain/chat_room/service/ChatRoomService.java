@@ -76,7 +76,13 @@ public class ChatRoomService {
                 .build();
         chatMapper.saveChatMessage(chatMessage);
         chatRoomMapper.updateChatRoomLastMessage(chatMessage.getRoomId(), chatMessage.getChatId());
-        sendChatMessageFcm(chatRoomCreate.getChatRoomId(), chatRoomCreate.getChatRoomName(), employeeInfo.getProfileUrl(), message);
+
+        employeeInfoList.stream()
+                .filter(e -> e.getStatus() != 4L)
+                .forEach(e -> {
+            redisService.collectMessage(e.getEmployeeId().toString(), SendPushDto.of(employeeInfo.getName(), message, employeeInfo.getProfileUrl()));
+        });
+
         eventPublisher.publishEvent(chatRoomCreate);
     }
 
