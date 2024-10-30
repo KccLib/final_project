@@ -21,7 +21,8 @@ window.addEventListener("click", function (event) {
     modal.classList.add("hidden");
     statusModel.classList.add("hidden");
   }
-    searchBar.value = "";
+
+
 });
 
 // 사용자 상태 변경 js
@@ -115,7 +116,7 @@ searchBar.addEventListener("click", function () {
         searchBar.value = "";
 
     }
-    // console.log(searchBarCount);
+    console.log(searchBarCount);
         searchBarCount++;
 });
 
@@ -123,6 +124,8 @@ window.addEventListener("click", function (event) {
     if (event.target === searchContainer) {
         searchContainer.classList.add("hidden");
     }
+    searchBar.value = "";
+    
 });
 
 searchBar.addEventListener("input", function (event) {

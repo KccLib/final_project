@@ -45,7 +45,6 @@
                 )
                 ORDER BY chat_room_id DESC
             )
-        WHERE ROWNUM <![CDATA[<=]]> 3
     </select>
 
     <select id="participationEmployeeFindByChatRoomId" parameterType="long"

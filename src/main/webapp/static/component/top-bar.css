@@ -515,7 +515,7 @@
   width: 50px;
   height: 100%; /* 컨테이너 크기에 맞춤 */
   border-radius: 70%;
-  border: 1.5px solid gray;
+  border: 1.5px solid #d7d7d7;
   object-fit: cover;
 }
 
@@ -527,7 +527,7 @@
   width: 30px;
   height: 100%; /* 컨테이너 크기에 맞춤 */
   border-radius: 70%;
-  border: 1.5px solid gray;
+  border: 1.5px solid #d7d7d7;
 }
 
 .search-chatroom-name {
