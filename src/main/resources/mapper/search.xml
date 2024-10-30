@@ -57,5 +57,24 @@
     </select>
 
 
+    <select id="getChangeAllEmployeesInfo" parameterType="map"
+            resultType="com.kcc.trioffice.domain.employee.dto.response.SearchEmployee">
+        SELECT e.employee_id as id
+             , e.name
+             , d.name as deptName
+             , e.position
+             , e.profile_url as profileURL
+        FROM employee e
+                 LEFT JOIN department d
+                           ON e.dept_id = d.dept_id AND d.is_deleted = 0
+        WHERE
+            e.is_deleted = 0 AND
+            e.employee_id != #{employeeId} AND
+            e.name Like '%'||#{keyword}||'%' AND
+            ROWNUM <![CDATA[<=]]> 5
+        ORDER BY
+            e.name
+    </select>
+
 
 </mapper>

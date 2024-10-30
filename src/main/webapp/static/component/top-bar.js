@@ -123,5 +123,49 @@ window.addEventListener("click", function (event) {
 });
 
 searchBar.addEventListener("input", function (event) {
+    let searchBarValue = event.target.value;
     console.log("변경된 값이 있습니다");
+
+    $.ajax({
+        method: "GET",
+        url: "/api/search/change",
+        data: {
+            keyword : searchBarValue },
+        dataType: "json",
+        success: function (responseSearch) {
+            console.log("검색된 개체 개수 :" + responseSearch.searchEmployeeList + responseSearch.searchChatRoomList);
+
+
+            // searchContentsPeople 요소를 초기화
+            searchContentsPeople.innerHTML = "";
+
+            // searchEmployeeList에서 각 직원 정보를 가져와서 HTML 생성
+            responseSearch.searchEmployeeList.forEach(function (employee) {
+                searchContentsPeople.innerHTML +=
+                    "<div class=\"search-peoples\" style=\"cursor: pointer;\">" +
+                    "    <div class=\"search-profile-img\">" +
+                    "        <img src=\"" + employee.profileURL + "\" alt=\"프로필 이미지\" />" +
+                    "    </div>" +
+                    "    <p class=\"search-profile-name\">" + employee.name + "</p>" +
+                    "    <p class=\"search-profile-dept\">" + employee.deptName + "</p>" +
+                    "    <p class=\"search-profile-position\">" + employee.position + "</p>" +
+                    "</div>";
+            });
+
+            // searchContentsChatRooms.innerHTML = "";
+            //
+            // responseSearch.searchChatRoomList.forEach(function (chatroom) {
+            //     // 새로운 HTML 요소 생성
+            //     searchContentsChatRooms.innerHTML +=
+            //         "<div class='search-group-contents'>" +
+            //         "<div class='search-chat-profile-img'>" +
+            //         "<img src='" + chatroom.imageURL + "' alt='그룹 채팅방 이미지' />" +
+            //         "</div>" +
+            //         "<p class='search-chatroom-name'>" + chatroom.name + "</p>" +
+            //         "</div>";
+            // });
+
+        },
+        error: function (result) {}
+    });
 })  ;

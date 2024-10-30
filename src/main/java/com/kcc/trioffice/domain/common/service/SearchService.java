@@ -72,12 +72,16 @@ public class SearchService {
     }
 
 
-    public List<SearchEmployee> getChangeEmployeeList(Long employeeId) {
-        List<SearchEmployee> employeeList = searchMapper.getAllEmployeesInfo(employeeId);
-        
+    public List<SearchEmployee> getChangeEmployeeList(Long employeeId, String keyword) {
+        List<SearchEmployee> employeeList = searchMapper.getChangeAllEmployeesInfo(employeeId, keyword);
+
         return employeeList;
     }
 
-    public List<SearchChatRoom> getChangeSearchChatRoom(Long employeeId) {
+    public List<SearchChatRoom> getChangeSearchChatRoom(Long employeeId, String keyword) {
+
+        List<SearchChatRoom> searchChatRoomList = new ArrayList<>();
+
+        return searchChatRoomList;
     }
 }

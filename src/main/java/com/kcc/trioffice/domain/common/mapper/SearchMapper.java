@@ -16,4 +16,6 @@ public interface SearchMapper {
     List<Long> getMyChatRooms(Long employeeId);
 
     List<Long> participationEmployeefindByChatRoomId(Long chatRoomId);
+
+    List<SearchEmployee> getChangeAllEmployeesInfo(Long employeeId, String keyword);
 }
