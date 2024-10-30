@@ -1,5 +1,8 @@
 package com.kcc.trioffice.domain.department.dto.response;
 
+import com.google.protobuf.Timestamp;
+import com.google.protobuf.TimestampProto;
+import com.kcc.trioffice.domain.company.dto.response.Company;
 import com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo;
 import lombok.Data;
 
@@ -12,6 +15,9 @@ public class Department {
     private String departmentName;
     private Long upperDeptId;
     private int deptLevel;
+    private String writeDt;
+    private Company company;
+
     private List<Department> subDepartments = new ArrayList<>();
     private List<EmployeeInfo> employees = new ArrayList<>();
 

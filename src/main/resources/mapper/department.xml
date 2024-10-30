@@ -57,15 +57,51 @@
            AND e.is_deleted = 0
     </select>
 
-    <!-- 부서 추가 쿼리 -->
+    <!-- 부서추가 -->
     <insert id="insertDepartment" parameterType="com.kcc.trioffice.domain.department.dto.response.Department">
-      INSERT INTO department (dept_id, name, upper_dept_id, dept_level, is_deleted)
-        VALUES (seq_department.nextval
-          , #{departmentName}
-          ,<if test="upperDeptId != null">#{upperDeptId}</if>
-           <if test="upperDeptId == null">NULL</if>
-          , #{deptLevel}
-          , 0)
+        INSERT INTO department (
+        dept_id,
+        name,
+        upper_dept_id,
+        company_id,
+        writer,
+        write_dt,
+        modifier,
+        modified_dt,
+        is_deleted
+        ) VALUES (
+        seq_department.nextval,
+        #{departmentName},
+        #{upperDeptId},
+        1,
+        1,
+        SYSTIMESTAMP,
+        1,
+        SYSTIMESTAMP,
+        0
+        )
+    </insert>
+
+    <insert id="insertTopDepartment" parameterType="com.kcc.trioffice.domain.department.dto.response.Department">
+        INSERT INTO department (
+        dept_id,
+        name,
+        company_id,
+        writer,
+        write_dt,
+        modifier,
+        modified_dt,
+        is_deleted
+        ) VALUES (
+        seq_department.nextval,
+        #{departmentName},
+        1,
+        1,
+        SYSTIMESTAMP,
+        1,
+        SYSTIMESTAMP,
+        0
+        )
     </insert>
 
     <!-- 부서 수정 쿼리 -->
@@ -79,21 +115,35 @@
     </update>
 
     <!-- 부서 삭제 쿼리 -->
-    <update id="deleteDepartment" parameterType="Long">
-      UPDATE department
+    <update id="deleteDepartment" parameterType="com.kcc.trioffice.domain.department.dto.response.Department">
+        UPDATE department
         SET is_deleted = 1
         WHERE dept_id = #{deptId}
     </update>
 
-    <select id="findDepartmentById" resultMap="DepartmentResultMap">
-      SELECT
-        LEVEL AS deptLevel,
-        d.dept_id AS deptId,
-        d.name AS departmentName,
-        d.upper_dept_id AS upperDeptId
-        FROM department d
-        WHERE d.dept_id = #{deptId}
-        AND d.is_deleted = 0
+    <select id="findDepartmentById" parameterType="Long" resultType="com.kcc.trioffice.domain.department.dto.response.Department">
+        SELECT
+        dept_id AS deptId,
+        name AS departmentName,
+        upper_dept_id AS upperDeptId,
+        write_dt AS writeDt
+        FROM department
+        WHERE dept_id = #{deptId}
+        AND is_deleted = 0
+    </select>
+
+    <!-- 부서id로 하위부서 출력하는 쿼리문 -->
+    <select id="findSubDepartments" parameterType="Long" resultType="com.kcc.trioffice.domain.department.dto.response.Department">
+        SELECT
+        dept_id AS deptId,
+        name AS departmentName,
+        upper_dept_id AS upperDeptId,
+        write_dt AS writeDt
+        FROM
+        department
+        WHERE
+        upper_dept_id = #{deptId}
+        AND is_deleted = 0
     </select>
 
     <select id="getDepartments" resultType="com.kcc.trioffice.domain.department.dto.response.DepartmentInfo">
@@ -107,6 +157,5 @@
           AND d.is_deleted = 0
         ORDER BY d.dept_order
     </select>
-
 
 </mapper>
