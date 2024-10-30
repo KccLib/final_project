@@ -101,23 +101,25 @@
                     <div class="row detail-dates">
                         <div class="start-date-box col-4">
                             <i class="fa-regular fa-calendar-check"></i>
-                            <label for="start-date">시작일:</label>
+                            <label for="start-date">시작일</label>
                             <input
                                     type="text"
                                     value="2024-10-02"
                                     id="start-date-detail"
                                     name="start-date"
+                                    class="ml-1"
                                     readonly
                             />
                         </div>
                         <div class="col-4">
                             <i class="fa-regular fa-calendar-check"></i>
-                            <label for="end-date" id="end-date-label">종료일:</label>
+                            <label for="end-date" id="end-date-label">종료일 </label>
                             <input
                                     type="text"
                                     id="end-date-detail"
                                     value="2024-10-02"
                                     name="end-date"
+                                    class="ml-1"
                                     readonly
                             />
                         </div>
