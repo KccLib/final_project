@@ -5,6 +5,7 @@ import com.kcc.trioffice.domain.department.service.DepartmentService;
 import com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -53,30 +54,7 @@ public class DepartmentController {
         return "department/addDepartment"; // 부서 추가 폼 페이지 경로
     }
 
-    // 부서 저장 처리
-    @PostMapping("/saveDepartment")
-    public String saveDepartment(@RequestParam Long upperDeptId, @RequestParam String departmentName, Model model) {
-        Department department = new Department();
-        department.setUpperDeptId(upperDeptId);
-        department.setDepartmentName(departmentName);
 
-        departmentService.saveDepartment(department);  // 부서 저장
-
-        // 부서 저장 후 다시 부서 목록을 불러오기
-        List<Department> departments = departmentService.getDepartmentDetails();
-        model.addAttribute("departmentTree", departments);
-        return "redirect:/departments/admin"; // 부서 목록을 보여주는 페이지로 리다이렉트
-    }
-
-    // 부서 수정 폼 페이지
-    @GetMapping("/department/edit/{deptId}")
-    public String showEditDepartmentForm(@PathVariable Long deptId, Model model) {
-        Department department = departmentService.getDepartmentById(deptId); // 부서 정보 가져오기
-        List<Department> parentDepartments = departmentService.getDepartmentDetails(); // 상위 부서 목록
-        model.addAttribute("department", department);
-        model.addAttribute("parentDepartments", parentDepartments);
-        return "department/editDepartment"; // 부서 수정 폼 페이지 경로
-    }
 
     // 부서 수정 처리
     @PostMapping("/updateDepartment/{deptId}")
@@ -91,12 +69,11 @@ public class DepartmentController {
         return "redirect:/departments/admin"; // 부서 목록으로 리다이렉트
     }
 
-    // 부서 삭제 처리 (소프트 삭제)
-    @PatchMapping("/deleteDepartment/{deptId}")
-    public String deleteDepartment(@PathVariable Long deptId) {
-        departmentService.deleteDepartment(deptId); // 부서 삭제 (is_deleted 값 변경)
-        return "redirect:/departments/admin"; // 부서 목록으로 리다이렉트
-    }
-
+    // 부서 삭제 처리
+//    @DeleteMapping("/delete/{deptId}")
+//    public void deleteDepartment(@PathVariable Long deptId) {
+//        System.out.println("Deleting department with id: " + deptId);
+//        departmentService.deleteDepartment(deptId);
+//    }
 
 }

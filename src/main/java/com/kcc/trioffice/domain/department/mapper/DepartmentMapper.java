@@ -22,6 +22,8 @@ public interface DepartmentMapper {
     // 부서를 저장하는 메서드 추가
     void insertDepartment(Department department);
 
+    void insertTopDepartment(Department department);
+
     // 부서 수정 메서드 추가
     void updateDepartment(Department department);
 
@@ -30,4 +32,6 @@ public interface DepartmentMapper {
 
     // 특정 부서 정보 조회
     Department findDepartmentById(Long deptId);
+
+    List<Department> findSubDepartments(Long deptId);
 }

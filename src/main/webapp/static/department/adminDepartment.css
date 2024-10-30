@@ -12,7 +12,6 @@
 }
 
 .add-department-form,
-.edit-department-form,
 #cancel-department-form {
     height: 400px;
     margin-left: 270px;
@@ -27,9 +26,23 @@
     display: none; /* 기본적으로 숨김 */
 }
 
+.edit-department-form {
+    height: 380px;
+    margin-left: 270px;
+    margin-top: 155px;
+    background-color: white;
+    display: block; /* 블록으로 설정 */
+    width: calc(100% - 540px); /* 좌우 마진을 고려한 폭 설정 (540px는 270px * 2) */
+    max-width: 800px; /* 최대 폭 설정 (필요에 따라 조정) */
+    padding: 20px; /* 여백 추가 */
+    box-shadow: 0 4px 8px rgba(0.05, 0.05, 0.05, 0.05); /* 그림자 효과 추가 (선택사항) */
+    border: 1.35px solid #8b8787; /* 테두리 추가 (선택사항) */
+    display: none; /* 기본적으로 숨김 */
+}
+
 .form-row2 .fa-circle-user {
     margin-left: 257px;
-    font-size: 12em;
+    font-size: 10em;
     color: #8b8787;
 }
 
@@ -46,7 +59,6 @@
     border: 1.35px solid #8b8787; /* 테두리 추가 (선택사항) */
     display: none; /* 기본적으로 숨김 */
 }
-
 
 .menu2 {
     display: flex;
@@ -195,9 +207,16 @@ li {
     margin-top: 17px;
 }
 
+.edit-department-form p {
+    font-size: 30px;
+    text-align: left;
+    margin-left: 13px;
+    margin-top: 17px;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
 
-
-.add-department-form, .add-employee-form {
+.add-department-form, .add-employee-form, edit-department-form {
     font-weight: bold;
 }
 
