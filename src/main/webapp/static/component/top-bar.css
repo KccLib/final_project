@@ -549,3 +549,192 @@
 #search-group-chat-rooms > div {
   border-radius: 5px;
 }
+
+#other-employee-info-container.hidden {
+  display: none;
+}
+
+
+.second-side-bar {
+  flex: 0 0 22%;
+  max-width: 500px;
+  min-width: 260px;
+  height: 100%;
+  background-color: #f5f5f5;
+  border-left: 1px solid #e4e4e4;
+  border-bottom: 1px solid #e4e4e4;
+  border-right: 1px solid #e4e4e4;
+  overflow-y: auto;
+  display: flex;
+  justify-content: center;
+  /*align-items: center;*/
+
+  /* 위치 속성 제거 */
+}
+
+#other-employee-info-container {
+  width: 96%;
+  height: 95.5%;
+  position: absolute;
+  background-color: white;
+  z-index: 18000;
+  margin-left: 3.8%;
+}
+
+#other-employee-info-contents {
+ width: 200px;
+  height: 200px;
+  background-color: black;
+}
+
+.second-side-bar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.second-side-bar::-webkit-scrollbar-thumb {
+  background: #b0b0b0;
+  border-radius: 20px;
+}
+
+.second-side-bar::-webkit-scrollbar-track {
+  background: #efefef;
+  border-radius: 20px;
+}
+
+
+#other-employee-schedule-close-button {
+  width: 50px;
+  height: 30px;
+  background-color: #4b6dd1;
+  border: 1px solid white;
+  border-radius: 5px;
+  color: white;
+  margin-top:5px;
+  margin-right: 5px;
+  font-size: 13px;
+}
+
+
+#other-employee-schedule-close-button:hover {
+
+  background-color: white;
+  border: 1px solid #4b6dd1;
+  border-radius: 5px;
+  color: #4b6dd1;
+}
+
+#close-button-container {
+  display: flex;
+  justify-content: end;
+}
+
+#employee-info-container{
+  width: 300px;
+  height: 500px;
+  /*background-color: #bababa;*/
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 11vw;
+}
+#profile-name-position{
+  width: 250px;
+  height: 70px;
+  /*background-color: #4b6dd1;*/
+  display: flex;
+  padding: 10px;
+  justify-content: end;
+
+}
+
+#other-employee-name-position {
+  display: flex;
+}
+
+#other-employee-img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #858a8f;
+  margin-left: 1vw;
+}
+
+#other-employee-status{
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  margin-left: 48px;
+  /* margin-bottom: 25rem; */
+  /* margin-right: 8rem; */
+  border-radius: 50%;
+  margin-top: 32px;
+}
+
+#other-name, #other-position {
+  font-size: 30px;
+  margin-top: 1vw;
+  font-family: "One Mobile Title", sans-serif;
+
+}
+
+#other-name {
+  margin-left: 0.5vw;
+}
+
+#other-etc-info-container{
+  height: 400px;
+  width: 250px;
+  /* background-color: #c5cdff; */
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+  /* padding: 5px; */
+  padding-right: 10px;
+
+}
+
+#other-etc-info-container > div{
+  margin-top: 5px;
+}
+
+#other-contents-container{
+  width: 220px;
+  height: 180px;
+  background-color: white;
+  border-radius: 7px;
+  border: 1.5px solid #ccc;
+  padding: 10px;
+  line-height: 1.2;
+}
+
+.fa-comment {
+  font-size: 35px;
+}
+
+#other-chat-button{
+  width: 50px;
+  height: 60px;
+  font-size: 10px;
+  /* justify-content: center; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 5.5rem;
+  margin-top: 15px !important;
+  cursor: pointer;
+}
+
+#other-chat-button > div {
+  font-size: 14px;
+}
+
+#other-profile-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 1px solid #d7d7d7;
+
+}
