@@ -1583,7 +1583,7 @@ $(document).ready(function() {
 
         // 파일 다운로드 요청
         $.ajax({
-            url: `/api/chatrooms/${chatRoomId}/chats/${messageId}/attached-file/download`,
+            url: `/api/chatrooms/chats/${messageId}/attached-file/download`,
             method: 'GET',
             xhrFields: {
                 responseType: 'blob' // 바이너리 데이터 수신을 위해 필요합니다.
