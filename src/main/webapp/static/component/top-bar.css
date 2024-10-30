@@ -567,7 +567,7 @@
   overflow-y: auto;
   display: flex;
   justify-content: center;
-  align-items: center;
+  /*align-items: center;*/
 
   /* 위치 속성 제거 */
 }
@@ -636,6 +636,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 11vw;
 }
 #profile-name-position{
   width: 250px;
