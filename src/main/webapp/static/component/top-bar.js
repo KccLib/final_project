@@ -125,7 +125,7 @@ window.addEventListener("click", function (event) {
         searchContainer.classList.add("hidden");
     }
     searchBar.value = "";
-    
+
 });
 
 searchBar.addEventListener("input", function (event) {
