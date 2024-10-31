@@ -38,20 +38,18 @@ public class SearchService {
     public List<SearchChatRoom> getSearchChatRoom(Long employeeId) {
         List<Long> chatRoomList = searchMapper.getMyChatRooms(employeeId);
         List<SearchChatRoom> searchChatRoomList = new ArrayList<>();
-
+        // 대화하기용 chatRoomList 저장
 
         StringBuilder participationEmployees = new StringBuilder();
 
         chatRoomList.forEach(chatRoomId -> {
+
             List<Long> employeeIds = searchMapper.participationEmployeeFindByChatRoomId(chatRoomId);
-
             List<String> names = new ArrayList<>();
-
             employeeIds.forEach(id -> {
                 EmployeeInfo employeeInfo = employeeMapper.getEmployeeInfo(id).orElseThrow( () -> new NotFoundException("회원의 아이디를 가져올 수 없습니다."));
                 names.add(employeeInfo.getName());
             });
-
             // 이름 목록을 문자열로 변환하여 participationEmployees에 추가
             if (names != null && !names.isEmpty()) {
                 names.forEach(name -> {
@@ -63,7 +61,7 @@ public class SearchService {
                 participationEmployees.setLength(participationEmployees.length() - 2); // 마지막 쉼표 및 공백 제거
             }
             participationEmployees.append("님과의 채팅");
-            searchChatRoomList.add(new SearchChatRoom(participationEmployees.toString(), DEFAULT_GROUP_IMAGE));
+            searchChatRoomList.add(new SearchChatRoom(participationEmployees.toString(), DEFAULT_GROUP_IMAGE, chatRoomId));
             participationEmployees.delete(0, participationEmployees.length());
         });
 
@@ -107,7 +105,7 @@ public class SearchService {
 
             if(participationEmployees.toString().contains(keyword)) {
                 participationEmployees.append("님과의 채팅");
-                searchChatRoomList.add(new SearchChatRoom(participationEmployees.toString(), DEFAULT_GROUP_IMAGE));
+                searchChatRoomList.add(new SearchChatRoom(participationEmployees.toString(), DEFAULT_GROUP_IMAGE,chatRoomId));
                 participationEmployees.delete(0, participationEmployees.length());
 
             }else {

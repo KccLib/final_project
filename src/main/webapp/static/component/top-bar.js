@@ -104,7 +104,7 @@ searchBar.addEventListener("click", function () {
         responseSearch.searchChatRoomList.forEach(function (chatroom) {
           // 새로운 HTML 요소 생성
           searchContentsChatRooms.innerHTML +=
-            "<div class='search-group-contents'>" +
+            `<div class='search-group-contents' data-chatroomid="${chatroom.myChatRoomId}">` +
             "<div class='search-chat-profile-img'>" +
             "<img src='" +
             chatroom.imageURL +
@@ -186,7 +186,7 @@ searchBar.addEventListener("input", function (event) {
       responseSearch.searchChatRoomList.forEach(function (chatroom) {
         // 새로운 HTML 요소 생성
         searchContentsChatRooms.innerHTML +=
-          "<div class='search-group-contents'>" +
+            `<div class='search-group-contents' data-chatroomid="${chatroom.myChatRoomId}">` +
           "<div class='search-chat-profile-img'>" +
           "<img src='" +
           chatroom.imageURL +
@@ -301,6 +301,27 @@ searchPeopleElements.addEventListener("click", function (event) {
 otherEmployeeClose.addEventListener("click", function () {
   otherEmployeeContainer.classList.add("hidden");
 });
+
+/**
+ * 그룹채팅방 눌렀을 때 이동시키기
+ *
+ */
+
+const searchChatRoomElements = document.getElementById("search-group-chat-rooms");
+
+searchChatRoomElements.addEventListener("click", function (event) {
+
+  const target = event.target.closest(".search-group-contents");
+  if (target) {
+    const roomId = target.dataset.chatroomid;
+
+    console.log("선택된 roomId는 : " + roomId);
+  }
+
+});
+
+
+
 
 /**
  * 달력 랜더링
@@ -487,7 +508,7 @@ searchPeopleElements.addEventListener("click", function (event) {
 const otherEmployeeChatRoom = document.getElementById("other-chat-button");
 
 otherEmployeeChatRoom.addEventListener("click", function (event) {
-  event.preventDefault(); // 기본 버튼 동작 방지
+  event.preventDefault();
   console.log("요청한 employeeId =", otherEmployeeId);
 
   const form = document.createElement("form");
