@@ -479,3 +479,27 @@ searchPeopleElements.addEventListener("click", function (event) {
     calendarTopBar.render();
   }
 );
+
+/**
+ * 대화하기
+ */
+
+const otherEmployeeChatRoom = document.getElementById("other-chat-button");
+
+otherEmployeeChatRoom.addEventListener("click", function (event) {
+  event.preventDefault(); // 기본 버튼 동작 방지
+  console.log("요청한 employeeId =", otherEmployeeId);
+
+  const form = document.createElement("form");
+  form.method = "GET";
+  form.action = "/chatrooms";
+
+  const input = document.createElement("input");
+  input.type = "hidden";
+  input.name = "targetId";
+  input.value = otherEmployeeId;
+  form.appendChild(input);
+
+  document.body.appendChild(form);
+  form.submit();
+});
