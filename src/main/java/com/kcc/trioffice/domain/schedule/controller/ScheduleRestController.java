@@ -31,7 +31,7 @@ public class ScheduleRestController {
     public ResponseEntity<List<EmployeeSchedules>> getEmployeeSchedules(@RequestParam String startDate,
         @RequestParam String endDate, @AuthenticationPrincipal PrincipalDetail principalDetail) {
 
-      System.out.println("request Date : " + startDate + endDate);
+//      System.out.println("request Date : " + startDate + endDate);
       List<EmployeeSchedules> schedules = scheduleService.getEmployeeSchedules(startDate, endDate, principalDetail);
       return ResponseEntity.ok(schedules);
     }
@@ -72,4 +72,12 @@ public class ScheduleRestController {
         scheduleService.rejectSchedule(principalDetail.getEmployeeId(), scheduleId);
     }
 
+    @GetMapping("/schedules/other")
+    public ResponseEntity<List<EmployeeSchedules>> getEmployeeSchedules(@RequestParam String startDate,
+                                                                        @RequestParam String endDate, @RequestParam Long employeeId) {
+
+//      System.out.println("request Date : " + startDate + endDate);
+        List<EmployeeSchedules> schedules = scheduleService.getOtherSchedules(startDate, endDate, employeeId);
+        return ResponseEntity.ok(schedules);
+    }
 }

@@ -432,4 +432,14 @@ public class ChatRoomService {
         }
     }
 
+    public ChatInfoAndRedirectNum getGroupChatList(Long employeeId, Long roomId) {
+        List<ChatRoomInfo> chatRoomInfoList = chatRoomMapper.getChatRoomListByEmployeeId(employeeId);
+
+        chatRoomInfoList.forEach(c -> {
+            setChatRoomNameAndProfile(employeeId, c);
+            setLastMessage(c);
+        });
+
+        return new ChatInfoAndRedirectNum(chatRoomInfoList, roomId);
+    }
 }

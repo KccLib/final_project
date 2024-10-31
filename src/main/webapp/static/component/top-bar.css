@@ -609,7 +609,7 @@
   border: 1px solid white;
   border-radius: 5px;
   color: white;
-  margin-top:5px;
+  margin-top: 10px;
   margin-right: 5px;
   font-size: 13px;
 }
@@ -673,11 +673,16 @@
   margin-top: 32px;
 }
 
-#other-name, #other-position {
+#other-name {
   font-size: 30px;
   margin-top: 1vw;
   font-family: "One Mobile Title", sans-serif;
+}
 
+#other-position{
+  font-size: 20px;
+  margin-top: 1.5vw;
+  font-family: "One Mobile Title", sans-serif;
 }
 
 #other-name {
@@ -738,4 +743,32 @@
   border-radius: 50%;
   border: 1px solid #d7d7d7;
 
+}
+
+
+/**
+top-bar 달력
+ */
+
+#name-bar-top-bar {
+  height: 50px;
+  width: 100%;
+  background-color: #f4f4f4;
+  border-top: 1px solid #cfcfcf;
+  border-bottom: 1px solid #cfcfcf;
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+}
+
+#employee-name-location-top-bar {
+  margin-left: 14px;
+  color: #828181;
+}
+
+#calendar-top-bar {
+  /* border: 1px solid black; */
+  width: 100%;
+  height: calc(100% - 9.3rem);
+  padding: 10px;
 }

@@ -27,7 +27,7 @@
 
     <div class="second-side-bar">
         <ul>
-            <p>조직도</p>
+            <p id="department-title">조직도</p>
             <%
                 List<Department> departmentTree = (List<Department>) request.getAttribute("departmentTree");
                 for (Department dept : departmentTree) {
