@@ -177,5 +177,26 @@
       SET is_participated = #{isParticipated}
       WHERE schedule_invite_id = #{scheduleId} AND employee_id = #{employeeId}
   </update>
+
+    <select id="getOtherSchedules" parameterType="map" resultType="com.kcc.trioffice.domain.schedule.dto.EmployeeSchedules">
+        SELECT
+            schedule_id as scheduleId
+             , name
+             , started_dt as startedDt
+             , ended_dt as endedDt
+             , writer
+        FROM schedule
+        WHERE schedule_id IN (SELECT i.SCHEDULE_INVITE_ID AS scheduleInviteId
+                              FROM schedule_invite i
+                              WHERE is_participated = 2 AND employee_id = (
+                                  SELECT employee_id
+                                  FROM employee
+                                  WHERE employee_id = #{employeeId}
+                              )
+                                AND is_deleted = 0
+        )
+          AND started_dt <![CDATA[>]]> ADD_MONTHS(TO_DATE(#{startDate}, 'YYYY-MM-DD'), -1)
+          AND ended_dt <![CDATA[<=]]> ADD_MONTHS(TO_DATE(#{endDate}, 'YYYY-MM-DD'), 1)
+    </select>
   
 </mapper>

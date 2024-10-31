@@ -60,18 +60,18 @@ public class ScheduleService {
         PrincipalDetail principalDetail) {
       Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
       String employeeEmail = authentication.getName();
-      List<EmployeeSchedules> schdules = scheduleMapper.getEmployeeSchedules(employeeEmail, startDate, endDate);
+      List<EmployeeSchedules> schedules = scheduleMapper.getEmployeeSchedules(employeeEmail, startDate, endDate);
 
-      for (int i = 0; i < schdules.size(); i++) {
-        System.out.println((i + 1) + "번의 일정명은 " + schdules.get(i).getStartedDt());
+      for (int i = 0; i < schedules.size(); i++) {
+        System.out.println((i + 1) + "번의 일정명은 " + schedules.get(i).getStartedDt());
         // 내 스케줄인지 처리
-        if (schdules.get(i).getWriter().equals(principalDetail.getEmployeeId())) {
-          schdules.get(i).setIsMySchedule(1);
+        if (schedules.get(i).getWriter().equals(principalDetail.getEmployeeId())) {
+          schedules.get(i).setIsMySchedule(1);
         } else {
-          schdules.get(i).setIsMySchedule(0);
+          schedules.get(i).setIsMySchedule(0);
         }
       }
-      return schdules;
+      return schedules;
     }
 
     @Transactional
@@ -368,4 +368,18 @@ public class ScheduleService {
         scheduleMapper.updateScheduleInviteParticipate(employeeId, scheduleId, ScheduleInviteType.NOT_PARTICIPATE.getValue());
     }
 
+    public List<EmployeeSchedules> getOtherSchedules(String startDate, String endDate, Long employeeId) {
+      List<EmployeeSchedules> schedules = scheduleMapper.getOtherSchedules(employeeId, startDate, endDate);
+
+      for (int i = 0; i < schedules.size(); i++) {
+        System.out.println((i + 1) + "번의 일정명은 " + schedules.get(i).getStartedDt());
+        // 다른 사람의 일정 조회를 할 때 그 사람의 schedule인지 여부 판단
+        if (schedules.get(i).getWriter().equals(employeeId)) {
+          schedules.get(i).setIsMySchedule(1);
+        } else {
+          schedules.get(i).setIsMySchedule(0);
+        }
+      }
+      return schedules;
+    }
 }

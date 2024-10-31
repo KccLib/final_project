@@ -120,7 +120,7 @@ document.addEventListener("click", function (e) {
 });
 
 // 캘린더 랜더링
-document.addEventListener("DOMContentLoaded", function (employeeEvents) {
+document.addEventListener("DOMContentLoaded", function () {
   var calendarEl = document.getElementById("calendar");
   calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: "dayGridMonth",
@@ -630,7 +630,6 @@ function validateDates() {
     // `startDate`와 `endDate`가 Date 객체인지 확인
     if (startDate instanceof Date && endDate instanceof Date) {
       if (endDate.getTime() && endDate.getDate() !== startDate.getDate()) {
-
         // 날짜가 다르면 끝 날짜 초기화
         endDateInput.value = ""; // 끝 날짜 입력 필드 초기화
         mobiscroll.getInst(endDateInput).setVal(null); // Mobiscroll에서 끝 날짜 필드 초기화
@@ -642,14 +641,12 @@ function validateDates() {
         });
       }
     } else {
-      console.error("Invalid Date: startDate 또는 endDate가 유효하지 않습니다.");
+      console.error(
+        "Invalid Date: startDate 또는 endDate가 유효하지 않습니다."
+      );
     }
   }
-
 }
-
-
-
 
 var inviteEmployee = 0;
 var quill = new Quill("#schedule-contents", {

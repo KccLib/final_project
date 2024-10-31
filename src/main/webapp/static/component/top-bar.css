@@ -673,11 +673,16 @@
   margin-top: 32px;
 }
 
-#other-name, #other-position {
+#other-name {
   font-size: 30px;
   margin-top: 1vw;
   font-family: "One Mobile Title", sans-serif;
+}
 
+#other-position{
+  font-size: 20px;
+  margin-top: 1.5vw;
+  font-family: "One Mobile Title", sans-serif;
 }
 
 #other-name {
