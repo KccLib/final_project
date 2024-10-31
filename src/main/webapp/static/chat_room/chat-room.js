@@ -147,11 +147,12 @@ $(document).ready(function() {
 
         console.log(initialChatRoomId);
 
-        if (currentChatRoomId != null && chatRooms.length > 0) {
+        if (currentChatRoomId == null && chatRooms.length > 0) {
             var chatRoomIdToOpen = initialChatRoomId;
 
             // 해당 chatRoomId를 가진 채팅방 아이템을 찾습니다.
             var chatRoomItem = $('.chat-room-item[data-chat-room-id="' + chatRoomIdToOpen + '"]');
+            console.log(chatRoomItem);
             if (chatRoomItem.length > 0) {
                 chatRoomItem.trigger('click');
                 $('.default-contents').hide()
