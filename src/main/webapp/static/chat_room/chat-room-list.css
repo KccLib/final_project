@@ -373,7 +373,7 @@ th {
     text-align: center !important;
 }
 
-thead {
+.file-table thead {
     font-weight: bold;
     color: #fff;
     background: #7AB7FA;
