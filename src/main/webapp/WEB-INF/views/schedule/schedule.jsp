@@ -50,7 +50,6 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
         <button id="left-button"><</button>
         <button id="right-button">></button>
       </div> -->
-
         <div id="calendar"></div>
         <!-- 일정등록 모달 -->
         <div id="add-schedule-container" class="hidden">

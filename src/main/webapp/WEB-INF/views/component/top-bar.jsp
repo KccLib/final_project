@@ -174,6 +174,21 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
                 <button id="other-employee-schedule-close-button">닫기</button>
               </div>
             </div>
+            <div id="name-bar-top-bar">
+            <div id="employee-name-location-top-bar">
+              <security:authorize access="isAuthenticated()">
+                ${name} 님의 일정
+              </security:authorize>
+            </div>
+          </div>
+          <!-- <div id="calendar-bar">
+          <input type="month" id="date-picker" />
+          <button id="today-button"></button>
+          <button id="left-button"><</button>
+          <button id="right-button">></button>
+        </div> -->
+
+          <div id="calendar-top-bar"></div>
 
 
           </div>

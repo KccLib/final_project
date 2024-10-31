@@ -239,7 +239,9 @@ searchPeopleElements.addEventListener("click", function(event) {
 
                 otherEmailContainer.innerHTML = `<p id="other-email">${employeeInfo.email}</p>`;
 
-                otherLocateContainer.innerHTML = `<p id="other-locate">${employeeInfo.location}</p>`;
+                if(employeeInfo.location) {
+                    otherLocateContainer.innerHTML = `<p id="other-locate">${employeeInfo.location}</p>`;
+                }
 
                 otherContentsContainer.innerHTML = `<p id="other-contents>${employeeInfo.contents}</p>`;
             },

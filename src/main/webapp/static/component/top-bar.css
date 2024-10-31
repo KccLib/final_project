@@ -739,3 +739,31 @@
   border: 1px solid #d7d7d7;
 
 }
+
+
+/**
+top-bar 달력
+ */
+
+#name-bar-top-bar {
+  height: 50px;
+  width: 100%;
+  background-color: #f4f4f4;
+  border-top: 1px solid #cfcfcf;
+  border-bottom: 1px solid #cfcfcf;
+  display: flex;
+  align-items: center;
+  margin-top: 4rem;
+}
+
+#employee-name-location-top-bar {
+  margin-left: 14px;
+  color: #828181;
+}
+
+#calendar-top-bar {
+  /* border: 1px solid black; */
+  width: 100%;
+  height: calc(100% - 9.3rem);
+  padding: 10px;
+}
