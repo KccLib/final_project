@@ -119,22 +119,68 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
       </div>
     </div>
 
+    <%--  검색바 --%>
     <div id="search-bar-container" class="hidden">
       <div id="search-bar-contents">
         <div id="search-people-title">사원</div>
-        <div id="search-people-contents"><%-- 검색된 직원들 js로 추가 --%></div>
+        <div id="search-people-contents">
+          <%-- 검색된 직원들 js로 추가 --%>
+        </div>
         <div id="search-group-title">그룹 채팅</div>
         <div id="search-group-chat-rooms">
-          <div class="search-group-contents">
-            <div class="search-chat-profile-img"></div>
-            <p class="search-chatroom-name">그룹채팅방</p>
-          </div>
-
-          <div class="search-group-contents">123123</div>
-          <div class="search-group-contents">123123</div>
+          <%-- 검색된 채팅방 목록 --%>
         </div>
       </div>
     </div>
+
+    <%-- 다른 사용자 조회   --%>
+    <div id="other-employee-info-container" class="hidden">
+        <div class="layout-container">
+          <div class="second-side-bar">
+            <div id="employee-info-container">
+              <div id="profile-name-position">
+                <div id="other-profile-status">
+                  <div id="other-employee-status"></div>
+                  <div id="other-employee-img">
+                    <%--                  이미지 넣기--%>
+                  </div>
+                </div>
+                <div id="other-employee-name-position"><p id="other-name">김길동</p>&nbsp;<p id="other-position">사원</p></div>
+              </div>
+              <div id="other-etc-info-container">
+                <div id="other-dept-container">
+                  <p id="other-dept">SI 영업 1팀</p>
+                </div>
+                <div id="other-email-container">
+                  <p id="other-email">exam01@kcc.co.kr</p>
+                </div>
+                <div id="other-locate-container">
+                  <p id="other-locate">동측 기둥 0번자리 </p>
+                </div>
+                <div id="other-contents-container">
+                  <p id="other-contents">내일은 내일의 해가 뜬다. <br>
+                    ~ 2024 03 02 ing</p>
+                </div>
+                <div id="other-chat-button">
+                  <i class="fa-regular fa-comment"></i>
+                  <div>대화하기</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="contents">
+            <div id="close-button-container">
+              <div id="other-employee-schedule-close">
+                <button id="other-employee-schedule-close-button">닫기</button>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+    </div>
+
+
   </body>
 
   <script src="<%= request.getContextPath() %>/static/component/top-bar.js"></script>

@@ -58,7 +58,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
             <div id="title-add-sche">일정 등록</div>
             <form id="schedule-form">
               <div class="add-sche-text">
-                <div id="add-schedule-name">일정명</div>
+                <div id="add-schedule-name"><i class="fa-solid fa-pen-to-square"></i>&nbsp;일정명</div>
                 <input
                   type="text"
                   id="schedule-name"
@@ -69,7 +69,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
               </div>
 
               <div class="add-sche-date">
-                <label for="start-date">시작일:</label>
+                <label for="start-date"><i class="fa-regular fa-calendar-check"></i>&nbsp;시작일</label>
                 <input
                   type="text"
                   placeholder="날짜를 선택해주세요."
@@ -78,7 +78,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
                   required
                 />
 
-                <label for="end-date" id="end-date-label">종료일:</label>
+                <label for="end-date" id="end-date-label"><i class="fa-regular fa-calendar-check"></i> 종료일</label>
                 <input
                   type="text"
                   placeholder="날짜를 선택해주세요."
@@ -96,7 +96,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
               <div id="invite">
                 <div id="invite-title">
                   <div id="title-text">
-                    인원 초대 - 총원
+                    <i class="fa-solid fa-user-clock"></i>&nbsp;인원 초대 - 총원
                     <div id="count-employees"><span id="count"></span>명</div>
                   </div>
                   <input type="text" name="employees[]" />
@@ -112,20 +112,20 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
                     이메일 알림
                   </label>
 
-                  <label id="messenger-alram-label">
-                    <input
-                      type="checkbox"
-                      id="messenger-alram"
-                      name="messenger-alram"
-                      class="checkbox"
-                    />
-                    메신저 알림
-                  </label>
+<%--                  <label id="messenger-alram-label">--%>
+<%--                    <input--%>
+<%--                      type="checkbox"--%>
+<%--                      id="messenger-alram"--%>
+<%--                      name="messenger-alram"--%>
+<%--                      class="checkbox"--%>
+<%--                    />--%>
+<%--                    메신저 알림--%>
+<%--                  </label>--%>
                 </div>
               </div>
 
               <div id="wyswyg">
-                <div id="schedule-contents-title">일정내용</div>
+                <div id="schedule-contents-title"><i class="fa-solid fa-clipboard"></i>&nbsp;일정내용</div>
                 <div id="schedule-contents"></div>
               </div>
               <div id="add-schedule-modal-buttons">
@@ -148,7 +148,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
             <div id="detail-inner">
               <div id="detail-title"></div>
               <div id="schedule-master">
-                주최자 :
+                <i class="fa-solid fa-user-tie"></i>&nbsp;주최자
                 <input
                   type="text"
                   value=""
@@ -158,7 +158,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
                 />
               </div>
               <div class="detail-dates">
-                <label for="start-date">시작일:</label>
+                <label for="start-date"><i class="fa-regular fa-calendar-check"></i>&nbsp;시작일</label>
                 <input
                   type="text"
                   value=""
@@ -167,7 +167,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
                   readonly
                 />
 
-                <label for="end-date" id="end-date-label">종료일:</label>
+                <label for="end-date" id="end-date-label"><i class="fa-regular fa-calendar-check"></i>&nbsp;종료일</label>
                 <input
                   type="text"
                   id="end-date-detail"
@@ -177,11 +177,11 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
                 />
               </div>
               <div class="add-people">
-                <div id="add-people-text">참석 인원</div>
+                <div id="add-people-text"><i class="fa-solid fa-user-clock"></i>&nbsp;참석 인원</div>
                 <div id="add-people-table"></div>
               </div>
               <div class="detail-text">
-                <div id="detail-text-title" data-schduleid="1">일정 내용</div>
+                <div id="detail-text-title" data-schduleid="1"><i class="fa-solid fa-clipboard"></i>&nbsp;일정 내용</div>
                 <!-- 임시 Quill 컨테이너 -->
                 <div id="temp-quill-container" style="display: none"></div>
                 <div id="detail-text-contents"></div>

@@ -73,7 +73,7 @@ searchBar.addEventListener("click", function () {
             url: "/api/search",
             dataType: "json",
             success: function (responseSearch) {
-                console.log("검색된 개체 개수 :" + responseSearch.searchEmployeeList + responseSearch.searchChatRoomList);
+                // console.log("검색된 개체 개수 :" + responseSearch.searchEmployeeList + responseSearch.searchChatRoomList);
 
 
                 // searchContentsPeople 요소를 초기화
@@ -82,7 +82,7 @@ searchBar.addEventListener("click", function () {
                 // searchEmployeeList에서 각 직원 정보를 가져와서 HTML 생성
                 responseSearch.searchEmployeeList.forEach(function (employee) {
                     searchContentsPeople.innerHTML +=
-                        "<div class=\"search-peoples\" style=\"cursor: pointer;\">" +
+                        "<div class=\"search-peoples\" style=\"cursor: pointer;\" data-id=\"" + employee.id + "\">" +
                         "    <div class=\"search-profile-img\">" +
                         "        <img src=\"" + employee.profileURL + "\" alt=\"프로필 이미지\" />" +
                         "    </div>" +
@@ -106,7 +106,12 @@ searchBar.addEventListener("click", function () {
                 });
 
             },
-            error: function (result) {}
+            error: function(xhr, status, error) {
+                console.log("요청 실패:");
+                console.log("XHR:", xhr);
+                console.log("상태:", status);
+                console.log("오류:", error);
+            }
         });
 
 
@@ -116,7 +121,7 @@ searchBar.addEventListener("click", function () {
         searchBar.value = "";
 
     }
-    console.log(searchBarCount);
+    // console.log(searchBarCount);
         searchBarCount++;
 });
 
@@ -125,11 +130,13 @@ window.addEventListener("click", function (event) {
         searchContainer.classList.add("hidden");
     }
     searchBar.value = "";
-    
+
 });
 
 searchBar.addEventListener("input", function (event) {
     let searchBarValue = event.target.value;
+    searchContainer.classList.remove("hidden");
+
     console.log("변경된 값이 있습니다");
 
     $.ajax({
@@ -139,7 +146,7 @@ searchBar.addEventListener("input", function (event) {
             keyword : searchBarValue },
         dataType: "json",
         success: function (responseSearch) {
-            console.log("검색된 개체 개수 :" + responseSearch.searchEmployeeList + responseSearch.searchChatRoomList);
+            // console.log("검색된 개체 개수 :" + responseSearch.searchEmployeeList + responseSearch.searchChatRoomList);
 
 
             // searchContentsPeople 요소를 초기화
@@ -147,8 +154,9 @@ searchBar.addEventListener("input", function (event) {
 
             // searchEmployeeList에서 각 직원 정보를 가져와서 HTML 생성
             responseSearch.searchEmployeeList.forEach(function (employee) {
+                // console.log("넘어온 employee id : " + employee.id);
                 searchContentsPeople.innerHTML +=
-                    "<div class=\"search-peoples\" style=\"cursor: pointer;\">" +
+                    "<div class=\"search-peoples\" style=\"cursor: pointer;\" data-id=\"" + employee.id + "\">" +
                     "    <div class=\"search-profile-img\">" +
                     "        <img src=\"" + employee.profileURL + "\" alt=\"프로필 이미지\" />" +
                     "    </div>" +
@@ -172,6 +180,93 @@ searchBar.addEventListener("input", function (event) {
             });
 
         },
-        error: function (result) {}
+        error: function (xhr, status, error) {
+            console.error("그룹채팅방을 가져올 수 없습니다. " + error);
+        }
     });
 })  ;
+
+/**
+ * 다른사용자 조회 js
+ *
+ */
+const otherEmployeeContainer = document.getElementById("other-employee-info-container");
+const otherEmployeeClose = document.getElementById("other-employee-schedule-close");
+const searchPeopleElements = document.getElementById("search-people-contents");
+
+
+/**
+ * 상위 요소에 이벤트 리스너 추가 - employee profile은 동적으로 생성
+ */
+searchPeopleElements.addEventListener("click", function(event) {
+
+    //각 요소 비우기
+    const otherEmployeeNamePosition = document.getElementById("other-employee-name-position");
+    const otherDeptContainer = document.getElementById("other-dept-container");
+    const otherEmailContainer = document.getElementById("other-email-container");
+    const otherLocateContainer = document.getElementById("other-locate-container");
+    const otherContentsContainer = document.getElementById("other-contents-container");
+    const otherEmployeeImg = document.getElementById("other-employee-img");
+
+    otherEmployeeNamePosition.innerHTML = "";
+    otherDeptContainer.innerHTML = "";
+    otherEmailContainer.innerHTML = "";
+    otherLocateContainer.innerHTML = "";
+    otherContentsContainer.innerHTML = "";
+
+    const target = event.target.closest(".search-peoples");
+    if (target) {
+        const id = target.dataset.id;
+        console.log("user profile 선택" + id);
+        otherEmployeeContainer.classList.remove("hidden");
+        searchContainer.classList.add("hidden");
+        searchBar.value = "";
+
+        $.ajax({
+            method: "GET",
+            url: `/api/other/${id}`,
+            dataType: "json",
+            success: function (employeeInfo) {
+                console.log("회원 정보를 가져왔습니다." + employeeInfo.name);
+
+                otherEmployeeNamePosition.innerHTML = `
+                                                        <p id="other-name">${employeeInfo.name}</p>
+                                                        <p id="other-position">${employeeInfo.position}</p>
+                                                    `;
+
+                otherDeptContainer.innerHTML = `<p id="other-dept">${employeeInfo.deptName}</p>`;
+                otherEmployeeImg.innerHTML =  `<img src="${employeeInfo.profileUrl}" id="other-profile-img" alt="프로필 이미지" />` ;
+
+                otherEmailContainer.innerHTML = `<p id="other-email">${employeeInfo.email}</p>`;
+
+                otherLocateContainer.innerHTML = `<p id="other-locate">${employeeInfo.location}</p>`;
+
+                otherContentsContainer.innerHTML = `<p id="other-contents>${employeeInfo.contents}</p>`;
+            },
+            error: function (xhr, status, error) {
+                console.error("회원 조회에 실패했습니다. " + error);
+            }
+        })
+
+
+    }
+});
+
+
+// //엔터키 눌렀을 때 검색된 사람 중 제일 앞에 사람
+// document.addEventListener("keydown", function(event) {
+//     // 엔터 키가 눌렸는지 확인
+//     if (event.key === "Enter") {
+//         // 선택할 요소
+//         const selectedElement = document.getElementById("search-people-contents");
+//
+//         if (selectedElement.target.closest(".search-peoples")) {
+//             console.log("user profile 선택");
+//             otherEmployeeContainer.classList.remove("hidden");
+//         }
+//     }
+// });
+
+otherEmployeeClose.addEventListener("click", function () {
+   otherEmployeeContainer.classList.add("hidden");
+});

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.kcc.trioffice.domain.common.mapper.OtherEmployeeMapper">
+
+    <select id="getEmployeeInfoWithDept" parameterType="Long"
+            resultType="com.kcc.trioffice.domain.common.domain.EmployeeInfoWithDept">
+        SELECT
+            e.employee_id
+             , e.dept_id
+             , e.company_id
+             , e.email
+             , e.password
+             , e.phone_num
+             , e.external_email
+             , e.name
+             , e.birth
+             , e.profile_url
+             , e.fax
+             , e.location
+             , e.is_receive_notification
+             , e.position
+             , e.status
+             , e.status_message
+             , e.fcm_token
+             , e.writer
+             , e.write_dt
+             , e.modifier
+             , e.modified_dt
+             , e.is_deleted
+             , d.name as deptName
+        FROM employee e
+        INNER JOIN department d
+        ON e.dept_id = d.dept_id
+        WHERE e.employee_id = #{id}
+          AND e.is_deleted = 0
+    </select>
+
+</mapper>
