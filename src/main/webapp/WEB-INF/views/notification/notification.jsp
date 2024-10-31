@@ -98,8 +98,8 @@
                             />
                         </div>
                     </div>
-                    <div class="row detail-dates">
-                        <div class="start-date-box col-4">
+                    <div class="row detail-dates justify-content-start">
+                        <div class="start-date-box col-6">
                             <i class="fa-regular fa-calendar-check"></i>
                             <label for="start-date">시작일</label>
                             <input
@@ -111,8 +111,9 @@
                                     readonly
                             />
                         </div>
-                        <div class="col-4">
+                        <div class="col-6 d-flex justify-content-end align-items-center">
                             <i class="fa-regular fa-calendar-check"></i>
+                            &nbsp;
                             <label for="end-date" id="end-date-label">종료일 </label>
                             <input
                                     type="text"
@@ -131,7 +132,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-10">
+                        <div class="col-12">
                             <div class="notification-table">
                                 <div id="table-container">
                                 </div>
@@ -149,11 +150,11 @@
                             <div id="detail-text-contents"></div>
                         </div>
                     </div>
-                    <div class="row justify-content-end">
-                        <div class="col-4 d-flex justify-content-end">
-                            <div id="detail-buttons">
-                                <button id="detail-approve">수락</button>
-                                <button id="detail-reject">거절</button>
+                    <div class="row justify-content-center">
+                        <div class="col-4 d-flex justify-content-center">
+                            <div id="detail-buttons" style="width: 100%;">
+                                <button id="detail-approve" class="col-6">수락</button>
+                                <button id="detail-reject" class="col-6">거절</button>
                             </div>
                         </div>
                     </div>

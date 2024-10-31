@@ -62,7 +62,6 @@
 #start-date-detail,
 #end-date-detail,
 #writer-detail {
-    width: 11rem;
     height: 2rem;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -125,28 +124,24 @@
 
 #detail-reject {
     color: white;
-    width: 100px;
     height: 40px;
     background-color: indianred;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-right: 5px;
 }
 
 #detail-approve {
     color: white;
-    width: 100px;
     height: 40px;
     background-color: #0056b3;
     border: 1px solid #ccc;
-    margin-right: 5px;
     border-radius: 5px;
 }
 
 .detail-inner {
     padding: 40px;
-    width: 80%;
-    border: 1px solid #676767;
+    width: 55%;
+    border: 1px solid darkgray;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,.25);
 }
@@ -177,10 +172,11 @@
 
 #detail-text-contents {
     margin-top: 5px;
-    width: 82.8%;
-    padding: 5px;
+    width: 100%;
+    padding: 7px;
     height: 200px;
     border: 1px solid #d2dae1;
+    line-height: 1.2;
 }
 
 #detail-people-tbody {
@@ -192,7 +188,7 @@
 
 .notification-table {
     position: relative;
-    border: 1px solid #7AB7FA;
+    border: 1px solid #d2dae1;
 }
 
 .table {
@@ -225,10 +221,6 @@
 
 .contents {
     height: 98% !important;
-}
-
-.detail-title p {
-    padding-bottom: 10px;
 }
 
 .notification-item.active {
