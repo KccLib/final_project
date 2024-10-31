@@ -10,4 +10,5 @@ import java.util.List;
 public class ChatInfoAndRedirectNum {
     private List<ChatRoomInfo> chatRoomInfos;
     private Long redirectNum;
+
 }

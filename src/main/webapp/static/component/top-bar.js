@@ -315,8 +315,18 @@ searchChatRoomElements.addEventListener("click", function (event) {
   if (target) {
     const roomId = target.dataset.chatroomid;
 
-    console.log("선택된 roomId는 : " + roomId);
-  }
+    const form = document.createElement("form");
+    form.method = "GET";
+    form.action = "/group";
+
+    const input = document.createElement("input");
+    input.type = "hidden";
+    input.name = "roomId";
+    input.value = roomId;
+    form.appendChild(input);
+
+    document.body.appendChild(form);
+    form.submit();  }
 
 });
 
@@ -509,7 +519,7 @@ const otherEmployeeChatRoom = document.getElementById("other-chat-button");
 
 otherEmployeeChatRoom.addEventListener("click", function (event) {
   event.preventDefault();
-  console.log("요청한 employeeId =", otherEmployeeId);
+  // console.log("요청한 employeeId =", otherEmployeeId);
 
   const form = document.createElement("form");
   form.method = "GET";

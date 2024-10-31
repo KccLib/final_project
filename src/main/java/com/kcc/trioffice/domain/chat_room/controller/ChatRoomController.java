@@ -57,4 +57,17 @@ public class ChatRoomController {
         return "redirect:/chatrooms";
     }
 
+    /**
+     * 그룹채팅 이동
+     * @param roomId 선택한 그룹채팅의 번호
+     */
+    @GetMapping("/group")
+    public String groupChatRoom(Model model, @AuthenticationPrincipal PrincipalDetail principalDetail, @RequestParam(value = "roomId", required = false) Long roomId) {
+        ChatInfoAndRedirectNum chatInfoAndRedirectNum = chatRoomService.getGroupChatList(principalDetail.getEmployeeId(), roomId);
+
+        model.addAttribute("chatRoomList", chatInfoAndRedirectNum.getChatRoomInfos());
+        model.addAttribute("initialChatRoomId", chatInfoAndRedirectNum.getRedirectNum() != null ? chatInfoAndRedirectNum.getRedirectNum() : "");
+        return "chat_room/chat-room-list";
+    }
+
 }

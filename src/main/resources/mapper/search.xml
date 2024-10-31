@@ -46,7 +46,7 @@
                                     WHERE employee_id = #{employeeId} AND is_deleted = 0
                                     )
                 GROUP BY chat_room_id
-                HAVING COUNT(employee_id) >= 2
+                HAVING COUNT(employee_id) > 2
                 )
                 ORDER BY chat_room_id DESC
             )
@@ -97,7 +97,7 @@
                               WHERE employee_id = #{employeeId} AND is_deleted = 0
                           )
                           GROUP BY chat_room_id
-                          HAVING COUNT(employee_id) >= 2
+                          HAVING COUNT(employee_id) > 2
                       )
                  ORDER BY chat_room_id DESC
              )
