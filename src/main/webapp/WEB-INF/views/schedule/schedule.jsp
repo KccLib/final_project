@@ -5,12 +5,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
   <head>
     <meta charset="UTF-8" />
     <title>kcc정보통신 | 일정</title>
-    <link
-      rel="stylesheet"
-      href="<%= request.getContextPath() %>/static/schedule/schedule.css"
-    />
-    <script src="<%= request.getContextPath() %>/static/component/fullcalendar/dist/index.global.js"></script>
-    <script src="<%= request.getContextPath() %>/static/component/fullcalendar/dist/index.global.js"></script>
+
   </head>
 
   <body>

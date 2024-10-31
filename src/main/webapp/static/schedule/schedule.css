@@ -529,6 +529,7 @@ input[name="employees[]"] {
 #detail-modify.hidden {
   display: none;
 }
+
 /* 시간 포함 이벤트 동그라미 색상 변경 */
 .time-event-dot .fc-daygrid-event-dot {
   border: calc(var(--fc-daygrid-event-dot-width) / 2) solid red; /* 동그라미 색상 */

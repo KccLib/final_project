@@ -311,14 +311,30 @@ var lastDayForOthers;
 
 function getFirstAndLastDateOfMonthForOther() {
   // 날짜를 'YYYY-MM-DD' 형식으로 포맷팅
-  var formattedFirstDay = firstDay.toISOString().split("T")[0];
-  var formattedLastDay = lastDay.toISOString().split("T")[0];
+  var formattedFirstDay = firstDayForOthers.toISOString().split("T")[0];
+  var formattedLastDay = lastDayForOthers.toISOString().split("T")[0];
 
   //json 형식으로 반환
   return {
     firstDayForOthers: formattedFirstDay,
     lastDayForOthers: formattedLastDay,
   };
+}
+
+function formatDateToISOForOther(dateString) {
+  // 'YYYY-MM-DD HH:mm:ss' 형식의 문자열을 Date 객체로 변환
+  const [datePart, timePart] = dateString.split(" ");
+  const [year, month, day] = datePart.split("-");
+  const [hour, minute, second] = timePart.split(":");
+
+  // Date 객체를 한국 시간(KST) 기준으로 생성
+  const localDate = new Date(year, month - 1, day, hour, minute, second);
+
+  const isoDate = new Date(
+      localDate.getTime() - localDate.getTimezoneOffset() * 60000
+  ).toISOString();
+
+  return isoDate.replace(".000Z", ""); // 초까지 포함된 형식을 유지
 }
 
 function  fetchCalendarDataForOther(){
@@ -348,8 +364,8 @@ function  fetchCalendarDataForOther(){
         var event = {
           title: schedule.name,
           // ISO 8601 형식으로 변환
-          start: formatDateToISO(schedule.startedDt),
-          end: formatDateToISO(schedule.endedDt),
+          start: formatDateToISOForOther(schedule.startedDt),
+          end: formatDateToISOForOther(schedule.endedDt),
           extendedProps: {
             // 추가 정보를 담기 - 스케줄의 각 id의 고유한 번호, 내스케줄여부
             isMySchedule: schedule.isMySchedule,

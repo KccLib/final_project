@@ -13,6 +13,12 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
       rel="stylesheet"
       href="<%= request.getContextPath() %>/static/component/top-bar.css"
     />
+    <script src="<%= request.getContextPath() %>/static/component/fullcalendar/dist/index.global.js"></script>
+    <script src="<%= request.getContextPath() %>/static/component/fullcalendar/dist/index.global.js"></script>
+    <link
+            rel="stylesheet"
+            href="<%= request.getContextPath() %>/static/schedule/schedule.css"
+    />
   </head>
 
   <body>

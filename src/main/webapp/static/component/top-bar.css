@@ -609,7 +609,7 @@
   border: 1px solid white;
   border-radius: 5px;
   color: white;
-  margin-top:5px;
+  margin-top: 10px;
   margin-right: 5px;
   font-size: 13px;
 }
@@ -758,7 +758,7 @@ top-bar 달력
   border-bottom: 1px solid #cfcfcf;
   display: flex;
   align-items: center;
-  margin-top: 4rem;
+  margin-top: 10px;
 }
 
 #employee-name-location-top-bar {
