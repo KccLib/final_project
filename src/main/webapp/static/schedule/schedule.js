@@ -265,7 +265,7 @@ document.addEventListener("DOMContentLoaded", function (employeeEvents) {
                 <thead id="detail-people-header">
                     <tr>
                         <th style="width: 124px;">이름</th>
-                        <th style="width: 179px;">부서</th>
+                        <th style="width: 207px;">부서</th>
                         <th>참석 여부</th>
                     </tr>
                 </thead>
@@ -291,8 +291,8 @@ document.addEventListener("DOMContentLoaded", function (employeeEvents) {
             tableHTML += `
                           <tr>
                               <td style="width: 125px; border-right: 1px solid #d2dae1;">${employee.employeeName}</td>
-                              <td style="width: 179px; border-right: 1px solid #d2dae1;">${employee.deptName}</td>
-                              <td style="width: 155px;">${participationStatus}</td>
+                              <td style="width: 207px; border-right: 1px solid #d2dae1;">${employee.deptName}</td>
+                              <td style="width: 162px;">${participationStatus}</td>
                           </tr>
                       `;
           });

@@ -163,7 +163,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
                 </div>
                 <div id="other-chat-button">
                   <i class="fa-regular fa-comment"></i>
-                  <div>대화하기</div>
+                  <a id="enter-chat-room">대화하기</a>
                 </div>
               </div>
             </div>
