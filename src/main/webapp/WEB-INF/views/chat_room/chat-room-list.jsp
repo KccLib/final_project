@@ -211,6 +211,7 @@
                                     value=""
                                     data-blacklist=".NET,PHP"
                                     autofocus
+                                    required
                             />
                         </div>
                     </div>
