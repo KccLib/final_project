@@ -1,15 +1,16 @@
 var idleTime = 0;
 var isAway = false;
 setInterval(timerIncrement, 60000); // 1분마다 실행
+var employeeInfo = 0;
 
 statusModel.addEventListener("click", function (event) {
   const target = event.target.closest(".user-status-select");
   if (target) {
-    // console.log("사용자가 선택한 status" + target.dataset.status);
+    console.log("사용자가 선택한 status" + target.dataset.status);
     const status = target.dataset.status;
-
     userStatusBox.innerHTML = "";
     isStatusOpen = !isStatusOpen;
+    employeeInfo = status;
     $.ajax({
       method: "PUT",
       url: "/api/employees/status",
@@ -57,6 +58,11 @@ statusModel.addEventListener("click", function (event) {
 
 $(document).on("mousemove keypress mousedown scroll touchstart", function () {
   // console.log("타이머 작동");
+
+  if (employeeInfo !== 1) {
+    return;
+  }
+
   idleTime = 0;
   if (isAway) {
     isAway = false;
@@ -70,6 +76,7 @@ function timerIncrement() {
     // 10분 비활동 시
     isAway = true;
     updateUserStatus("ABSENT"); // 상태가 '자리비움'으로 변경될 때만 호출
+    console.log("사용자 상태변경");
   }
 }
 
