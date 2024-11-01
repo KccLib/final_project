@@ -237,12 +237,14 @@ searchPeopleElements.addEventListener("click", function (event) {
   const employeeName = document.getElementById(
     "employee-name-location-top-bar",
   );
+  const otherEmployeeStatus = document.getElementById("other-employee-status");
 
   otherEmployeeNamePosition.innerHTML = "";
   otherDeptContainer.innerHTML = "";
   otherEmailContainer.innerHTML = "";
   otherLocateContainer.innerHTML = "";
   otherContentsContainer.innerHTML = "";
+  otherEmployeeStatus.innerHTML = "";
 
   const target = event.target.closest(".search-peoples");
   if (target) {
@@ -273,9 +275,19 @@ searchPeopleElements.addEventListener("click", function (event) {
         if (employeeInfo.location) {
           otherLocateContainer.innerHTML = `<p id="other-locate">${employeeInfo.location}</p>`;
         }
-
         otherContentsContainer.innerHTML = `<p id="other-contents>${employeeInfo.contents}</p>`;
+
         employeeName.innerHTML = `<p>${employeeInfo.name} 님의 일정</p>`;
+
+        if (employeeInfo.status === 1) {
+          otherEmployeeStatus.innerHTML = `<div id="employee-status" style="background-color: #92c353;"><i class="fa-solid fa-check" style="color: white;"></i></div>`;
+        } else if (employeeInfo.status === 2) {
+          otherEmployeeStatus.innerHTML = `<div id="employee-status" style="background-color: #eaa300;"><i class="fa-solid fa-minus" style="color: white;"></i></div>`;
+        } else if (employeeInfo.status === 3) {
+          otherEmployeeStatus.innerHTML = `<div id="employee-status" style="background-color: #d9d9d9;"><i class="fa-solid fa-minus" style="color: white;"></i></div>`;
+        } else if (employeeInfo.status === 4) {
+          otherEmployeeStatus.innerHTML = `<div id="employee-status" style="background-color: #ea0000;"><i class="fa-solid fa-minus" style="color: white;"></i></div>`;
+        }
       },
       error: function (xhr, status, error) {
         console.error("회원 조회에 실패했습니다. " + error);
