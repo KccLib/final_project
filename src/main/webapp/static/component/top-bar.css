@@ -104,11 +104,13 @@
   width: 230px;
   height: 240px;
   padding: 10px;
-  border: 1px solid #bbb;
   border-radius: 3px;
   display: flex;
   flex-direction: column;
   z-index: 10000; /* 모달 내용이 모달 배경 위에 표시되도록 */
+
+  border: 1px solid gainsboro;
+  box-shadow: 0px 1px 3px 0 darkgray;
 }
 
 #modalContainer.hidden {
@@ -415,7 +417,7 @@
   margin-top: 2px;
 }
 
-#search-bar-container.hidden{
+#search-bar-container.hidden {
   display: none;
 }
 
@@ -438,14 +440,13 @@
   margin-left: 70px;
   box-shadow: 0px 1px 3px 0 darkgray;
   padding: 3px;
-
 }
 
 #search-bar-contents * {
   color: #676767;
 }
 
-#search-people-title{
+#search-people-title {
   margin-top: 10px;
 }
 
@@ -459,13 +460,14 @@
 #search-group-title,
 #search-people-contents,
 #search-people-title,
-.search-group-contents{
+.search-group-contents {
   padding-left: 7px;
   padding-right: 8px;
 }
 
-#search-group-title{
-  margin-top: 10px;}
+#search-group-title {
+  margin-top: 10px;
+}
 
 .search-peoples {
   padding-top: 3px;
@@ -482,24 +484,22 @@
   margin-top: 2px;
 }
 
-.search-profile-img{
+.search-profile-img {
   width: 50px;
   height: 50px;
   padding-left: 2px;
   padding-right: 2px;
   border-radius: 70%;
   /*border: 1px solid #0b93ff;*/
-
 }
 
-#search-group-chat-rooms{
+#search-group-chat-rooms {
   height: 150px;
   width: 100%;
   overflow-y: auto;
 }
 
-
-.search-group-contents{
+.search-group-contents {
   padding-top: 3px;
   padding-bottom: 3px;
   height: 50px;
@@ -511,7 +511,7 @@
   cursor: pointer;
 }
 
-.search-profile-img img{
+.search-profile-img img {
   width: 50px;
   height: 100%; /* 컨테이너 크기에 맞춤 */
   border-radius: 70%;
@@ -519,11 +519,11 @@
   object-fit: cover;
 }
 
-.search-chat-profile-img{
+.search-chat-profile-img {
   display: flex;
 }
 
-.search-chat-profile-img img{
+.search-chat-profile-img img {
   width: 30px;
   height: 100%; /* 컨테이너 크기에 맞춤 */
   border-radius: 70%;
@@ -541,8 +541,7 @@
 }
 
 #search-people-contents > div:hover,
-#search-group-chat-rooms > div:hover
-{
+#search-group-chat-rooms > div:hover {
   background-color: aliceblue; /* 포커스 시 배경 색상 변경 */
 }
 #search-people-contents > div,
@@ -553,7 +552,6 @@
 #other-employee-info-container.hidden {
   display: none;
 }
-
 
 .second-side-bar {
   flex: 0 0 22%;
@@ -582,7 +580,7 @@
 }
 
 #other-employee-info-contents {
- width: 200px;
+  width: 200px;
   height: 200px;
   background-color: black;
 }
@@ -601,7 +599,6 @@
   border-radius: 20px;
 }
 
-
 #other-employee-schedule-close-button {
   width: 50px;
   height: 30px;
@@ -614,9 +611,7 @@
   font-size: 13px;
 }
 
-
 #other-employee-schedule-close-button:hover {
-
   background-color: white;
   border: 1px solid #4b6dd1;
   border-radius: 5px;
@@ -628,7 +623,7 @@
   justify-content: end;
 }
 
-#employee-info-container{
+#employee-info-container {
   width: 300px;
   height: 500px;
   /*background-color: #bababa;*/
@@ -639,14 +634,13 @@
   margin-top: 11vw;
   margin-left: 1.5vw;
 }
-#profile-name-position{
+#profile-name-position {
   width: 250px;
   height: 70px;
   /*background-color: #4b6dd1;*/
   display: flex;
   padding: 10px;
   justify-content: end;
-
 }
 
 #other-employee-name-position {
@@ -661,7 +655,7 @@
   margin-left: 1vw;
 }
 
-#other-employee-status{
+#other-employee-status {
   position: absolute;
   width: 20px;
   height: 20px;
@@ -679,7 +673,7 @@
   font-family: "One Mobile Title", sans-serif;
 }
 
-#other-position{
+#other-position {
   font-size: 20px;
   margin-top: 1.5vw;
   font-family: "One Mobile Title", sans-serif;
@@ -689,7 +683,7 @@
   margin-left: 0.5vw;
 }
 
-#other-etc-info-container{
+#other-etc-info-container {
   height: 400px;
   width: 250px;
   /* background-color: #c5cdff; */
@@ -698,14 +692,13 @@
   align-items: end;
   /* padding: 5px; */
   padding-right: 10px;
-
 }
 
-#other-etc-info-container > div{
+#other-etc-info-container > div {
   margin-top: 5px;
 }
 
-#other-contents-container{
+#other-contents-container {
   width: 220px;
   height: 180px;
   background-color: white;
@@ -719,7 +712,7 @@
   font-size: 35px;
 }
 
-#other-chat-button{
+#other-chat-button {
   width: 50px;
   height: 60px;
   font-size: 10px;
@@ -742,9 +735,7 @@
   object-fit: cover;
   border-radius: 50%;
   border: 1px solid #d7d7d7;
-
 }
-
 
 /**
 top-bar 달력

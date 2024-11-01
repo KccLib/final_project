@@ -72,7 +72,7 @@ $("#find-password-button").click(function (event) {
   setFindPasswordEmailCookie(findPasswordEmail);
   if (employeeId === null || employeeId === "") {
     $("#checkedId").html(
-      '<p class="text-danger">아이디(이메일)을 입력해주세요.</p>'
+      '<p class="text-danger" style="margin-top: 3px">아이디(이메일)을 입력해주세요.</p>'
     );
   } else {
     $("#checkedId").html(""); // 해당 영역 초기화

@@ -44,6 +44,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
       <div id="modalContainer" class="hidden">
         <div id="modalContent">
           <div id="logout">
+            <a href="#" >회원수정</a>
             <form
               id="logoutForm"
               action="/logout"
