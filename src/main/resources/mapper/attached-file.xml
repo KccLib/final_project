@@ -183,4 +183,77 @@
         AND is_deleted = 0
   </select>
 
+  <select id="getAllAttachedFile" resultType="com.kcc.trioffice.domain.attached_file.dto.response.AttachedFileDetailInfo">
+    SELECT * FROM (
+    SELECT sub.*, ROWNUM rnum FROM (
+    SELECT
+    cr.chat_room_id,
+    cr.name AS chatRoomName,
+    af.file_id,
+    af.file_name,
+    af.filename_extension AS fileExtension,
+    e.employee_id AS senderId,
+    e.name AS senderName,
+    e.profile_url AS senderProfileUrl,
+    TO_CHAR(af.write_dt, 'YYYY-MM-DD') AS writeDt,
+    t.tags AS tags
+    FROM
+    attached_file af
+    JOIN
+    chat c ON af.chat_id = c.chat_id AND c.is_deleted = 0
+    JOIN
+    chat_room cr ON c.chat_room_id = cr.chat_room_id AND cr.is_deleted = 0
+    JOIN
+    participation_employee pe ON cr.chat_room_id = pe.chat_room_id AND pe.employee_id = #{currentEmployeeId} AND pe.is_deleted = 0
+    JOIN
+    employee e ON af.writer = e.employee_id AND e.is_deleted = 0
+    LEFT JOIN (
+    SELECT
+    file_id,
+    LISTAGG(name, ',') WITHIN GROUP (ORDER BY name) AS tags
+    FROM
+    tag
+    WHERE
+    is_deleted = 0
+    GROUP BY
+    file_id
+    ) t ON af.file_id = t.file_id
+    WHERE
+    af.is_deleted = 0
+    <if test="extensions != null and extensions != ''">
+      <choose>
+        <when test="extensions == 'img'">
+          AND LOWER(af.filename_extension) IN ('png', 'jpg', 'jpeg', 'gif')
+        </when>
+        <otherwise>
+          AND LOWER(af.filename_extension) = LOWER(#{extensions})
+        </otherwise>
+      </choose>
+    </if>
+    <if test="senderId != null">
+      AND af.writer = #{senderId}
+    </if>
+    <if test="startDate != null and startDate != ''">
+      AND af.write_dt &gt;= TO_DATE(#{startDate}, 'YYYY-MM-DD')
+    </if>
+    <if test="endDate != null and endDate != ''">
+      AND af.write_dt &lt;= TO_DATE(#{endDate}, 'YYYY-MM-DD') + 1
+    </if>
+    <if test="keyword != null and keyword != ''">
+      AND (
+      af.file_name LIKE '%' || #{keyword} || '%'
+      OR EXISTS (
+      SELECT 1 FROM tag t2
+      WHERE t2.file_id = af.file_id AND t2.is_deleted = 0 AND t2.name LIKE '%' || #{keyword} || '%'
+      )
+      )
+    </if>
+    ORDER BY
+    af.write_dt DESC
+    ) sub
+    WHERE ROWNUM &lt;= #{limit} + #{offset}
+    )
+    WHERE rnum &gt; #{offset}
+  </select>
+
 </mapper>

@@ -20,4 +20,6 @@ public interface SearchMapper {
     List<SearchEmployee> getChangeAllEmployeesInfo(Long employeeId, String keyword);
 
     List<Long> getChangeMyChatRooms(Long employeeId);
+
+    List<SearchEmployee> getAllEmployeesInfoByKeyword(Long companyId, String keyword);
 }
