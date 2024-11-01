@@ -1,6 +1,6 @@
 .top-bar {
   border: 1px solid #e4e4e4;
-  height: 40px;
+  height: 50px;
   width: 100%;
   background-color: #ebebeb;
   display: flex;
@@ -10,6 +10,8 @@
 .search {
   font-family: "One Mobile Title", sans-serif;
   font-weight: 400; /* Regular weight */
+  display: flex;
+  align-items: center;
 }
 
 /* 검색창 */
@@ -24,13 +26,14 @@
   border: 1px solid #bbb;
   border-radius: 8px;
   padding: 10px 10px;
-  font-size: 10px;
+  font-size: 13px;
+  height: 35px;
 }
 
 .search > img {
   position: absolute;
   width: 17px;
-  top: 8px;
+  top: 14px;
   right: 9px;
   margin: 0;
   cursor: pointer;
@@ -44,7 +47,7 @@
 /* 우측 상태 확인 관련 css */
 
 .employee {
-  margin-top: 5px;
+  margin-top: 8px;
   margin-right: 5px;
   width: 30px;
   height: 30px;
@@ -67,8 +70,8 @@
 .logo {
   margin-left: 5px;
   margin-top: 5px;
-  width: 100px;
-  height: 30px; /*
+  width: 130px;
+  height: 40px; /*
   border: 1px solid black; */
 }
 
@@ -469,12 +472,12 @@
 
 #search-bar-contents {
   height: 325px;
-  width: 30rem;
+  width: 29.9rem;
   background-color: white;
   border: 1px solid gainsboro;
   border-radius: 3px;
   z-index: 20001;
-  margin-left: 70px;
+  margin-left: 100px;
   box-shadow: 0px 1px 3px 0 darkgray;
   padding: 3px;
 }
