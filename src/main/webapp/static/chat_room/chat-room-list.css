@@ -359,7 +359,7 @@
 /*
 */
 
-table {
+.file-table table {
     border: 1px #a39485 solid;
     font-size: .9em;
     box-shadow: 0 2px 5px rgba(0,0,0,.25);
@@ -369,7 +369,7 @@ table {
     overflow: hidden;
 }
 
-th {
+.file-table th {
     text-align: center !important;
 }
 
@@ -380,12 +380,12 @@ th {
     height: 30px;
 }
 
-td, th {
+.file-table td, .file-table th {
     padding: 1em .5em !important;
     vertical-align: middle !important;
 }
 
-td {
+.file-table td {
     border-bottom: 1px solid rgba(0,0,0,.1);
     background: #fff;
     text-align: center !important;
@@ -416,29 +416,29 @@ td {
 
 @media all and (max-width: 768px) {
 
-    table, thead, tbody, th, td, tr {
+    .file-table table, .file-table thead, .file-table tbody, .file-table th, .file-table td, .file-table tr {
         display: block;
     }
 
-    th {
+    .file-table th {
         text-align: center;  // 텍스트를 중앙으로 정렬
         vertical-align: middle;  // 내용을 수직 중앙으로 정렬
         line-height: 30px;  // 높이에 맞춰 line-height 조정
     }
 
-    table {
+    .file-table table {
         position: relative;
         padding-bottom: 0;
         border: none;
         box-shadow: 0 0 10px rgba(0, 0, 0, .2);
     }
 
-    thead {
+    .file-table thead {
         float: left;
         white-space: nowrap;
     }
 
-    tbody {
+    .file-table tbody {
         overflow-x: auto;
         overflow-y: hidden;
         position: relative;

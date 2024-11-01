@@ -23,6 +23,7 @@
 .date,
 .company,
 .chat-bot,
+.files,
 #chat {
   display: flex;
   flex-direction: column;
@@ -51,6 +52,8 @@
 .date > a:hover .menu-text,
 .company > a:hover .icons i,
 .company > a:hover .menu-text,
+.files > a:hover .icons i,
+.files > a:hover .menu-text,
 .chat-bot:hover .icons i {
   color: #0056b3;
 }

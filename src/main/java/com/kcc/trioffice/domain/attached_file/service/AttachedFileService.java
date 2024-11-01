@@ -1,11 +1,14 @@
 package com.kcc.trioffice.domain.attached_file.service;
 
+import com.kcc.trioffice.domain.attached_file.dto.request.AttachedFileSelect;
+import com.kcc.trioffice.domain.attached_file.dto.response.AttachedFileDetailInfo;
 import com.kcc.trioffice.domain.attached_file.dto.response.AttachedFileInfo;
 import com.kcc.trioffice.domain.attached_file.dto.response.ImageInfo;
 import com.kcc.trioffice.domain.attached_file.mapper.AttachedFileMapper;
 import com.kcc.trioffice.domain.attached_file.mapper.TagMapper;
 import com.kcc.trioffice.domain.chat_room.dto.request.ChatMessage;
 import com.kcc.trioffice.domain.chat_room.dto.response.ChatMessageInfo;
+import com.kcc.trioffice.domain.chat_room.dto.response.ChatRoomInfoBase;
 import com.kcc.trioffice.domain.chat_room.dto.response.ParticipantEmployeeInfo;
 import com.kcc.trioffice.domain.chat_room.mapper.ChatMapper;
 import com.kcc.trioffice.domain.chat_room.mapper.ChatRoomMapper;
@@ -32,6 +35,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.kcc.trioffice.global.constant.GlobalConstants.DEFAULT_GROUP_IMAGE;
 
 @Service
 @RequiredArgsConstructor
@@ -225,4 +230,37 @@ public class AttachedFileService {
                 () -> new NotFoundException("해당 파일이 존재하지 않습니다."));
         return s3FileService.download(s3UploadFile.getFileUrl(), s3UploadFile.getFileName());
     }
+
+    public List<AttachedFileDetailInfo> getAllAttachedFile(Long currentEmployeeId, AttachedFileSelect attachedFileSelect) {
+        List<AttachedFileDetailInfo> attachedFileDetailInfos = attachedFileMapper.getAllAttachedFile(currentEmployeeId,
+                attachedFileSelect.getExtensions(),
+                attachedFileSelect.getSenderId(),
+                attachedFileSelect.getStartDate(),
+                attachedFileSelect.getEndDate(),
+                attachedFileSelect.getKeyword(),
+                attachedFileSelect.getOffset(),
+                50L);
+
+        attachedFileDetailInfos.stream().filter(a -> a.getChatRoomName() == null)
+                .forEach(a -> setChatRoomNameAndProfile(currentEmployeeId, a));
+
+        log.info("attachedFileDetailInfos: {}", attachedFileDetailInfos);
+
+        return attachedFileDetailInfos;
+    }
+
+    private void setChatRoomNameAndProfile(Long employeeId, AttachedFileDetailInfo attachedFileDetailInfo) {
+        List<EmployeeInfo> employeeInfos = participationEmployeeMapper.getEmployeeByChatRoomIdExceptOneSelf(attachedFileDetailInfo.getChatRoomId(), employeeId);
+
+        if (employeeInfos.size() == 1) {
+            EmployeeInfo employeeInfo = employeeInfos.get(0);
+            attachedFileDetailInfo.setChatRoomName(employeeInfo.getName());
+        } else {
+            List<String> employeeNames = employeeInfos.stream().map(EmployeeInfo::getName).toList();
+            String chatRoomName = String.join(", ", employeeNames);
+            attachedFileDetailInfo.setChatRoomName(chatRoomName);
+        }
+
+    }
+
 }
