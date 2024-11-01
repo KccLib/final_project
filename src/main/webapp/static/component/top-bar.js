@@ -18,6 +18,7 @@ const userProfileImg = document.getElementById("profile-img");
 const userStatusMessageContents = document.getElementById(
   "status-message-contents",
 );
+const userStatusBox = document.getElementById("user-status-box");
 
 modalOpenButton.addEventListener("click", () => {
   modal.classList.remove("hidden");
@@ -27,6 +28,7 @@ modalOpenButton.addEventListener("click", () => {
   userEmail.innerText = "";
   userProfileImg.innerText = "";
   userStatusMessageContents.innerText = "";
+  userStatusBox.innerText = "";
 
   $.ajax({
     url: "/api/employees/current-employee",
@@ -43,6 +45,33 @@ modalOpenButton.addEventListener("click", () => {
               height="150"
             /><div id="profile-img-modify"><i class="fa-solid fa-camera"></i></div>`;
       userStatusMessageContents.innerText = `${employeeInfo.statusMessage}`;
+
+      if (employeeInfo.status === 1) {
+        userStatusBox.innerHTML = `<div id="status"><i class="fa-solid fa-check"></i></div>
+                                  <div id="status-text">대화 가능</div>
+                                  <div id="status-modify-icon">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                  </div>
+                                `;
+      } else if (employeeInfo.status === 2) {
+        userStatusBox.innerText = `<div class="status-reset-icon"><i class="fa-solid fa-minus"></i></div>
+                                    <div id="status-text">자리비움</div>
+                                    <div id="status-modify-icon">
+                                      <i class="fa-solid fa-chevron-right"></i>
+                                    </div>`;
+      } else if (employeeInfo.status === 3) {
+        userStatusBox.innerText = `<div class="status-offline-icon"><i class="fa-solid fa-minus"></i></div>
+                                    <div id="status-text">오프라인</div>
+                                    <div id="status-modify-icon">
+                                      <i class="fa-solid fa-chevron-right"></i>
+                                    </div>`;
+      } else if (employeeInfo.status === 4) {
+        userStatusBox.innerText = `<div class="status-disturb-icon"><i class="fa-solid fa-minus"></i></div>
+                                  <div id="status-text">방해금지</div>
+                                  <div id="status-modify-icon">
+                                    <i class="fa-solid fa-chevron-right"></i>
+                                  </div>`;
+      }
     },
     error: function (xhr, status, error) {
       console.log("회원 조회에 실패했습니다 :" + error);

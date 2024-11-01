@@ -73,34 +73,30 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
             <div id="user-email"></div>
           </div>
           <div id="user-status-box">
-            <div id="status"><i class="fa-solid fa-check"></i></div>
-            <div id="status-text">대화 가능</div>
-            <div id="status-modify-icon">
-              <i class="fa-solid fa-chevron-right"></i>
-            </div>
+                <%--            상태값 동적 변환 --%>
           </div>
           <div id="status-container" class="hidden">
             <div id="status-ok">
-              <div id="status-ok-icon"><i class="fa-solid fa-check"></i></div>
-              <span>대화가능</span>
+              <div class="status-ok-icon"><i class="fa-solid fa-check"></i></div>
+              <span style="margin-top: 5px;">대화가능</span>
             </div>
             <div id="status-reset">
-              <div id="status-reset-icon">
+              <div class="status-reset-icon">
                 <i class="fa-solid fa-minus"></i>
               </div>
               <span>자리비움</span>
             </div>
             <div id="status-offline">
-              <div id="status-offline-icon">
+              <div class="status-offline-icon">
                 <i class="fa-solid fa-minus"></i>
               </div>
-              <span>오프라인</span>
+              <span style="margin-top: 5px;">오프라인</span>
             </div>
             <div id="status-disturb">
-              <div id="status-disturb-icon">
+              <div class="status-disturb-icon">
                 <i class="fa-solid fa-minus"></i>
               </div>
-              <span>방해금지</span>
+              <span style="margin-top: 6px;">방해금지</span>
             </div>
           </div>
           <div id="status-message">
