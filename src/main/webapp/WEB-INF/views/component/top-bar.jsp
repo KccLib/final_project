@@ -43,7 +43,6 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
       <!-- 사용자 상태 조회 모달 -->
       <div id="modalContainer" class="hidden">
         <div id="modalContent">
-          <a href="#" id="modify-employee-button" >회원수정</a>
           <div id="logout">
             <form
               id="logoutForm"
@@ -69,9 +68,9 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
             <div id="profile-img-modify"><i class="fa-solid fa-pen"></i></div>
           </div>
           <div id="user-profile">
-            <div id="user-name">김길동 대리</div>
-            <div id="user-dept">SI영업 1팀</div>
-            <div id="user-email">gildongkim@kcc.co.kr</div>
+            <div id="user-name"></div>
+            <div id="user-dept"></div>
+            <div id="user-email"></div>
           </div>
           <div id="user-status-box">
             <div id="status"><i class="fa-solid fa-check"></i></div>

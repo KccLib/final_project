@@ -29,5 +29,4 @@ public class EmployeeInfo implements Serializable {
     private String modifiedDt;
     private String isDeleted;
 
-
 }

@@ -6,9 +6,48 @@ const statusClose = document.getElementById("status-contents");
 const statusModel = document.getElementById("status-container");
 var isStatusOpen = true;
 
+/**
+ * 사용자 상태 조회 및 변경
+ *
+ */
+
+const userName = document.getElementById("user-name");
+const userDept = document.getElementById("user-dept");
+const userEmail = document.getElementById("user-email");
+const userProfileImg = document.getElementById("profile-img");
+const userStatusMessageContents = document.getElementById(
+  "status-message-contents",
+);
+
 modalOpenButton.addEventListener("click", () => {
-  console.log("remove");
   modal.classList.remove("hidden");
+
+  userName.innerHTML = "";
+  userDept.innerText = "";
+  userEmail.innerText = "";
+  userProfileImg.innerText = "";
+  userStatusMessageContents.innerText = "";
+
+  $.ajax({
+    url: "/api/employees/current-employee",
+    method: "GET",
+    dataType: "json",
+    success: function (employeeInfo) {
+      userName.innerHTML = `${employeeInfo.name} <span id="user-position">${employeeInfo.position}</span>`;
+      userDept.innerText = `${employeeInfo.deptName}`;
+      userEmail.innerText = `${employeeInfo.email}`;
+      userProfileImg.innerHTML = `<img
+              src="${employeeInfo.profileUrl}"
+              alt="Profile Image"
+              width="150"
+              height="150"
+            /><div id="profile-img-modify"><i class="fa-solid fa-camera"></i></div>`;
+      userStatusMessageContents.innerText = `${employeeInfo.statusMessage}`;
+    },
+    error: function (xhr, status, error) {
+      console.log("회원 조회에 실패했습니다 :" + error);
+    },
+  });
 });
 
 modalCloseButton.addEventListener("click", () => {
@@ -61,6 +100,11 @@ const searchContentsPeople = document.getElementById("search-people-contents");
 const searchContentsChatRooms = document.getElementById(
   "search-group-chat-rooms",
 );
+
+/**
+ *  검색바 구현
+ *
+ */
 
 searchBar.addEventListener("click", function () {
   if (searchBarCount % 2 === 0) {

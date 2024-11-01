@@ -1,5 +1,6 @@
 package com.kcc.trioffice.domain.employee.controller;
 
+import com.kcc.trioffice.domain.common.domain.EmployeeInfoWithDept;
 import com.kcc.trioffice.domain.employee.dto.request.SaveFcmToken;
 import com.kcc.trioffice.domain.employee.dto.request.UpdateStatus;
 import com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo;
@@ -79,6 +80,11 @@ public class EmployeeRestController {
     public ResponseEntity<EmployeeInfo> getEmployee(@PathVariable Long employeeId) {
         EmployeeInfo employeeInfo = employeeService.findById(employeeId);
         return ResponseEntity.ok(employeeInfo);
+    }
+
+    @GetMapping("/employees/current-employee")
+    public ResponseEntity<EmployeeInfoWithDept> getCurrentEmployeeWithDept(@AuthenticationPrincipal PrincipalDetail principalDetail) {
+        return ResponseEntity.ok(employeeService.getEmployeeInfoWithDept(principalDetail.getEmployeeId()));
     }
 
 }
