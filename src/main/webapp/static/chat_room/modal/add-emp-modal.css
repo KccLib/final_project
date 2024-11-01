@@ -33,7 +33,6 @@ button {
     padding: 11px 15px; /* Padding inside the input */
     font-size: 20px; /* Font size */
     color: #333; /* Text color */
-    width: 100%; /* Full width */
     box-sizing: border-box; /* Border and padding included in width */
     background-color: #fff; /* White background */
 }
