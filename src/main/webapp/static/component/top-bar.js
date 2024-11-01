@@ -45,8 +45,10 @@ modalOpenButton.addEventListener("click", () => {
               height="150"
             /><div id="profile-img-modify"><i class="fa-solid fa-camera"></i></div>`;
 
-      if (employeeInfo.statusMessage !== null) {
+      if (employeeInfo.statusMessage !== "null") {
         userStatusMessageContents.innerText = `${employeeInfo.statusMessage}`;
+      } else {
+        console.log("status가 null입니다.");
       }
 
       if (employeeInfo.status === 1) {
@@ -306,22 +308,20 @@ searchPeopleElements.addEventListener("click", function (event) {
   const otherLocateContainer = document.getElementById(
     "other-locate-container",
   );
-  const otherContentsContainer = document.getElementById(
-    "other-contents-container",
-  );
+
   const otherEmployeeImg = document.getElementById("other-employee-img");
   const employeeName = document.getElementById(
     "employee-name-location-top-bar",
   );
   const otherEmployeeStatus = document.getElementById("other-employee-status");
+  const otherContents = document.getElementById("other-contents-container");
 
   otherEmployeeNamePosition.innerHTML = "";
   otherDeptContainer.innerHTML = "";
   otherEmailContainer.innerHTML = "";
   otherLocateContainer.innerHTML = "";
-  otherContentsContainer.innerHTML = "";
   otherEmployeeStatus.innerHTML = "";
-
+  otherContents.innerHTML = "";
   const target = event.target.closest(".search-peoples");
   if (target) {
     const id = target.dataset.id;
@@ -352,9 +352,13 @@ searchPeopleElements.addEventListener("click", function (event) {
           otherLocateContainer.innerHTML = `<p id="other-locate">${employeeInfo.location}</p>`;
         }
 
-        otherContentsContainer.innerHTML = `<p id="other-contents>${employeeInfo.contents}</p>`;
-
         employeeName.innerHTML = `<p>${employeeInfo.name} 님의 일정</p>`;
+
+        if (employeeInfo.statusMessage) {
+          otherContents.innerHTML = `<p id="other-contents" style="font-size: 13px;">
+                                      ${employeeInfo.statusMessage}
+                                      </p>`;
+        }
 
         if (employeeInfo.status === 1) {
           otherEmployeeStatus.innerHTML = `<div id="employee-status" style="background-color: #92c353;"><i class="fa-solid fa-check" style="color: white;"></i></div>`;

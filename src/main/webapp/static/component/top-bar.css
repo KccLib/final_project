@@ -144,7 +144,7 @@
   position: absolute;
   width: 70px;
   height: 70px;
-  border: 2px solid rgb(143, 143, 143);
+  border: 1px solid rgb(143, 143, 143);
   margin-top: 11px;
   border-radius: 51%;
   margin-left: 1rem;
@@ -154,7 +154,7 @@
 #profile-img img {
   max-width: 100%;
   max-height: 100%;
-  border-radius: 30px;
+  border-radius: 50px;
 }
 
 #user-profile {

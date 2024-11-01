@@ -142,25 +142,24 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
                 <div id="other-employee-img"><%-- 이미지 넣기--%></div>
               </div>
               <div id="other-employee-name-position">
-                <p id="other-name">김길동</p>
+                <p id="other-name"></p>
                 &nbsp;
-                <p id="other-position">사원</p>
+                <p id="other-position"></p>
               </div>
             </div>
             <div id="other-etc-info-container">
               <div id="other-dept-container">
-                <p id="other-dept">SI 영업 1팀</p>
+                <p id="other-dept"></p>
               </div>
               <div id="other-email-container">
-                <p id="other-email">exam01@kcc.co.kr</p>
+                <p id="other-email"></p>
               </div>
               <div id="other-locate-container">
-                <p id="other-locate">동측 기둥 0번자리</p>
+                <p id="other-locate"></p>
               </div>
               <div id="other-contents-container">
-                <p id="other-contents">
-                  내일은 내일의 해가 뜬다. <br />
-                  ~ 2024 03 02 ing
+                <p id="other-contents" style="font-size: 13px;">
+
                 </p>
               </div>
               <div id="other-chat-button">
