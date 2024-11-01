@@ -44,7 +44,10 @@ modalOpenButton.addEventListener("click", () => {
               width="150"
               height="150"
             /><div id="profile-img-modify"><i class="fa-solid fa-camera"></i></div>`;
-      userStatusMessageContents.innerText = `${employeeInfo.statusMessage}`;
+
+      if (employeeInfo.statusMessage !== null) {
+        userStatusMessageContents.innerText = `${employeeInfo.statusMessage}`;
+      }
 
       if (employeeInfo.status === 1) {
         userStatusBox.innerHTML = `<div id="status"><i class="fa-solid fa-check"></i></div>
@@ -348,6 +351,7 @@ searchPeopleElements.addEventListener("click", function (event) {
         if (employeeInfo.location) {
           otherLocateContainer.innerHTML = `<p id="other-locate">${employeeInfo.location}</p>`;
         }
+
         otherContentsContainer.innerHTML = `<p id="other-contents>${employeeInfo.contents}</p>`;
 
         employeeName.innerHTML = `<p>${employeeInfo.name} 님의 일정</p>`;

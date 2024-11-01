@@ -17,7 +17,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
     <script src="<%= request.getContextPath() %>/static/component/fullcalendar/dist/index.global.js"></script>
     <link
             rel="stylesheet"
-            href="<%= request.getContextPath() %>/static/schedule/schedule.css"
+            href="<%= request.getContextPath() %>/static/schedule/schedule-top-bar.css"
     />
   </head>
 
