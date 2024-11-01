@@ -27,7 +27,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
           <form id="password-form" action="/find-password/email" method="post">
             <div id="input1">
               외부 메일 주소 :
-              <input type="email" name="email" id="externalEmail" placeholder="(예시: user@example.com)" required />
+              <input type="email" name="email" id="externalEmail" placeholder="user@example.com" required />
             </div>
             <div id="checkedId">
               <!-- danger code -->

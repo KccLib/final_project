@@ -35,4 +35,6 @@ public interface ScheduleMapper {
   int deleteScheduleInvite(Long deleteScheduleNum);
 
   int updateScheduleInviteParticipate(Long employeeId, Long scheduleId, Long isParticipated);
+
+  List<EmployeeSchedules> getOtherSchedules(Long employeeId, String startDate, String endDate);
 }
