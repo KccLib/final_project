@@ -329,6 +329,10 @@
   flex-direction: column;
 }
 
+.user-status-select {
+  cursor: pointer;
+}
+
 #status-container.hidden {
   display: none;
 }

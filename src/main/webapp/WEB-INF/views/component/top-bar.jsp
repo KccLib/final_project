@@ -76,23 +76,23 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
                 <%--            상태값 동적 변환 --%>
           </div>
           <div id="status-container" class="hidden">
-            <div id="status-ok">
+            <div id="status-ok" class="user-status-select" data-status="1">
               <div class="status-ok-icon"><i class="fa-solid fa-check"></i></div>
               <span style="margin-top: 5px;">대화가능</span>
             </div>
-            <div id="status-reset">
+            <div id="status-reset" class="user-status-select" data-status="2">
               <div class="status-reset-icon">
                 <i class="fa-solid fa-minus"></i>
               </div>
               <span>자리비움</span>
             </div>
-            <div id="status-offline">
+            <div id="status-offline" class="user-status-select" data-status="3">
               <div class="status-offline-icon">
                 <i class="fa-solid fa-minus"></i>
               </div>
               <span style="margin-top: 5px;">오프라인</span>
             </div>
-            <div id="status-disturb">
+            <div id="status-disturb" class="user-status-select" data-status="4">
               <div class="status-disturb-icon">
                 <i class="fa-solid fa-minus"></i>
               </div>

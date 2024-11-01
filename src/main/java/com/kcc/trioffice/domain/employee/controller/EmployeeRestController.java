@@ -87,4 +87,10 @@ public class EmployeeRestController {
         return ResponseEntity.ok(employeeService.getEmployeeInfoWithDept(principalDetail.getEmployeeId()));
     }
 
+    @PutMapping("/employees/status")
+    public ResponseEntity<EmployeeInfoWithDept> updateEmployeeStatus(@RequestParam int status, @AuthenticationPrincipal PrincipalDetail principalDetail) {
+        EmployeeInfoWithDept employeeInfoWithDept = employeeService.updateEmployeeStatus(status, principalDetail.getEmployeeId());
+        return ResponseEntity.ok(employeeInfoWithDept);
+    }
+
 }

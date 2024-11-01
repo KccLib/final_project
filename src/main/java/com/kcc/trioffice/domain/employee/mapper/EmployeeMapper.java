@@ -45,4 +45,5 @@ public interface EmployeeMapper {
     List<String> getAllPositions();
 
 
+    int updateEmployeeStatus(int status, Long employeeId);
 }

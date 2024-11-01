@@ -197,4 +197,11 @@ public class EmployeeService {
 
         return  employeeInfoWithDept;
     }
+
+    @Transactional
+    public EmployeeInfoWithDept updateEmployeeStatus(int status, Long employeeId) {
+        employeeMapper.updateEmployeeStatus(status, employeeId);
+        EmployeeInfoWithDept employeeInfoWithDept = otherEmployeeMapper.getEmployeeInfoWithDept(employeeId).orElseThrow(() -> new NotFoundException("회원정보를 조회할 수 없습니다."));
+        return employeeInfoWithDept;
+    }
 }

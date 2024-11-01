@@ -354,6 +354,12 @@
         ORDER BY position
     </select>
 
+    <update id="updateEmployeeStatus" parameterType="map">
+        UPDATE employee
+        SET status = #{status}
+        WHERE employee_id = #{employeeId}
+        AND is_deleted = 0
+    </update>
 
 
 </mapper>

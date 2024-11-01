@@ -28,7 +28,7 @@ modalOpenButton.addEventListener("click", () => {
   userEmail.innerText = "";
   userProfileImg.innerText = "";
   userStatusMessageContents.innerText = "";
-  userStatusBox.innerText = "";
+  userStatusBox.innerHTML = "";
 
   $.ajax({
     url: "/api/employees/current-employee",
@@ -54,19 +54,19 @@ modalOpenButton.addEventListener("click", () => {
                                   </div>
                                 `;
       } else if (employeeInfo.status === 2) {
-        userStatusBox.innerText = `<div class="status-reset-icon"><i class="fa-solid fa-minus"></i></div>
+        userStatusBox.innerHTML = `<div class="status-reset-icon"><i class="fa-solid fa-minus"></i></div>
                                     <div id="status-text">자리비움</div>
                                     <div id="status-modify-icon">
                                       <i class="fa-solid fa-chevron-right"></i>
                                     </div>`;
       } else if (employeeInfo.status === 3) {
-        userStatusBox.innerText = `<div class="status-offline-icon"><i class="fa-solid fa-minus"></i></div>
+        userStatusBox.innerHTML = `<div class="status-offline-icon"><i class="fa-solid fa-minus"></i></div>
                                     <div id="status-text">오프라인</div>
                                     <div id="status-modify-icon">
                                       <i class="fa-solid fa-chevron-right"></i>
                                     </div>`;
       } else if (employeeInfo.status === 4) {
-        userStatusBox.innerText = `<div class="status-disturb-icon"><i class="fa-solid fa-minus"></i></div>
+        userStatusBox.innerHTML = `<div class="status-disturb-icon"><i class="fa-solid fa-minus"></i></div>
                                   <div id="status-text">방해금지</div>
                                   <div id="status-modify-icon">
                                     <i class="fa-solid fa-chevron-right"></i>
