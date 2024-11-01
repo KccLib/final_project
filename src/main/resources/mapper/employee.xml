@@ -41,7 +41,7 @@
     <select id="getEmployeeInfo" parameterType="Long"
             resultType="com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo">
       SELECT
-        employee_id
+          employee_id
         , dept_id
         , company_id
         , email
@@ -63,7 +63,7 @@
         , modifier
         , modified_dt
         , is_deleted
-        FROM employee e
+        FROM employee
         WHERE employee_id = #{employee_id}
           AND is_deleted = 0
     </select>
@@ -353,5 +353,13 @@
         WHERE is_deleted = 0
         ORDER BY position
     </select>
+
+    <update id="updateEmployeeStatus" parameterType="map">
+        UPDATE employee
+        SET status = #{status}
+        WHERE employee_id = #{employeeId}
+        AND is_deleted = 0
+    </update>
+
 
 </mapper>

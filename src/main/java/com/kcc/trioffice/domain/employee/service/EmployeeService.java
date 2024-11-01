@@ -1,5 +1,7 @@
 package com.kcc.trioffice.domain.employee.service;
 
+import com.kcc.trioffice.domain.common.domain.EmployeeInfoWithDept;
+import com.kcc.trioffice.domain.common.mapper.OtherEmployeeMapper;
 import com.kcc.trioffice.domain.employee.dto.request.SaveEmployee;
 import com.kcc.trioffice.domain.employee.dto.request.SaveFcmToken;
 import com.kcc.trioffice.domain.employee.dto.request.UpdateStatus;
@@ -37,6 +39,7 @@ public class EmployeeService {
     private final BCryptPasswordEncoder passwordEncoder;
     private final EmployeeMapper employeeMapper;
     private final JavaMailSender mailSender;
+    private final OtherEmployeeMapper otherEmployeeMapper;
 
     // 임시비밀번호 생성
     private String generateTempPassword() {
@@ -189,4 +192,16 @@ public class EmployeeService {
         return employeeMapper.getAllPositions(); // EmployeeMapper에서 모든 포지션 정보 조회
     }
 
+    public EmployeeInfoWithDept getEmployeeInfoWithDept(Long employeeId) {
+        EmployeeInfoWithDept employeeInfoWithDept = otherEmployeeMapper.getEmployeeInfoWithDept(employeeId).orElseThrow(() -> new NotFoundException("회원정보를 조회할 수 없습니다."));
+
+        return  employeeInfoWithDept;
+    }
+
+    @Transactional
+    public EmployeeInfoWithDept updateEmployeeStatus(int status, Long employeeId) {
+        employeeMapper.updateEmployeeStatus(status, employeeId);
+        EmployeeInfoWithDept employeeInfoWithDept = otherEmployeeMapper.getEmployeeInfoWithDept(employeeId).orElseThrow(() -> new NotFoundException("회원정보를 조회할 수 없습니다."));
+        return employeeInfoWithDept;
+    }
 }

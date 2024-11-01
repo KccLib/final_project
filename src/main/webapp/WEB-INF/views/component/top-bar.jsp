@@ -17,7 +17,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
     <script src="<%= request.getContextPath() %>/static/component/fullcalendar/dist/index.global.js"></script>
     <link
             rel="stylesheet"
-            href="<%= request.getContextPath() %>/static/schedule/schedule.css"
+            href="<%= request.getContextPath() %>/static/schedule/schedule-top-bar.css"
     />
   </head>
 
@@ -68,39 +68,35 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
             <div id="profile-img-modify"><i class="fa-solid fa-pen"></i></div>
           </div>
           <div id="user-profile">
-            <div id="user-name">김길동 대리</div>
-            <div id="user-dept">SI영업 1팀</div>
-            <div id="user-email">gildongkim@kcc.co.kr</div>
+            <div id="user-name"></div>
+            <div id="user-dept"></div>
+            <div id="user-email"></div>
           </div>
           <div id="user-status-box">
-            <div id="status"><i class="fa-solid fa-check"></i></div>
-            <div id="status-text">대화 가능</div>
-            <div id="status-modify-icon">
-              <i class="fa-solid fa-chevron-right"></i>
-            </div>
+                <%--            상태값 동적 변환 --%>
           </div>
           <div id="status-container" class="hidden">
-            <div id="status-ok">
-              <div id="status-ok-icon"><i class="fa-solid fa-check"></i></div>
-              <span>대화가능</span>
+            <div id="status-ok" class="user-status-select" data-status="1">
+              <div class="status-ok-icon"><i class="fa-solid fa-check"></i></div>
+              <span style="margin-top: 5px;">대화가능</span>
             </div>
-            <div id="status-reset">
-              <div id="status-reset-icon">
+            <div id="status-reset" class="user-status-select" data-status="2">
+              <div class="status-reset-icon">
                 <i class="fa-solid fa-minus"></i>
               </div>
               <span>자리비움</span>
             </div>
-            <div id="status-offline">
-              <div id="status-offline-icon">
+            <div id="status-offline" class="user-status-select" data-status="3">
+              <div class="status-offline-icon">
                 <i class="fa-solid fa-minus"></i>
               </div>
-              <span>오프라인</span>
+              <span style="margin-top: 5px;">오프라인</span>
             </div>
-            <div id="status-disturb">
-              <div id="status-disturb-icon">
+            <div id="status-disturb" class="user-status-select" data-status="4">
+              <div class="status-disturb-icon">
                 <i class="fa-solid fa-minus"></i>
               </div>
-              <span>방해금지</span>
+              <span style="margin-top: 6px;">방해금지</span>
             </div>
           </div>
           <div id="status-message">
@@ -146,25 +142,24 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
                 <div id="other-employee-img"><%-- 이미지 넣기--%></div>
               </div>
               <div id="other-employee-name-position">
-                <p id="other-name">김길동</p>
+                <p id="other-name"></p>
                 &nbsp;
-                <p id="other-position">사원</p>
+                <p id="other-position"></p>
               </div>
             </div>
             <div id="other-etc-info-container">
               <div id="other-dept-container">
-                <p id="other-dept">SI 영업 1팀</p>
+                <p id="other-dept"></p>
               </div>
               <div id="other-email-container">
-                <p id="other-email">exam01@kcc.co.kr</p>
+                <p id="other-email"></p>
               </div>
               <div id="other-locate-container">
-                <p id="other-locate">동측 기둥 0번자리</p>
+                <p id="other-locate"></p>
               </div>
               <div id="other-contents-container">
-                <p id="other-contents">
-                  내일은 내일의 해가 뜬다. <br />
-                  ~ 2024 03 02 ing
+                <p id="other-contents" style="font-size: 13px;">
+
                 </p>
               </div>
               <div id="other-chat-button">

@@ -81,7 +81,8 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
                   required
                 />
 
-                <label
+                <label style="    position: absolute;
+    margin-top: 17px;"
                   ><input type="checkbox" name="allDayCheck" id="allDayCheck" />
                   하루 종일
                 </label>
@@ -96,7 +97,9 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
                   <input type="text" name="employees[]" />
                 </div>
                 <div class="checkbox-group">
-                  <label>
+                  <label style="    position: absolute;
+    margin-top: 8px;
+    margin-right: 10px;">
                     <input
                       type="checkbox"
                       id="email-alram"
