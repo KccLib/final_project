@@ -54,6 +54,14 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
             <div class="menu-text">조직도</div>
           </a>
         </div>
+        <div class="files">
+            <a href="/attached-files" style="text-decoration: none">
+                <div class="icons">
+                  <i class="fa-regular fa-folder-open fa-2x"></i>
+                </div>
+                <div class="menu-text">파일</div>
+            </a>
+        </div>
       </div>
       <div class="chat-bot">
         <div class="icons" id="bot-icon">

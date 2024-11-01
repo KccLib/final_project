@@ -1,5 +1,7 @@
 package com.kcc.trioffice.domain.attached_file.controller;
 
+import com.kcc.trioffice.domain.attached_file.dto.request.AttachedFileSelect;
+import com.kcc.trioffice.domain.attached_file.dto.response.AttachedFileDetailInfo;
 import com.kcc.trioffice.domain.attached_file.dto.response.AttachedFileInfo;
 import com.kcc.trioffice.domain.attached_file.dto.response.ImageInfo;
 import com.kcc.trioffice.domain.attached_file.service.AttachedFileService;
@@ -10,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -110,5 +113,11 @@ public class AttachedFileRestController {
         return attachedFileService.downloadImage(fileId, principalDetail.getEmployeeId());
     }
 
+    @GetMapping("/api/attached-files")
+    public List<AttachedFileDetailInfo> attachedFile(@AuthenticationPrincipal PrincipalDetail principalDetail,
+                               @ModelAttribute AttachedFileSelect attachedFileSelect) {
+        log.info("attachedFileSelect : {}", attachedFileSelect);
+        return attachedFileService.getAllAttachedFile(principalDetail.getEmployeeId(), attachedFileSelect);
+    }
 
 }

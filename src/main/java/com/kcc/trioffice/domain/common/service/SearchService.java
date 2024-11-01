@@ -31,7 +31,6 @@ public class SearchService {
     public List<SearchEmployee> getEmployeeList(Long employeeId) {
         List<SearchEmployee> employeeList = searchMapper.getAllEmployeesInfo(employeeId);
 
-
         return employeeList;
     }
 
@@ -71,9 +70,13 @@ public class SearchService {
 
 
     public List<SearchEmployee> getChangeEmployeeList(Long employeeId, String keyword) {
-        List<SearchEmployee> employeeList = searchMapper.getChangeAllEmployeesInfo(employeeId, keyword);
 
-        return employeeList;
+        return searchMapper.getChangeAllEmployeesInfo(employeeId, keyword);
+    }
+
+    public List<SearchEmployee> getAllEmployees(Long employeeId, String keyword) {
+        EmployeeInfo employeeInfo = employeeMapper.getEmployeeInfo(employeeId).orElseThrow(() -> new NotFoundException("회원의 아이디를 가져올 수 없습니다."));
+        return searchMapper.getAllEmployeesInfoByKeyword(employeeInfo.getCompanyId(), keyword);
     }
 
     public List<SearchChatRoom> getChangeSearchChatRoom(Long employeeId, String keyword) {

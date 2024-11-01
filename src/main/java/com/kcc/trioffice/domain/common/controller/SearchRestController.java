@@ -7,6 +7,7 @@ import com.kcc.trioffice.domain.common.service.SearchService;
 import com.kcc.trioffice.domain.employee.dto.response.SearchEmployee;
 import com.kcc.trioffice.global.auth.PrincipalDetail;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @RequiredArgsConstructor
+@Slf4j
 public class SearchRestController {
 
     private final SearchService searchService;
@@ -47,5 +49,14 @@ public class SearchRestController {
                 .build();
 
         return ResponseEntity.ok(responseSearch);
+    }
+
+    @GetMapping("/search/employees")
+    public ResponseEntity<List<SearchEmployee>> searchEmployee(@AuthenticationPrincipal PrincipalDetail principalDetail, @RequestParam String keyword) {
+        log.info("keyword : {}", keyword);
+        List<SearchEmployee> searchEmployee =  searchService.getAllEmployees(principalDetail.getEmployeeId(), keyword);
+        log.info("searchEmployee : {}", searchEmployee);
+
+        return ResponseEntity.ok(searchEmployee);
     }
 }
