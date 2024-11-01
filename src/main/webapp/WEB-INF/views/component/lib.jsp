@@ -31,6 +31,7 @@ uri="http://www.springframework.org/security/tags" %>
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
       rel="stylesheet"
     />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 
     <!-- 폰트어썸 -->
     <link
@@ -87,6 +88,8 @@ uri="http://www.springframework.org/security/tags" %>
       rel="stylesheet"
       href="<%= request.getContextPath() %>/static/component/reset.css"
     />
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css" rel="stylesheet">
+
     <%-- markdown --%>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
@@ -96,28 +99,21 @@ uri="http://www.springframework.org/security/tags" %>
       /* NanumSquare_ac 폰트 정의 */
       @font-face {
         font-family: "NanumSquare_ac";
-        src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2107@1.1/NanumSquare_acR.woff")
-          format("woff");
+        src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquare/NanumSquareR.eot);
+        src: url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquare/NanumSquareR.eot?#iefix) format("embedded-opentype"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquare/NanumSquareR.woff) format("woff"), url(https://hangeul.pstatic.net/hangeul_static/webfont/NanumSquare/NanumSquareR.ttf) format("truetype");
         font-weight: normal;
-        font-style: normal;
-      }
-
-      @font-face {
-        font-family: "NanumSquare_ac";
-        src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2107@1.1/NanumSquare_acB.woff")
-          format("woff");
-        font-weight: bold;
         font-style: normal;
       }
 
       /* One Mobile Title 폰트 정의 */
       @font-face {
-        font-family: "One Mobile Title";
-        src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2107@1.1/OneMobileTitle.woff")
-          format("woff");
-        font-weight: 400; /* Regular weight */
+        font-family: 'One Mobile Title';
+        src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2105_2@1.0/ONE-Mobile-Title.woff') format('woff');
+        font-weight: normal;
         font-style: normal;
       }
+
+
       /* 적용방법 */
       .test-font {
         font-family: "NanumSquare_ac", sans-serif;

@@ -13,22 +13,10 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
       rel="stylesheet"
       href="<%= request.getContextPath() %>/static/chat_room/chat-room-save.css"
     />
-    <link
-      href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square.css"
-      rel="stylesheet"
-    />
     <script src="/static/chat_room/chat-room-save.js" charset="utf-8"></script>
 
     <!-- 소스 다운 -->
     <script src="https://unpkg.com/@yaireo/tagify"></script>
-
-    <!-- 폴리필 (구버젼 브라우저 지원) -->
-    <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
-    <link
-      href="https://unpkg.com/@yaireo/tagify/dist/tagify.css"
-      rel="stylesheet"
-      type="text/css"
-    />
 
     <title>Insert title here</title>
   </head>
