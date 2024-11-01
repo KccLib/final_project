@@ -43,8 +43,8 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
       <!-- 사용자 상태 조회 모달 -->
       <div id="modalContainer" class="hidden">
         <div id="modalContent">
+          <a href="#" id="modify-employee-button" >회원수정</a>
           <div id="logout">
-            <a href="#" >회원수정</a>
             <form
               id="logoutForm"
               action="/logout"

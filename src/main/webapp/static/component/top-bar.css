@@ -118,9 +118,9 @@
 }
 
 #logoutLink {
-  text-decoration: none; /* 밑줄 제거 */
-  color: inherit; /* 부모 요소의 색상 상속 */
-  cursor: pointer; /* 마우스 커서를 포인터로 변경 */
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
 }
 
 #logout {
@@ -129,6 +129,15 @@
   /* font-weight: 300; */
   font-size: 13px;
   margin-left: auto;
+}
+
+#modify-employee-button {
+  position: absolute;
+  font-size: 13px;
+  text-decoration: none;
+  color: inherit;
+
+  cursor: pointer;
 }
 
 #profile-img {

@@ -44,7 +44,7 @@ document
     logoutForm.action = "/logout"; // 로그아웃 URL
 
     document.body.appendChild(logoutForm); // form을 body에 추가
-    logoutForm.submit(); // 폼 제출
+    logoutForm.submit();
   });
 
 document
@@ -59,7 +59,7 @@ let searchBarCount = 0;
 
 const searchContentsPeople = document.getElementById("search-people-contents");
 const searchContentsChatRooms = document.getElementById(
-  "search-group-chat-rooms"
+  "search-group-chat-rooms",
 );
 
 searchBar.addEventListener("click", function () {
@@ -186,7 +186,7 @@ searchBar.addEventListener("input", function (event) {
       responseSearch.searchChatRoomList.forEach(function (chatroom) {
         // 새로운 HTML 요소 생성
         searchContentsChatRooms.innerHTML +=
-            `<div class='search-group-contents' data-chatroomid="${chatroom.myChatRoomId}">` +
+          `<div class='search-group-contents' data-chatroomid="${chatroom.myChatRoomId}">` +
           "<div class='search-chat-profile-img'>" +
           "<img src='" +
           chatroom.imageURL +
@@ -209,10 +209,10 @@ searchBar.addEventListener("input", function (event) {
  *
  */
 const otherEmployeeContainer = document.getElementById(
-  "other-employee-info-container"
+  "other-employee-info-container",
 );
 const otherEmployeeClose = document.getElementById(
-  "other-employee-schedule-close"
+  "other-employee-schedule-close",
 );
 const searchPeopleElements = document.getElementById("search-people-contents");
 let otherEmployeeId = 0;
@@ -223,19 +223,19 @@ let otherEmployeeId = 0;
 searchPeopleElements.addEventListener("click", function (event) {
   //각 요소 비우기
   const otherEmployeeNamePosition = document.getElementById(
-    "other-employee-name-position"
+    "other-employee-name-position",
   );
   const otherDeptContainer = document.getElementById("other-dept-container");
   const otherEmailContainer = document.getElementById("other-email-container");
   const otherLocateContainer = document.getElementById(
-    "other-locate-container"
+    "other-locate-container",
   );
   const otherContentsContainer = document.getElementById(
-    "other-contents-container"
+    "other-contents-container",
   );
   const otherEmployeeImg = document.getElementById("other-employee-img");
   const employeeName = document.getElementById(
-    "employee-name-location-top-bar"
+    "employee-name-location-top-bar",
   );
 
   otherEmployeeNamePosition.innerHTML = "";
@@ -307,10 +307,11 @@ otherEmployeeClose.addEventListener("click", function () {
  *
  */
 
-const searchChatRoomElements = document.getElementById("search-group-chat-rooms");
+const searchChatRoomElements = document.getElementById(
+  "search-group-chat-rooms",
+);
 
 searchChatRoomElements.addEventListener("click", function (event) {
-
   const target = event.target.closest(".search-group-contents");
   if (target) {
     const roomId = target.dataset.chatroomid;
@@ -326,12 +327,9 @@ searchChatRoomElements.addEventListener("click", function (event) {
     form.appendChild(input);
 
     document.body.appendChild(form);
-    form.submit();  }
-
+    form.submit();
+  }
 });
-
-
-
 
 /**
  * 달력 랜더링
@@ -362,13 +360,13 @@ function formatDateToISOForOther(dateString) {
   const localDate = new Date(year, month - 1, day, hour, minute, second);
 
   const isoDate = new Date(
-      localDate.getTime() - localDate.getTimezoneOffset() * 60000
+    localDate.getTime() - localDate.getTimezoneOffset() * 60000,
   ).toISOString();
 
   return isoDate.replace(".000Z", ""); // 초까지 포함된 형식을 유지
 }
 
-function  fetchCalendarDataForOther(){
+function fetchCalendarDataForOther() {
   var dateData = getFirstAndLastDateOfMonthForOther();
   // console.log(dateData);
   //일정조회 ajax
@@ -423,93 +421,91 @@ function  fetchCalendarDataForOther(){
 
 // 캘린더 랜더링
 searchPeopleElements.addEventListener("click", function (event) {
+  const calendarEl = document.getElementById("calendar-top-bar");
+  calendarTopBar = new FullCalendar.Calendar(calendarEl, {
+    initialView: "dayGridMonth",
+    headerToolbar: {
+      left: "prev next today",
+      center: "title",
+      right: "dayGridMonth,dayGridWeek,dayGridDay",
+    },
+    buttonText: {
+      today: "오늘",
+      month: "월",
+      week: "주",
+      day: "일",
+      list: "목록",
+    },
 
-    const calendarEl = document.getElementById("calendar-top-bar");
-    calendarTopBar = new FullCalendar.Calendar(calendarEl, {
-      initialView: "dayGridMonth",
-      headerToolbar: {
-        left: "prev next today",
-        center: "title",
-        right: "dayGridMonth,dayGridWeek,dayGridDay",
-      },
-      buttonText: {
-        today: "오늘",
-        month: "월",
-        week: "주",
-        day: "일",
-        list: "목록",
-      },
-
-      // 일 빼기
-      dayCellContent: function (info) {
-        var number = document.createElement("a");
-        number.classList.add("fc-daygrid-day-number");
-        number.innerHTML = info.dayNumberText.replace("일", "");
-        if (info.view.type === "dayGridMonth") {
-          return {
-            html: number.outerHTML,
-          };
-        }
+    // 일 빼기
+    dayCellContent: function (info) {
+      var number = document.createElement("a");
+      number.classList.add("fc-daygrid-day-number");
+      number.innerHTML = info.dayNumberText.replace("일", "");
+      if (info.view.type === "dayGridMonth") {
         return {
-          domNodes: [],
+          html: number.outerHTML,
         };
-      },
-      selectable: true,
-      dayMaxEventRows: true,
-      dayMaxEventRows: 3, // 하루에 표시할 최대 이벤트 수
-      events: employeeEventsForOthers,
+      }
+      return {
+        domNodes: [],
+      };
+    },
+    selectable: true,
+    dayMaxEventRows: true,
+    dayMaxEventRows: 3, // 하루에 표시할 최대 이벤트 수
+    events: employeeEventsForOthers,
 
-      eventDidMount: function (info) {
-        info.el.style.cursor = "pointer";
-        // isMySchedule에 따른 색상 변경 처리
-        if (info.event.extendedProps.isMySchedule === 1) {
-          if (!info.event.allDay) {
-            info.el.style.color = "black";
-            info.el.style.backgroundColor = "white";
-            info.el.classList.add("time-event-dot"); // 클래스 추가
-          } else {
-            info.el.style.backgroundColor = "#FF7364";
-            info.el.style.paddingLeft = "5px";
-            info.el.style.border = "0px"; // 테두리 제거
-          }
+    eventDidMount: function (info) {
+      info.el.style.cursor = "pointer";
+      // isMySchedule에 따른 색상 변경 처리
+      if (info.event.extendedProps.isMySchedule === 1) {
+        if (!info.event.allDay) {
+          info.el.style.color = "black";
+          info.el.style.backgroundColor = "white";
+          info.el.classList.add("time-event-dot"); // 클래스 추가
         } else {
-          if (!info.event.allDay) {
-            info.el.style.color = "black";
-            info.el.style.backgroundColor = "white";
-          } else {
-            info.el.style.backgroundColor = "#6769FF";
-            info.el.style.paddingLeft = "5px";
-            info.el.style.border = "0px"; // 테두리 제거
-          }
+          info.el.style.backgroundColor = "#FF7364";
+          info.el.style.paddingLeft = "5px";
+          info.el.style.border = "0px"; // 테두리 제거
         }
+      } else {
+        if (!info.event.allDay) {
+          info.el.style.color = "black";
+          info.el.style.backgroundColor = "white";
+        } else {
+          info.el.style.backgroundColor = "#6769FF";
+          info.el.style.paddingLeft = "5px";
+          info.el.style.border = "0px"; // 테두리 제거
+        }
+      }
 
-        // data-schedule-id 속성 추가
-        info.el.setAttribute(
-          "data-schedule-id",
-          info.event.extendedProps.scheduleId
-        );
-      },
+      // data-schedule-id 속성 추가
+      info.el.setAttribute(
+        "data-schedule-id",
+        info.event.extendedProps.scheduleId,
+      );
+    },
 
-      // 상세보기는 other에서 제거
-      eventClick: function (info) {},
+    // 상세보기는 other에서 제거
+    eventClick: function (info) {},
 
-      displayEventTime: true,
-      displayEventEnd: true,
-      locale: "ko",
+    displayEventTime: true,
+    displayEventEnd: true,
+    locale: "ko",
 
-      datesSet: function (info) {
-        firstDayForOthers = info.view.currentStart;
-        lastDayForOthers = info.view.currentEnd;
+    datesSet: function (info) {
+      firstDayForOthers = info.view.currentStart;
+      lastDayForOthers = info.view.currentEnd;
 
-        fetchCalendarDataForOther();
-        // calendar.refetchEvents(); // FullCalendar에 이벤트 업데이트
-        console.log("dataset other Employee Schedules");
-      },
-    });
+      fetchCalendarDataForOther();
+      // calendar.refetchEvents(); // FullCalendar에 이벤트 업데이트
+      console.log("dataset other Employee Schedules");
+    },
+  });
 
-    calendarTopBar.render();
-  }
-);
+  calendarTopBar.render();
+});
 
 /**
  * 대화하기
