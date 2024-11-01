@@ -97,7 +97,7 @@ input::placeholder {
     border: 1px solid #959595;
 }
 
-.tagify {
+.add-employee-input {
     display: block;
     width: 100%;
     min-height: 38px; /* 필요에 따라 최소 높이 조절 */
