@@ -45,7 +45,7 @@ modalOpenButton.addEventListener("click", () => {
               height="150"
             /><div id="profile-img-modify"><i class="fa-solid fa-camera"></i></div>`;
 
-      if (employeeInfo.statusMessage !== "null") {
+      if (employeeInfo.statusMessage) {
         userStatusMessageContents.innerText = `${employeeInfo.statusMessage}`;
       } else {
         console.log("status가 null입니다.");
@@ -95,8 +95,9 @@ window.addEventListener("click", function (event) {
     statusModel.classList.add("hidden");
   }
 });
-
-// 사용자 상태 변경 js
+/**
+ *  사용자 상태 변경
+ */
 statusOpenButton.addEventListener("click", function () {
   if (isStatusOpen) {
     statusModel.classList.add("hidden");
@@ -279,6 +280,52 @@ searchBar.addEventListener("input", function (event) {
     error: function (xhr, status, error) {
       console.error("그룹채팅방을 가져올 수 없습니다. " + error);
     },
+  });
+});
+
+/**
+ * 프로필 사진 변경
+ *
+ */
+const profileImg = document.getElementById("profile-img");
+const fileInput = document.getElementById("fileInput");
+
+// 프로필 이미지를 클릭하면 파일 선택기를 엽니다.
+profileImg.addEventListener("click", function (event) {
+  modal.classList.add("hidden");
+
+  Swal.fire({
+    title: "프로필 사진 변경",
+    text: "프로필 사진을 변경하시겠습니까?",
+    showCancelButton: true,
+    confirmButtonColor: "#2993ff",
+    cancelButtonColor: "#9a9a9a",
+    confirmButtonText: "변경",
+    cancelButtonText: "취소",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      fileInput.click(); //
+      const formData = new FormData();
+      // 파일이 선택되면 프로필 이미지 변경
+      fileInput.addEventListener("change", function () {
+        const file = fileInput.files[0]; // 선택된 파일
+
+        if (file) {
+          formData.append("file", file);
+          $.ajax({
+            method: "POST",
+            url: "/api/employees/profile",
+            contentType: false,
+            processData: false,
+            data: formData,
+            success: function () {},
+            error: function (xhr, status, error) {
+              console.log("파일 업로드 실패 + " + error);
+            },
+          });
+        }
+      });
+    }
   });
 });
 
