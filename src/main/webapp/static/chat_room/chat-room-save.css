@@ -27,7 +27,7 @@ button {
 .add-dept-button {
     background-color: #7AB7FA;
     color: white;
-    width: 21%;
+    width: 23%;
     padding-left: 6px;
     border-radius: 10px;
 }
@@ -68,7 +68,7 @@ input::placeholder {
     font-size: 45px;
 }
 
-.tagify {
+.input-add-group-name .tagify {
     width: 100%;
     height: 50px;
 }
@@ -107,7 +107,7 @@ input::placeholder {
 }
 
 /* 태그가 많아질 때 입력 필드의 높이를 자동으로 늘림 */
-.tagify__input {
+.input-add-group-name .tagify__input {
     white-space: normal !important;
     height: auto;
 }

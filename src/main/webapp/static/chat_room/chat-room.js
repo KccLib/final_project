@@ -1086,16 +1086,32 @@ $(document).ready(function() {
     $('.add-emp-box').off('click').on('click', function () {
 
         if (addEmpModalVisible) {
-            // 모달이 보이면 숨기기
             console.log('모달이 이미 보이고 있습니다.');
+
+            // Tagify 인스턴스 제거
+
+
             addEmpModal.hide();
-            addEmpModalVisible = false;  // 모달 상태 업데이트
+            addEmpModalVisible = false;
             return;
         }
 
         if (tagify) {
             tagify.destroy();
+            tagify = null;
         }
+
+        // 입력 필드 초기화
+        let inputElm = document.querySelector("input[name='except-ptpt-employees[]']");
+        inputElm.value = '';
+
+        // Tagify가 생성한 DOM 요소 제거 및 입력 필드 대체
+        let newInputElm = inputElm.cloneNode(false); // 자식 노드 없이 클론 생성
+        inputElm.parentNode.replaceChild(newInputElm, inputElm);
+
+        // 모달을 열고 Tagify를 재초기화하기 전에 입력 필드를 다시 선택
+        addEmpModal.show();
+        addEmpModalVisible = true;
 
         let whitelist = [];
 
@@ -1125,6 +1141,7 @@ $(document).ready(function() {
                     enforceWhitelist: true, // 화이트리스트에서 허용된 태그만 사용
                     whitelist: whitelist, // 화이트 리스트 배열. 화이트 리스트를 등록하면 자동으로 드롭다운 메뉴가 생긴다
                     autogrow: true, // 태그 입력창이 자동으로 늘어난다
+
                     originalInputValueFormat: function (valuesArr) {
                         return valuesArr.map(function (item) {
                             return item.value;
@@ -1155,7 +1172,8 @@ $(document).ready(function() {
                     dropdown: {
                         // 검색에 사용할 속성 지정
                         searchKeys: ['name'],
-                        maxItems: 5, // 최대 표시 아이템 수 (필요에 따라 조정)
+                        maxItems: 3, // 최대 표시 아이템 수 (필요에 따라 조정)
+                        position: "input",
                         enabled: 0    // 0으로 설정하면 입력한 글자 수와 상관없이 항상 드롭다운을 표시
                     }
                 });
@@ -1956,7 +1974,7 @@ $(document).ready(function() {
 
         // tag remvoed callback
         function onRemoveTag(e) {
-            console.log("onRemoveTag:", e.detail, "tagify instance value:", tagify.value)
+            console.log("onRemoveTag:", e.detail, "tagify instance value:", tagify2.value)
         }
 
         function onTagEdit(e) {

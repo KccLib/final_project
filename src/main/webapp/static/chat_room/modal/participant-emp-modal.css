@@ -9,6 +9,11 @@
     width: 100px;
 }
 
+.modal-content {
+    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    border-radius: 10px;
+}
+
 /* 모달 콘텐츠 */
 #emp-modal .modal-content {
     padding: 20px;
