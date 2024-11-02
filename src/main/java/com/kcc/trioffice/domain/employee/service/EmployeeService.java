@@ -13,6 +13,10 @@ import com.kcc.trioffice.global.enums.StatusType;
 import com.kcc.trioffice.global.exception.type.EmployeeSaveException;
 import com.kcc.trioffice.global.exception.type.NotFoundException;
 
+import com.kcc.trioffice.global.image.FilePathUtils;
+import com.kcc.trioffice.global.image.S3SaveDir;
+import com.kcc.trioffice.global.image.dto.response.S3UploadFile;
+import com.kcc.trioffice.global.image.service.S3FileService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +45,7 @@ public class EmployeeService {
     private final EmployeeMapper employeeMapper;
     private final JavaMailSender mailSender;
     private final OtherEmployeeMapper otherEmployeeMapper;
+    private final S3FileService s3FileService;
 
     // 임시비밀번호 생성
     private String generateTempPassword() {
@@ -202,14 +207,19 @@ public class EmployeeService {
     @Transactional
     public EmployeeInfoWithDept updateEmployeeStatus(int status, Long employeeId) {
         employeeMapper.updateEmployeeStatus(status, employeeId);
-        EmployeeInfoWithDept employeeInfoWithDept = otherEmployeeMapper.getEmployeeInfoWithDept(employeeId).orElseThrow(() -> new NotFoundException("회원정보를 조회할 수 없습니다."));
-        return employeeInfoWithDept;
+        EmployeeInfoWithDept employeeInfoWithDeptForStatus = otherEmployeeMapper.getEmployeeInfoWithDept(employeeId).orElseThrow(() -> new NotFoundException("회원정보를 조회할 수 없습니다."));
+        return employeeInfoWithDeptForStatus;
     }
 
-    public String updateEmplyeeProfile(Long employeeId, MultipartFile profile) {
+    @Transactional
+    public String updateEmployeeProfile(Long employeeId, MultipartFile profile) {
         String profileUrl = "";
 
+        String s3UploadProfilePath = FilePathUtils.createS3UploadFilePath(profile);
+        S3UploadFile s3UploadProfile = s3FileService.upload(profile, s3UploadProfilePath, S3SaveDir.PROFILE);
 
+        profileUrl = s3UploadProfile.getFileUrl();
+        employeeMapper.updateEmployeeProfile(s3UploadProfile.getFileUrl(), employeeId);
 
         return profileUrl;
     }

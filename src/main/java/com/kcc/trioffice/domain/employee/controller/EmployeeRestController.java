@@ -95,9 +95,9 @@ public class EmployeeRestController {
     }
 
     @PutMapping("/employees/profile")
-    public ResponseEntity<String> updateEmployeeProfile(@AuthenticationPrincipal PrincipalDetail principalDetail, @RequestParam("file") MultipartFile profile) {
+    public ResponseEntity<String> updateEmployeeProfile(@AuthenticationPrincipal PrincipalDetail principalDetail, @RequestParam("profile") MultipartFile profile) {
 
-        String employeeProfileUrl = employeeService.updateEmplyeeProfile(principalDetail.getEmployeeId(), profile);
+        String employeeProfileUrl = employeeService.updateEmployeeProfile(principalDetail.getEmployeeId(), profile);
         return ResponseEntity.ok(employeeProfileUrl);
     }
 

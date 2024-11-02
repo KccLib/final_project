@@ -46,4 +46,6 @@ public interface EmployeeMapper {
 
 
     int updateEmployeeStatus(int status, Long employeeId);
+
+    int updateEmployeeProfile(String profileUrl, Long employeeId);
 }

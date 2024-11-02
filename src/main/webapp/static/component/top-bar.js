@@ -289,7 +289,7 @@ searchBar.addEventListener("input", function (event) {
  */
 const profileImg = document.getElementById("profile-img");
 const fileInput = document.getElementById("fileInput");
-
+const forProfileTarget = document.getElementById("modalContent");
 // 프로필 이미지를 클릭하면 파일 선택기를 엽니다.
 profileImg.addEventListener("click", function (event) {
   modal.classList.add("hidden");
@@ -311,7 +311,7 @@ profileImg.addEventListener("click", function (event) {
         const file = fileInput.files[0]; // 선택된 파일
 
         if (file) {
-          formData.append("file", file);
+          formData.append("profile", file);
           $.ajax({
             method: "PUT",
             url: "/api/employees/profile",
@@ -319,7 +319,8 @@ profileImg.addEventListener("click", function (event) {
             processData: false,
             data: formData,
             success: function (employeeProfileUrl) {
-              console.log("파일 업로드 완료 ");
+              Swal.fire("변경완료 되었습니다.");
+              modal.classList.add("hidden");
             },
             error: function (xhr, status, error) {
               console.log("파일 업로드 실패 + " + error);
