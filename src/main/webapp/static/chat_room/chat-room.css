@@ -62,64 +62,40 @@
 
 
 
-.status {
-    width: 20px;
-    height: 20px;
+.profile > div {
+    width: 15px;
+    height: 15px;
     border-radius: 70%;
-    background-color: #92C353;
     position: absolute;
     bottom: 0;
     right: 0;
     border: 1px solid #FFFFFF;
     margin-left: 300px;
     margin-top: 30px;
+}
+
+.status {
+    background-color: #92C353;
+}
+
+.profile > div > i {
+    font-size: 10px;
 }
 
 .absent-status {
-    width: 20px;
-    height: 20px;
-    border-radius: 70%;
     background-color: #eaa300;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    border: 1px solid #FFFFFF;
-    margin-left: 300px;
-    margin-top: 30px;
 }
 
 .inactive-status {
-    width: 20px;
-    height: 20px;
-    border-radius: 70%;
     background-color: #d9d9d9;
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    border: 1px solid #FFFFFF;
-    margin-left: 300px;
-    margin-top: 30px;
 }
 
 .dnd-status {
-     width: 20px;
-     height: 20px;
-     border-radius: 70%;
      background-color: #ea0000;
-     position: absolute;
-     bottom: 0;
-     right: 0;
-     border: 1px solid #FFFFFF;
-     margin-left: 300px;
-     margin-top: 30px;
 }
 
 .check-icon {
     color: #FFFFFF;
-}
-
-.chat-room-last-message {
-    margin-top: 20px;
 }
 
 .unread-count-box {
@@ -131,19 +107,25 @@
 }
 
 .chat-room {
-    border-bottom: 2px solid #e0e0e0;
     cursor: pointer;
     padding: 15px 0px;
+}
+
+.chat-room-item {
+    margin: 5px 10px !important;
+    border-radius: 20px;
+}
+
+
+.chat-room-item.active, .chat-room-item:hover {
+    background-color: rgba(255, 255, 255, 0.8); /* 밝은 흰색 배경 */
+    box-shadow: 0 0 0 1px rgba(200, 200, 200, 0.5) inset; /* 테두리 색을 부드러운 회색으로 변경 */
+}
+
+.second-side-bar {
 
 }
 
-.chat-rooms-list {
-}
-
-.chat-room-item.active {
-    background-color: rgba(0, 123, 255, 0.5)
-
-}
 
 .last-message-at {
     text-align: right;
@@ -213,4 +195,29 @@
 .default-area p {
     font-size: 16px;
     color: #888;
+}
+
+.chat-rooms-list {
+    height: 80vh;
+    overflow-y: auto;
+}
+
+/* 기본 상태에서는 스크롤바를 투명하게 함 */
+.chat-rooms-list::-webkit-scrollbar-thumb {
+    background: rgba(176, 176, 176, 0); /* 투명하게 설정 */
+    border-radius: 20px;
+}
+
+.chat-rooms-list::-webkit-scrollbar-track {
+    background: rgba(239, 239, 239, 0); /* 투명하게 설정 */
+    border-radius: 20px;
+}
+
+/* .second-side-bar가 호버 상태일 때 스크롤바 색상을 복원 */
+.chat-rooms-list:hover::-webkit-scrollbar-thumb {
+    background: rgba(176, 176, 176, 1); /* 원래 색상으로 복원 */
+}
+
+.chat-rooms-list:hover::-webkit-scrollbar-track {
+    background: rgba(239, 239, 239, 1); /* 원래 색상으로 복원 */
 }

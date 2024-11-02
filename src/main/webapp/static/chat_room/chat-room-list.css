@@ -522,3 +522,22 @@
     flex-direction: column;
     margin-top: auto; /* Pushes content to bottom when not enough messages */
 }
+
+.chat::-webkit-scrollbar-thumb {
+    background: rgba(176, 176, 176, 0); /* 투명하게 설정 */
+    border-radius: 20px;
+}
+
+.chat::-webkit-scrollbar-track {
+    background: rgba(239, 239, 239, 0); /* 투명하게 설정 */
+    border-radius: 20px;
+}
+
+/* .second-side-bar가 호버 상태일 때 스크롤바 색상을 복원 */
+.chat:hover::-webkit-scrollbar-thumb {
+    background: rgba(176, 176, 176, 1); /* 원래 색상으로 복원 */
+}
+
+.chat:hover::-webkit-scrollbar-track {
+    background: rgba(239, 239, 239, 1); /* 원래 색상으로 복원 */
+}
