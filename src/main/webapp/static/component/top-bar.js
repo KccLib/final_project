@@ -290,7 +290,10 @@ searchBar.addEventListener("input", function (event) {
 const profileImg = document.getElementById("profile-img");
 const fileInput = document.getElementById("fileInput");
 const forProfileTarget = document.getElementById("modalContent");
-// 프로필 이미지를 클릭하면 파일 선택기를 엽니다.
+
+//하나만 선택되도록 변경
+fileInput.removeAttribute("multiple");
+
 profileImg.addEventListener("click", function (event) {
   modal.classList.add("hidden");
 
@@ -311,21 +314,27 @@ profileImg.addEventListener("click", function (event) {
         const file = fileInput.files[0]; // 선택된 파일
 
         if (file) {
-          formData.append("profile", file);
-          $.ajax({
-            method: "PUT",
-            url: "/api/employees/profile",
-            contentType: false,
-            processData: false,
-            data: formData,
-            success: function (employeeProfileUrl) {
-              Swal.fire("변경완료 되었습니다.");
-              modal.classList.add("hidden");
-            },
-            error: function (xhr, status, error) {
-              console.log("파일 업로드 실패 + " + error);
-            },
-          });
+          // 이미지 파일 형식인지 확인
+          if (file.type.startsWith("image/")) {
+            formData.append("profile", file);
+            $.ajax({
+              method: "PUT",
+              url: "/api/employees/profile",
+              contentType: false,
+              processData: false,
+              data: formData,
+              success: function (employeeProfileUrl) {
+                Swal.fire("변경완료 되었습니다.");
+                // modal.classList.add("hidden");
+              },
+              error: function (xhr, status, error) {
+                console.log("파일 업로드 실패 + " + error);
+              },
+            });
+          } else {
+            Swal.fire("이미지 파일만 선택 가능합니다.");
+            fileInput.value = ""; // 유효하지 않은 파일 선택 시 초기화
+          }
         }
       });
     }
