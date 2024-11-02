@@ -2,7 +2,7 @@
 .side-bar-menu {
   width: 4rem;
   min-width: 4rem;
-  height: 100%;
+  /*height: calc(100% - 10px);*/
   border: 1px solid #e4e4e4;
   background-color: #ebebeb;
   box-shadow: inset 5px 0px 10px #dedede;

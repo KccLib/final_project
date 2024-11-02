@@ -35,5 +35,5 @@
   display: flex;
   flex-direction: row;
   width: 100%;
-  height: calc(100vh - 40px); /* 헤더의 높이를 빼주어야 함 */
+  height: calc(100vh - 50px);
 }
