@@ -73,7 +73,7 @@
 <jsp:include page="/WEB-INF/views/component/top-bar.jsp"/>
 <div class="layout-container">
 <jsp:include page="/WEB-INF/views/component/first-side-bar.jsp"/>
-
+<div class="chat-second-side-bar-container">
 <div class="second-side-bar">
     <div>
         <div class="container-fluid">
@@ -176,7 +176,9 @@
         </div>
     </div>
 </div>
+</div>
 
+<div class="contents-list">
 <div class="contents save-contents" style="display: none">
     <div class="container-fluid">
         <div class="row category d-flex align-items-center">
@@ -305,9 +307,11 @@
                 <div class="container-fluid">
                     <div class="d-flex justify-content-center">
                         <div class="chat-send-input d-flex justify-content-center">
-                            <input type="text" class="chat-input" placeholder="메시지를 입력하세요."/>
-                            <i class="fa-regular fa-file"></i>
-                            <i id="send" class="fa-regular fa-paper-plane"></i>
+                            <div class="input-container">
+                                <textarea class="chat-input" placeholder="메시지를 입력하세요."></textarea>
+                                <i class="fa-regular fa-file attach-icon"></i>
+                                <i id="send" class="fa-regular fa-paper-plane send-icon"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -397,6 +401,7 @@
 
         </div>
     </div>
+</div>
 </div>
 </div>
 <div id="emoticon-box"

@@ -19,6 +19,7 @@ import com.kcc.trioffice.domain.employee.service.EmployeeService;
 import com.kcc.trioffice.domain.participation_employee.dto.response.PtptEmpInfos;
 import com.kcc.trioffice.domain.participation_employee.mapper.ParticipationEmployeeMapper;
 import com.kcc.trioffice.global.enums.ChatType;
+import com.kcc.trioffice.global.enums.FileType;
 import com.kcc.trioffice.global.exception.type.NotFoundException;
 import com.kcc.trioffice.global.image.FilePathUtils;
 import com.kcc.trioffice.global.image.S3SaveDir;
@@ -27,6 +28,8 @@ import com.kcc.trioffice.global.image.service.S3FileService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -261,6 +264,30 @@ public class AttachedFileService {
             attachedFileDetailInfo.setChatRoomName(chatRoomName);
         }
 
+    }
+
+    public ResponseEntity<?> previewAttachedFile(Long fileId) {
+        S3UploadFile s3UploadFile = attachedFileMapper.getAttachedFileByFileId(fileId)
+                .orElseThrow(() -> new NotFoundException("해당 파일이 존재하지 않습니다."));
+
+        // Determine the file type
+        String fileExtension = s3UploadFile.getFileExtension().toLowerCase();
+        FileType fileType = s3UploadFile.getFileType() == 1 ? FileType.IMAGE : FileType.FILE;
+
+        // For images, return the image directly
+        if (fileType == FileType.IMAGE) {
+            return s3FileService.getFileAsResponseEntity(s3UploadFile.getFileUrl(), s3UploadFile.getFileName(), MediaType.IMAGE_JPEG);
+        }
+
+        // For PDFs, return the PDF content
+        if (fileExtension.equals("pdf")) {
+            return s3FileService.getFileAsResponseEntity(s3UploadFile.getFileUrl(), s3UploadFile.getFileName(), MediaType.APPLICATION_PDF);
+        }
+
+        // For other file types, return an appropriate response
+        // e.g., a message indicating that preview is not available
+        return ResponseEntity.status(HttpStatus.UNSUPPORTED_MEDIA_TYPE)
+                .body("Preview not available for this file type.");
     }
 
 }
