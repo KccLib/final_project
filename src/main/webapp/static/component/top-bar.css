@@ -125,10 +125,12 @@
   text-decoration: none;
   color: inherit;
   cursor: pointer;
+  display: flex;
+  justify-content: end;
 }
 
 #logout {
-  width: 45px;
+  width: 50px;
   height: 15px;
   /* font-weight: 300; */
   font-size: 13px;
@@ -147,7 +149,7 @@
   position: absolute;
   width: 70px;
   height: 70px;
-  border: 1px solid rgb(143, 143, 143);
+  border: 2px solid rgb(219 219 219);
   margin-top: 11px;
   border-radius: 51%;
   margin-left: 1rem;
@@ -394,9 +396,11 @@
   justify-content: center;
   align-items: center;
   margin-bottom: 2px;
+  margin-top: 1px;
 }
 
 .status-offline-icon {
+  margin-top: 1px;
   width: 20px;
   height: 20px;
   border: 1px solid white;
@@ -416,6 +420,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 2px;
 }
 .status-reset-icon > i,
 .status-offline-icon > i,
@@ -463,7 +468,7 @@
 
 #search-bar-container {
   width: 100%;
-  height: 95%;
+  height: 94%;
   position: absolute;
   z-index: 20000;
   display: flex;
@@ -612,7 +617,7 @@
 
 #other-employee-info-container {
   width: 96%;
-  height: 95.5%;
+  height: 94.5%;
   position: absolute;
   background-color: white;
   z-index: 18000;

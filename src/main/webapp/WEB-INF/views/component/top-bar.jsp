@@ -59,6 +59,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
             </form>
           </div>
           <div id="profile-img">
+            <input type="file" id="fileInput" accept="image/*" style="display: none;">
             <img
               src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
               alt="Profile Image"
