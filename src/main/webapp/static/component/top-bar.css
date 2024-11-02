@@ -468,7 +468,7 @@
 
 #search-bar-container {
   width: 100%;
-  height: 95%;
+  height: 94%;
   position: absolute;
   z-index: 20000;
   display: flex;
