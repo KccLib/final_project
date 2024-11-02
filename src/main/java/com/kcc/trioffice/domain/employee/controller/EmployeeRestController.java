@@ -16,6 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
@@ -91,6 +92,13 @@ public class EmployeeRestController {
     public ResponseEntity<EmployeeInfoWithDept> updateEmployeeStatus(@RequestParam int status, @AuthenticationPrincipal PrincipalDetail principalDetail) {
         EmployeeInfoWithDept employeeInfoWithDept = employeeService.updateEmployeeStatus(status, principalDetail.getEmployeeId());
         return ResponseEntity.ok(employeeInfoWithDept);
+    }
+
+    @PutMapping("/employees/profile")
+    public ResponseEntity<String> updateEmployeeProfile(@AuthenticationPrincipal PrincipalDetail principalDetail, @RequestParam("file") MultipartFile profile) {
+
+        String employeeProfileUrl = employeeService.updateEmplyeeProfile(principalDetail.getEmployeeId(), profile);
+        return ResponseEntity.ok(employeeProfileUrl);
     }
 
 }

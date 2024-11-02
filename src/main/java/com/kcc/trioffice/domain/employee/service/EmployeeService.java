@@ -24,6 +24,7 @@ import org.springframework.mail.MailException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashMap;
 import java.util.List;
@@ -203,5 +204,13 @@ public class EmployeeService {
         employeeMapper.updateEmployeeStatus(status, employeeId);
         EmployeeInfoWithDept employeeInfoWithDept = otherEmployeeMapper.getEmployeeInfoWithDept(employeeId).orElseThrow(() -> new NotFoundException("회원정보를 조회할 수 없습니다."));
         return employeeInfoWithDept;
+    }
+
+    public String updateEmplyeeProfile(Long employeeId, MultipartFile profile) {
+        String profileUrl = "";
+
+
+
+        return profileUrl;
     }
 }

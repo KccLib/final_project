@@ -313,12 +313,14 @@ profileImg.addEventListener("click", function (event) {
         if (file) {
           formData.append("file", file);
           $.ajax({
-            method: "POST",
+            method: "PUT",
             url: "/api/employees/profile",
             contentType: false,
             processData: false,
             data: formData,
-            success: function () {},
+            success: function (employeeProfileUrl) {
+              console.log("파일 업로드 완료 ");
+            },
             error: function (xhr, status, error) {
               console.log("파일 업로드 실패 + " + error);
             },
