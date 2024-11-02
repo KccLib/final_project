@@ -120,4 +120,9 @@ public class AttachedFileRestController {
         return attachedFileService.getAllAttachedFile(principalDetail.getEmployeeId(), attachedFileSelect);
     }
 
+    @GetMapping("/api/attached-files/{fileId}/preview")
+    public ResponseEntity<?> previewFile(@PathVariable Long fileId) {
+        return attachedFileService.previewAttachedFile(fileId);
+    }
+
 }

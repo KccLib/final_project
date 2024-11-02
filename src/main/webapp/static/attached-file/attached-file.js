@@ -151,11 +151,14 @@ $(document).ready(function() {
             let row = `
                 <tr>
                     <th style="width: 30%; margin-left: 10px;">
-                    <div class="row align-items-center" style="height: 30px;">
+                    <div class="row align-items-center preview-trigger" style="height: 30px;">
                         <p class="file-name">
                             <i class="${addExtensionIcon(item)}"></i>
                             ${item.fileName}
                         </p>
+                        </div>
+                        <div class="file-preview" style="display: none; position: absolute; z-index: 1000;">
+                          <!-- The preview content will be injected here -->
                         </div>
                     </th>
                     <td style="width: 15%;">
@@ -372,6 +375,90 @@ $(document).ready(function() {
                 console.error('파일 다운로드에 실패했습니다:', error);
             }
         });
+    });
+
+    $(document).on('mouseenter', '.preview-trigger', function() {
+        let fileId = $(this).closest('tr').find('.fa-download').data('file-id');
+        let previewContainer = $(this).closest('th').find('.file-preview');
+        let self = $(this); // Reference to the hovered element
+
+        // Show loading indicator
+        previewContainer.html('<p>Loading preview...</p>').show();
+
+        // Fetch the file preview
+        $.ajax({
+            url: `/api/attached-files/${fileId}/preview`,
+            method: 'GET',
+            xhrFields: {
+                responseType: 'blob'
+            },
+            success: function(blob, status, xhr) {
+                let contentType = xhr.getResponseHeader('Content-Type');
+
+                let contentHtml = '';
+                if (contentType.startsWith('image/')) {
+                    let url = URL.createObjectURL(blob);
+                    contentHtml = `<img src="${url}" alt="Image Preview" style="max-width: 400px; max-height: 400px;" />`;
+                } else if (contentType === 'application/pdf') {
+                    let url = URL.createObjectURL(blob);
+                    contentHtml = `<embed src="${url}" type="application/pdf" width="400px" height="400px" />`;
+                } else {
+                    contentHtml = '<p>No preview available for this file type.</p>';
+                }
+
+                // Set the content
+                previewContainer.html(contentHtml);
+
+                // Wait for the content to load
+                previewContainer.find('img, embed').on('load', function() {
+                    setPosition();
+                });
+
+                // For non-image/pdf content or if load event doesn't fire
+                setTimeout(setPosition, 100);
+
+                function setPosition() {
+                    // Get the actual dimensions of the preview container
+                    let previewWidth = previewContainer.outerWidth();
+                    let previewHeight = previewContainer.outerHeight();
+
+                    // Calculate positions
+                    let offset = self.offset();
+                    let leftPosition = offset.left + self.outerWidth();
+                    let topPosition = offset.top - $(window).scrollTop();
+
+                    // Adjust if the preview goes beyond the viewport width
+                    let viewportWidth = $(window).width();
+                    if (leftPosition + previewWidth > viewportWidth) {
+                        leftPosition = offset.left - previewWidth;
+                    }
+
+                    // Adjust if the preview goes beyond the viewport height
+                    let viewportHeight = $(window).height();
+                    if (topPosition + previewHeight > viewportHeight) {
+                        topPosition = viewportHeight - previewHeight;
+                        if (topPosition < 0) {
+                            topPosition = 0;
+                        }
+                    }
+
+                    // Set the position
+                    previewContainer.css({
+                        'top': topPosition + 'px',
+                        'left': leftPosition - 400 + 'px',
+                        'position': 'fixed'
+                    });
+                }
+            },
+            error: function(xhr, status, error) {
+                previewContainer.html('<p>Failed to load preview.</p>');
+            }
+        });
+    });
+
+    $(document).on('mouseleave', '.preview-trigger, .file-preview', function() {
+        let previewContainer = $(this).closest('th').find('.file-preview');
+        previewContainer.hide().empty();
     });
 
 });

@@ -91,4 +91,23 @@ public class S3FileService {
             throw new ServerException("S3 파일 삭제 실패");
         }
     }
+
+    public ResponseEntity<byte[]> getFileAsResponseEntity(String fileUrl, String fileName, MediaType mediaType) {
+        try {
+            URI uri = new URI(fileUrl);
+            String key = uri.getPath().substring(uri.getPath().indexOf(bucket) + bucket.length() + 1);
+            S3Object s3Object = amazonS3Client.getObject(new GetObjectRequest(bucket, key));
+            S3ObjectInputStream objectInputStream = s3Object.getObjectContent();
+            byte[] bytes = IOUtils.toByteArray(objectInputStream);
+
+            HttpHeaders httpHeaders = new HttpHeaders();
+            httpHeaders.setContentType(mediaType);
+            httpHeaders.setContentLength(bytes.length);
+            httpHeaders.setContentDispositionFormData("inline", URLEncoder.encode(fileName, "UTF-8").replaceAll("\\+", "%20"));
+
+            return new ResponseEntity<>(bytes, httpHeaders, HttpStatus.OK);
+        } catch (Exception e) {
+            throw new ServerException(e.getMessage());
+        }
+    }
 }
