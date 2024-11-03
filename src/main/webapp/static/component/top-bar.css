@@ -219,7 +219,8 @@
 }
 
 #message-pen,
-#message-trash {
+#message-trash,
+#message-save {
   cursor: pointer;
 }
 
@@ -271,6 +272,23 @@
   border-radius: 5px;
   background-color: #e0e0e0;
   margin-left: auto;
+  word-wrap: break-word;
+  word-break: break-all;
+  resize: none;
+}
+
+#tmp-employee-contents {
+  width: 210px;
+  height: 62px;
+  border-radius: 5px;
+  background-color: #e0e0e0;
+  position: absolute;
+  top: 133px;
+  left: 10px;
+  word-wrap: break-word;
+  word-break: break-all;
+  resize: none;
+  border: 0px solid black;
 }
 
 #status-message-contents {

@@ -361,5 +361,19 @@
         AND is_deleted = 0
     </update>
 
+    <update id="updateEmployeeProfile" parameterType="map" >
+        UPDATE employee
+        SET profile_url = #{profileUrl}
+        WHERE is_deleted = 0
+        AND employee_id = #{employeeId}
+    </update>
+
+    <update id="updateEmployeeStatusMessage"  parameterType="map" >
+        UPDATE employee
+        SET status_message = #{message}
+        WHERE is_deleted = 0
+          AND employee_id = #{employeeId}
+    </update>
+
 
 </mapper>

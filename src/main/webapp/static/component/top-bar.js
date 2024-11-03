@@ -93,6 +93,12 @@ window.addEventListener("click", function (event) {
   if (event.target === modal) {
     modal.classList.add("hidden");
     statusModel.classList.add("hidden");
+
+    statusMessageButtons.innerHTML = "";
+    statusMessageButtons.innerHTML = `<div id="message-pen"><i class="fa-solid fa-pen"></i></div>
+              <div id="message-trash">
+                <i class="fa-solid fa-trash-can"></i>
+              </div>`;
   }
 });
 /**
@@ -289,8 +295,11 @@ searchBar.addEventListener("input", function (event) {
  */
 const profileImg = document.getElementById("profile-img");
 const fileInput = document.getElementById("fileInput");
+const forProfileTarget = document.getElementById("modalContent");
 
-// 프로필 이미지를 클릭하면 파일 선택기를 엽니다.
+//하나만 선택되도록 변경
+fileInput.removeAttribute("multiple");
+
 profileImg.addEventListener("click", function (event) {
   modal.classList.add("hidden");
 
@@ -311,22 +320,124 @@ profileImg.addEventListener("click", function (event) {
         const file = fileInput.files[0]; // 선택된 파일
 
         if (file) {
-          formData.append("file", file);
-          $.ajax({
-            method: "POST",
-            url: "/api/employees/profile",
-            contentType: false,
-            processData: false,
-            data: formData,
-            success: function () {},
-            error: function (xhr, status, error) {
-              console.log("파일 업로드 실패 + " + error);
-            },
-          });
+          // 이미지 파일 형식인지 확인
+          if (file.type.startsWith("image/")) {
+            formData.append("profile", file);
+            $.ajax({
+              method: "PUT",
+              url: "/api/employees/profile",
+              contentType: false,
+              processData: false,
+              data: formData,
+              success: function (employeeProfileUrl) {
+                Swal.fire("변경완료 되었습니다.");
+                // modal.classList.add("hidden");
+              },
+              error: function (xhr, status, error) {
+                console.log("파일 업로드 실패 + " + error);
+              },
+            });
+          } else {
+            Swal.fire("이미지 파일만 선택 가능합니다.");
+            fileInput.value = ""; // 유효하지 않은 파일 선택 시 초기화
+          }
         }
       });
     }
   });
+});
+
+/**
+ * 사용자 상태 메세지 변경
+ *
+ */
+const messagePen = document.getElementById("status-message-buttons");
+const statusMessageButtons = document.getElementById("status-message-buttons");
+messagePen.addEventListener("click", function (event) {
+  const targetPen = event.target.closest("#message-pen");
+
+  if (targetPen) {
+    statusMessageButtons.innerHTML = "";
+    userStatusMessageContents.innerHTML =
+      "<textarea  id='tmp-employee-contents' type='text' placeholder='메시지를 입력하세요' maxlength='80'></textarea>";
+
+    statusMessageButtons.innerHTML = `<div id="message-save"><i class="fa-solid fa-circle-chevron-down"></i></div>
+              <div id="message-trash">
+                <i class="fa-solid fa-trash-can"></i>
+              </div>`;
+  }
+});
+
+//엔터 두번 방지하기
+messagePen.addEventListener("input", function (event) {
+  const targetContents = event.target.closest("#tmp-employee-contents");
+
+  if (targetContents) {
+    // 연속된 엔터 두 번을 하나로 치환
+    this.value = this.value.replace(/\n{2,}/g, "\n");
+  }
+});
+
+statusMessageButtons.addEventListener("click", function (event) {
+  const targetTrash = event.target.closest("#message-trash");
+  const targetSave = event.target.closest("#message-save");
+  // const targetTmpContents = event.target.closest("#tmp-employee-contents");
+
+  if (targetTrash) {
+    userStatusMessageContents.innerText = "";
+    statusMessageButtons.innerHTML = `<div id="message-pen"><i class="fa-solid fa-pen"></i></div>
+              <div id="message-trash">
+                <i class="fa-solid fa-trash-can"></i>
+              </div>`;
+
+    $.ajax({
+      method: "PUT",
+      url: "/api/employees/status-message",
+      dataType: "json",
+      data: {
+        statusContents: "",
+      },
+      success: function (response) {
+        console.log("회원의 상태메세지를 변경하였습니다.");
+        userStatusMessageContents.innerText = response.statusContents;
+      },
+      error: function (xhr, status, error) {
+        console.log("회원의 상태메세지를 변경할 수 없습니다." + error);
+      },
+    });
+  }
+
+  if (targetSave) {
+    const targetTmpContents = document.getElementById("tmp-employee-contents");
+    if (targetTmpContents) {
+      const saveStatusContents = targetTmpContents.value;
+      // 입력된 텍스트를 저장
+
+      $.ajax({
+        method: "PUT",
+        url: "/api/employees/status-message",
+        dataType: "json",
+        data: {
+          statusContents: saveStatusContents,
+        },
+        success: function (response) {
+          console.log("회원의 상태메세지를 변경하였습니다.");
+          userStatusMessageContents.innerText = response.statusContents;
+        },
+        error: function (xhr, status, error) {
+          console.log("회원의 상태메세지를 변경할 수 없습니다." + error);
+        },
+      });
+      // <input> 요소만 삭제
+      targetTmpContents.remove();
+
+      statusMessageButtons.innerHTML = "";
+      statusMessageButtons.innerHTML = `<div id="message-pen"><i class="fa-solid fa-pen"></i></div>
+              <div id="message-trash">
+                <i class="fa-solid fa-trash-can"></i>
+              </div>`;
+    }
+  }
 });
 
 /**
