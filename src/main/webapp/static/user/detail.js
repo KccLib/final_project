@@ -135,7 +135,51 @@ passwordCheckContainer.addEventListener("change", (e) => {
     },
   });
 });
-
 /**
  * 수정 submit
  */
+modifyApply.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  Swal.fire({
+    title: "회원 수정",
+    text: "변경사항을 저장할까요?",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#efefef",
+    confirmButtonText: "저장",
+    cancelButtonText: "취소",
+    customClass: {
+      confirmButton: "custom-confirm-button",
+      cancelButton: "custom-cancel-button",
+    },
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // 폼 데이터를 수집
+      const employeeInfo = {
+        location: document.getElementById("detail-locate").value,
+        externalEmail: document.getElementById("detail-external-email").value,
+        phoneNum: document.getElementById("detail-phone-number").value,
+        fax: document.getElementById("detail-fax-number").value,
+        // 필요 시 다른 필드 추가
+      };
+
+      $.ajax({
+        url: "/employees/modify",
+        method: "POST",
+        contentType: "application/json",
+        data: JSON.stringify(employeeInfo),
+        success: function (response) {
+          // 성공 시 처리할 로직
+          Swal.fire(response).then(() => {
+            window.location.href = "/notifications"; // 리다이렉트할 URL
+          });
+        },
+        error: function (xhr, status, error) {
+          // 에러 처리
+          console.log("수정 실패:", error);
+        },
+      });
+    }
+  });
+});

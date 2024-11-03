@@ -249,4 +249,15 @@ public class EmployeeService {
 
         return responsePasswordCheck;
     }
+
+    @Transactional
+    public boolean modifyEmployee(EmployeeInfo employeeInfo, Long employeeId) {
+        int modifyCheck = employeeMapper.modifyEmployee(employeeInfo, employeeId);
+
+        if (modifyCheck == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

@@ -66,4 +66,15 @@ public class EmployeeController { // 'Contoller' -> 'Controller' 오타 수정
     return "user/detail";
   }
 
+  @PostMapping("/employees/modify")
+  public ResponseEntity<String> modifyEmployee(@RequestBody EmployeeInfo employeeInfo, @AuthenticationPrincipal PrincipalDetail principalDetail) {
+    boolean isModified = employeeService.modifyEmployee(employeeInfo, principalDetail.getEmployeeId());
+
+    if (isModified) {
+      return ResponseEntity.ok("성공적으로 수정되었습니다.");
+    } else {
+      return ResponseEntity.status(400).body("수정에 실패하였습니다.");
+    }
+  }
+
 }

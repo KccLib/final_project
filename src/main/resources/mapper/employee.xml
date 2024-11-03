@@ -372,7 +372,17 @@
         UPDATE employee
         SET status_message = #{message}
         WHERE is_deleted = 0
-          AND employee_id = #{employeeId}
+        AND employee_id = #{employeeId}
+    </update>
+
+    <update id="modifyEmployee" parameterType="map">
+        UPDATE employee
+        SET location = #{employeeInfo.location}
+            , external_email = #{employeeInfo.externalEmail}
+            , phone_num = #{employeeInfo.phoneNum}
+            , fax = #{employeeInfo.fax}
+        WHERE is_deleted = 0
+        AND employee_id = #{employeeId}
     </update>
 
 
