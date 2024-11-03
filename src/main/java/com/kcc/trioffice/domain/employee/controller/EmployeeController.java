@@ -56,4 +56,9 @@ public class EmployeeController { // 'Contoller' -> 'Controller' 오타 수정
       return "redirect:/login";
   }
 
+  @GetMapping("/employees/detail")
+  public String employeeDetail() {
+    return "user/detail";
+  }
+
 }
