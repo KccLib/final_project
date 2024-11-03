@@ -20,7 +20,7 @@
             <div id="detail-employee-title">회원 정보</div>
             <div id="detail-employee-profile-info">
                 <div id="detail-profile-img">
-                    <input type="file" id="fileInput" accept="image/*" style="display: none;">
+                    <input type="file" id="detail-fileInput" accept="image/*" style="display: none;">
                     <img
                       src="${employee.profileUrl}"
                       alt="Profile Image"

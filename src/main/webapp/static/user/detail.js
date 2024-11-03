@@ -170,15 +170,71 @@ modifyApply.addEventListener("click", (e) => {
         contentType: "application/json",
         data: JSON.stringify(employeeInfo),
         success: function (response) {
-          // 성공 시 처리할 로직
           Swal.fire(response).then(() => {
-            window.location.href = "/notifications"; // 리다이렉트할 URL
+            window.location.href = "/notifications";
           });
         },
         error: function (xhr, status, error) {
           // 에러 처리
           console.log("수정 실패:", error);
         },
+      });
+    }
+  });
+});
+
+/**
+ * 프로필 사진 변경
+ *
+ */
+const detailProfileImg = document.getElementById("detail-profile-img");
+const detailFileInput = document.getElementById("detail-fileInput");
+
+//하나만 선택되도록 변경
+detailFileInput.removeAttribute("multiple");
+
+detailProfileImg.addEventListener("click", function (event) {
+  console.log("프로필 이미지 변경 ");
+  Swal.fire({
+    title: "프로필 사진 변경",
+    text: "프로필 사진을 변경하시겠습니까?",
+    showCancelButton: true,
+    confirmButtonColor: "#2993ff",
+    cancelButtonColor: "#9a9a9a",
+    confirmButtonText: "변경",
+    cancelButtonText: "취소",
+  }).then((resultDetail) => {
+    if (resultDetail.isConfirmed) {
+      detailFileInput.click(); //
+      const formData = new FormData();
+      // 파일이 선택되면 프로필 이미지 변경
+      detailFileInput.addEventListener("change", function () {
+        const file = detailFileInput.files[0]; // 선택된 파일
+
+        if (file) {
+          // 이미지 파일 형식인지 확인
+          if (file.type.startsWith("image/")) {
+            formData.append("profile", file);
+            $.ajax({
+              method: "PUT",
+              url: "/api/employees/profile",
+              contentType: false,
+              processData: false,
+              data: formData,
+              success: function (employeeProfileUrl) {
+                Swal.fire("변경이 완료되었습니다.").then(() => {
+                  window.location.href = "/employees/detail";
+                });
+              },
+              error: function (xhr, status, error) {
+                console.log("파일 업로드 실패 + " + error);
+              },
+            });
+          } else {
+            Swal.fire("이미지 파일만 선택 가능합니다.");
+            detailFileInput.value = ""; // 유효하지 않은 파일 선택 시 초기화
+          }
+        }
       });
     }
   });
