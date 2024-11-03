@@ -389,14 +389,45 @@ statusMessageButtons.addEventListener("click", function (event) {
               <div id="message-trash">
                 <i class="fa-solid fa-trash-can"></i>
               </div>`;
+
+    $.ajax({
+      method: "PUT",
+      url: "/api/employees/status-message",
+      dataType: "json",
+      data: {
+        statusContents: "",
+      },
+      success: function (response) {
+        console.log("회원의 상태메세지를 변경하였습니다.");
+        userStatusMessageContents.innerText = response.statusContents;
+      },
+      error: function (xhr, status, error) {
+        console.log("회원의 상태메세지를 변경할 수 없습니다." + error);
+      },
+    });
   }
 
   if (targetSave) {
     const targetTmpContents = document.getElementById("tmp-employee-contents");
     if (targetTmpContents) {
+      const saveStatusContents = targetTmpContents.value;
       // 입력된 텍스트를 저장
-      userStatusMessageContents.innerText = targetTmpContents.value;
 
+      $.ajax({
+        method: "PUT",
+        url: "/api/employees/status-message",
+        dataType: "json",
+        data: {
+          statusContents: saveStatusContents,
+        },
+        success: function (response) {
+          console.log("회원의 상태메세지를 변경하였습니다.");
+          userStatusMessageContents.innerText = response.statusContents;
+        },
+        error: function (xhr, status, error) {
+          console.log("회원의 상태메세지를 변경할 수 없습니다." + error);
+        },
+      });
       // <input> 요소만 삭제
       targetTmpContents.remove();
 

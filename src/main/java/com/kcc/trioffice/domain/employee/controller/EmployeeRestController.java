@@ -101,4 +101,10 @@ public class EmployeeRestController {
         return ResponseEntity.ok(employeeProfileUrl);
     }
 
+    @PutMapping("/employees/status-message")
+    public ResponseEntity<Map<String, String>> updateEmployeeStatusMessage(@AuthenticationPrincipal PrincipalDetail principalDetail, @RequestParam("statusContents") String message){
+        Map<String, String> response = employeeService.updateEmployeeStatusMessage(principalDetail.getEmployeeId(), message);
+        return ResponseEntity.ok(response);
+    }
+
 }

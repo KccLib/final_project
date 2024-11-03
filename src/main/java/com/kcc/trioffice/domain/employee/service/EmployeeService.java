@@ -223,4 +223,14 @@ public class EmployeeService {
 
         return profileUrl;
     }
+
+    @Transactional
+    public Map<String, String> updateEmployeeStatusMessage(Long employeeId, String message) {
+
+        employeeMapper.updateEmployeeStatusMessage(employeeId, message);
+
+        Map<String, String> employeeStatusMessage = new HashMap<>();
+        employeeStatusMessage.put("statusContents", message);
+        return employeeStatusMessage;
+    }
 }
