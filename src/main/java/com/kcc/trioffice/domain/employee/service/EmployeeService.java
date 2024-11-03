@@ -233,4 +233,20 @@ public class EmployeeService {
         employeeStatusMessage.put("statusContents", message);
         return employeeStatusMessage;
     }
+
+    public Map<String, Integer> detailPasswordCheck(Long employeeId, String password) {
+        EmployeeInfo employeeInfo = employeeMapper.getEmployeeInfo(employeeId).orElseThrow(() -> new NotFoundException("일치하는 회원 정보가 없습니다."));
+        String encodedPassword = employeeInfo.getPassword();
+        Map<String, Integer> responsePasswordCheck = new HashMap<>();
+        //평문 먼저, 암호화 나중에 ***
+        if (passwordEncoder.matches(password, encodedPassword)) {
+            responsePasswordCheck.put("passwordCheck", 1);
+            System.out.println("비밀번호가 같습니다.");
+        } else {
+            responsePasswordCheck.put("passwordCheck", 2);
+            System.out.println("비밀번호가 일치하지 않습니다.");
+        }
+
+        return responsePasswordCheck;
+    }
 }

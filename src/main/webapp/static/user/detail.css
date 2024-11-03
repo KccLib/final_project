@@ -19,15 +19,15 @@
 
 #employee-detail-contents {
   width: 45rem;
-  height: 42rem;
+  height: 46rem;
   border-radius: 5px;
-  border: 1px solid #d8d8d8;
+  border: 1.5px solid #d8d8d8;
   box-shadow: 2px 2px 2px #d3d3d3;
   display: flex;
   /* justify-content: center; */
   flex-direction: column;
   align-items: center;
-  padding: 2rem 1rem 1rem 1rem;
+  padding: 3rem 1rem 1rem 1rem;
 }
 
 #detail-profile-img {
@@ -92,6 +92,15 @@
   display: flex;
 }
 
+#detail-employee-title {
+  font-family: "One Mobile Title", sans-serif;
+  font-size: 30px;
+  padding-right: 30rem;
+  color: cornflowerblue;
+  border-bottom: 2px solid;
+  padding-bottom: 4px;
+}
+
 #detail-user-position {
   font-size: 30px;
   margin-top: 0.5vw;
@@ -109,9 +118,9 @@
 }
 
 #detail-modify-buttons {
-  position: fixed;
-  margin-top: 5rem;
-  margin-left: 16rem;
+  position: absolute;
+  margin-top: 40rem;
+  margin-left: 25rem;
 }
 
 #password-modify {
@@ -142,6 +151,12 @@
   border: 2px solid #48a0ff;
   background-color: white;
   color: #48a0ff;
+}
+
+#modify-apply:disabled {
+  background-color: #d3d3d3;
+  color: #a9a9a9;
+  cursor: not-allowed;
 }
 
 #employee-detail-close {
