@@ -1,8 +1,11 @@
 package com.kcc.trioffice.domain.employee.controller;
 
+import com.kcc.trioffice.domain.common.domain.EmployeeInfoWithDept;
 import com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo;
 import com.kcc.trioffice.domain.employee.service.EmployeeService; // EmployeeService를 임포트합니다.
+import com.kcc.trioffice.global.auth.PrincipalDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -57,7 +60,9 @@ public class EmployeeController { // 'Contoller' -> 'Controller' 오타 수정
   }
 
   @GetMapping("/employees/detail")
-  public String employeeDetail() {
+  public String employeeDetail(Model model, @AuthenticationPrincipal PrincipalDetail principalDetail) {
+    EmployeeInfoWithDept employeeInfoWithDept = employeeService.getEmployeeInfoWithDept(principalDetail.getEmployeeId());
+    model.addAttribute("employee", employeeInfoWithDept);
     return "user/detail";
   }
 

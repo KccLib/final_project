@@ -21,7 +21,7 @@
                 <div id="detail-profile-img">
                     <input type="file" id="fileInput" accept="image/*" style="display: none;">
                     <img
-                      src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                      src="${employee.profileUrl}"
                       alt="Profile Image"
                       width="150"
                       height="150"
@@ -30,31 +30,31 @@
 
                 </div>
                 <div id="detail-user-profile">
-                    <div id="detail-user-name">김길동 <p id="detail-user-position">사원</p></div>
-                    <div id="detail-user-dept">인사과</div>
-                    <div id="detail-user-email">exam@exam.com</div>
+                    <div id="detail-user-name">${employee.name} <p id="detail-user-position">${employee.position}</p></div>
+                    <div id="detail-user-dept">${employee.deptName}</div>
+                    <div id="detail-user-email">${employee.email}</div>
                 </div>
             </div>
             <form id="detail-modify-form" action="/employees/modify" >
                 <div class="detail-infos" id="detail-infos-top">
                     <i class="fa-solid fa-location-dot"></i>
-                    <label for="detail-locate">사내위치 &nbsp; </label><input id="detail-locate" >
+                    <label for="detail-locate">사내위치 &nbsp; </label><input id="detail-locate" value="${employee.location}" placeholder="사내 위치를 입력하세요">
                 </div>
                 <div class="detail-infos" >
                     <i class="fa-solid fa-envelope"></i>
-                    <label for="detail-external-email" >외부 이메일주소  &nbsp; </label><input id="detail-external-email"  style="width: 17rem;">
+                    <label for="detail-external-email" >외부 이메일주소  &nbsp; </label><input id="detail-external-email" value="${employee.externalEmail}" style="width: 19rem;" placeholder="외부 이메일 주소를 입력하세요">
                 </div>
                 <div class="detail-infos">
                     <i class="fa-solid fa-square-phone"></i>
-                    <label for="detail-phone-number">전화번호  &nbsp; </label><input id="detail-phone-number" >
+                    <label for="detail-phone-number">전화번호  &nbsp; </label><input id="detail-phone-number" value="${employee.phoneNum}" placeholder="전화번호를 입력하세요 (예: 010-1234-5678)">
                 </div>
                 <div class="detail-infos">
                     <i class="fa-solid fa-print"></i>
-                    <label for="detail-fax-number">팩스번호 &nbsp; </label><input id="detail-fax-number" >
+                    <label for="detail-fax-number">팩스번호 &nbsp; </label><input id="detail-fax-number" value="${employee.fax}" placeholder="팩스번호를 입력하세요 (예: 02-123-4567)">
                 </div>
                 <div class="detail-infos">
                     <i class="fa-solid fa-square-check"></i>
-                    <label for="detail-password-check">비밀번호 확인 &nbsp;</label><input id="detail-password-check" style="width: 18rem;">
+                    <label for="detail-password-check">비밀번호 확인 &nbsp;</label><input id="detail-password-check" placeholder="8~15자 특수문자, 대소 영문자로 작성해주세요." style="width: 20rem;" required>
                 </div>
                 <div id="detail-modify-buttons">
                     <button id="password-modify">비밀번호 변경</button>

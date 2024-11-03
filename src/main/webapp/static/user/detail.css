@@ -152,7 +152,7 @@
 }
 
 .detail-infos > input {
-  width: 20rem;
+  width: 22rem;
   height: 2rem;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -165,4 +165,10 @@
 
 .detail-infos {
   margin-top: 30px;
+}
+
+.custom-cancel-button {
+  color: black;
+  border-radius: 5px;
+  border: 1px solid #d8d8d8;
 }
