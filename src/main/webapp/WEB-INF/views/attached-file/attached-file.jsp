@@ -24,6 +24,8 @@ file="/WEB-INF/views/component/lib.jsp" %>
     <jsp:include page="/WEB-INF/views/component/top-bar.jsp" />
     <div class="layout-container">
       <jsp:include page="/WEB-INF/views/component/first-side-bar.jsp" />
+<div class="contents-list">
+
       <div class="contents">
         <div class="container-fluid">
           <div class="row justify-content-center search-items-area">
@@ -327,6 +329,7 @@ file="/WEB-INF/views/component/lib.jsp" %>
                 </tbody>
               </table>
             </div>
+          </div>
           </div>
         </div>
       </div>

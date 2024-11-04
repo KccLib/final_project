@@ -6,11 +6,11 @@
 
 .category {
     padding: 30px 10px;
-    border-bottom: 1px solid #e0e0e0;
+    border-bottom: 2px solid #e0e0e0;
 }
 
 .category .fa-pen-to-square {
-    color: #007bff;
+    color: #0056b3;
     font-size: 30px;
 }
 
@@ -222,7 +222,7 @@
     background: rgba(239, 239, 239, 1); /* 원래 색상으로 복원 */
 }
 
-.chat-second-side-bar-container {
+.second-side-bar-container {
     flex: 0 0 22%;
     max-width: 500px;
     min-width: 260px;

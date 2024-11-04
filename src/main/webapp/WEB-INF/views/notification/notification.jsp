@@ -23,6 +23,7 @@
 <jsp:include page="/WEB-INF/views/component/top-bar.jsp"/>
 <div class="layout-container">
     <jsp:include page="/WEB-INF/views/component/first-side-bar.jsp"/>
+    <div class="second-side-bar-container">
     <div class="second-side-bar">
         <div class="container-fluid">
             <div
@@ -59,6 +60,8 @@
             </div>
         </div>
     </div>
+    </div>
+    <div class="contents-list">
     <div class="contents default-contents">
         <div class="container-fluid">
             <div class="default-area">
@@ -157,6 +160,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </div>
 </div>
 </body>

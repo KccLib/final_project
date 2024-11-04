@@ -32,6 +32,7 @@
             rel="stylesheet"
             type="text/css"
     />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"></script>
 
     <script type="text/javascript">
         var initialChatRoomId = "${initialChatRoomId}";
@@ -73,7 +74,7 @@
 <jsp:include page="/WEB-INF/views/component/top-bar.jsp"/>
 <div class="layout-container">
 <jsp:include page="/WEB-INF/views/component/first-side-bar.jsp"/>
-<div class="chat-second-side-bar-container">
+<div class="second-side-bar-container">
 <div class="second-side-bar">
     <div>
         <div class="container-fluid">
@@ -220,7 +221,7 @@
                             <i class="fa-solid fa-pen-to-square"></i>
                         </div>
                         <div class="col-11">
-                            <input name="chatRoomName" type="text" name="chatRoomName" placeholder="채팅방 명을 입력해주세요." />
+                            <input name="chatRoomName" type="text" placeholder="채팅방 명을 입력해주세요." />
                         </div>
                     </div>
                 </div>
@@ -228,10 +229,10 @@
                     <div class="row d-flex justify-content-end">
                         <div class="col-4">
                             <div class="row d-flex justify-content-between">
-                                <div class="col-6">
+                                <div class="col-6" style="padding-right: 0px;">
                                     <button type="submit" class="create-button">생성</button>
                                 </div>
-                                <div class="col-6">
+                                <div class="col-6" style="padding-right: 0px;">
                                     <button type="button" class="cancel-button">취소</button>
                                 </div>
                             </div>
