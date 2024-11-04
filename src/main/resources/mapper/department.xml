@@ -117,12 +117,11 @@
         WHERE dept_id = #{deptId}
     </update>
 
-
     <!-- 부서 삭제 쿼리 -->
-    <update id="deleteDepartment" parameterType="com.kcc.trioffice.domain.department.dto.response.Department">
-        UPDATE department
-        SET is_deleted = 1
-        WHERE dept_id = #{deptId}
+    <update id="deleteDepartment" parameterType="Long">
+      UPDATE department
+         SET is_deleted = 1
+       WHERE dept_id = #{deptId}
     </update>
 
     <select id="findDepartmentById" parameterType="Long" resultType="com.kcc.trioffice.domain.department.dto.response.Department">

@@ -627,6 +627,62 @@
     padding: 10px 47px 10px 10px;
 }
 
-.btn-primary {
-    background-color: #0056b3 !important;
+.file-area .tagify, .image-area .tagify {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 10px;
+    background: #E9EEF6;
+    border: 1px solid rgba(130, 138, 145, .5);
 }
+
+.file-area .tagify:focus, .image-area .tagify:focus {
+    border-color: #E9EEF6;
+    outline-color: #E9EEF6;
+    box-shadow: 0 0 0 .2rem rgba(130, 138, 145, .5);
+}
+
+.file-area .tagify:hover, .image-area .tagify:hover {
+    border-color: #E9EEF6;
+    outline-color: #E9EEF6;
+    box-shadow: 0 0 0 .2rem rgba(130, 138, 145, .5);
+}
+
+.file-area .dropdown-toggle, .image-area .dropdown-toggle {
+    background: #E9EEF6 !important;
+    color: black;
+    border: none;
+    border-radius: 10px;
+}
+
+.dropdown-item:hover, .dropdown-item:focus {
+    background: #E9EEF6 !important;
+    color: black !important;
+}
+
+.dropdown-item:active {
+    background: #E9EEF6 !important;
+    color: black !important;
+}
+
+.file-area .dropdown-menu, .image-area .dropdown-menu {
+    border-radius: 10px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-toggle:focus {
+    border-color: #545b62;
+    outline-color: #545b62;
+    box-shadow: 0 0 0 .3rem rgba(130, 138, 145, .5) !important;
+}
+
+.dropdown-toggle:hover {
+    border-color: #545b62;
+    outline-color: #545b62;
+    box-shadow: 0 0 0 .3rem rgba(130, 138, 145, .5) !important;
+}
+
+.select-button {
+    background: #0056b3 !important;
+    color: white !important;
+}
+

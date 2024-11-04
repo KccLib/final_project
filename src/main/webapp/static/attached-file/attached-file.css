@@ -80,6 +80,7 @@
 
 .file-table thead {
     background-color: #0056b3;
+    font-weight: bold;
 }
 
 .file-table thead th {
@@ -264,3 +265,12 @@ td img {
 
 }
 
+.dropdown-item:hover, .dropdown-item:focus {
+    background: #E9EEF6 !important;
+    color: black !important;
+}
+
+.dropdown-item:active {
+    background: #E9EEF6 !important;
+    color: black !important;
+}
