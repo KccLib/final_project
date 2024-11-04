@@ -352,23 +352,83 @@
 
                 </div>
             </div>
-            <div class="file-table">
-                <div class="table-container">
-                    <table>
-                        <thead>
-                        <tr>
-                            <th>파일명</th>
-                            <th>공유 날짜</th>
-                            <th>보낸 사람</th>
-                            <th>태그</th>
-                            <th>다운로드</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="row file-table">
+            <div class="col-12">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col" style="width: 35%">이름</th>
+                    <th scope="col" style="width: 15%">보낸 사람</th>
+                    <th scope="col" style="width: 10%">보낸 일자</th>
+                    <th scope="col" style="width: 30%">태그</th>
+                    <th scope="col" style="width: 10%">다운로드</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th style="width: 30%">
+                      <i class="fa-solid fa-file-pdf"></i>
+                      인사과 정리 자료.pdf
+                    </th>
+                    <td style="width: 15%">
+                      <div class="row align-items-center">
+                        <img
+                          src="https://www.chosun.com/resizer/v2/DGKOZQCCQVBIHHS5GC7F7FQBKI.png?auth=cdba743fb5a8d14385151c684dcb6be4b6cd73aeb00331bcf184fe2861eca42b&width=616"
+                        />
+                        &nbsp;우영두
+                      </div>
+                    </td>
+                    <td style="width: 15%">인사과 단체톡방</td>
+                    <td style="width: 10%">2024-10-11</td>
+                    <td style="width: 20%"><span class="tag">서류</span></td>
+                    <td style="width: 10%">
+                      <i class="fa-solid fa-download"></i>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th style="width: 30%" scope="row">
+                      <i class="fa-solid fa-table"></i>
+                      인사과 정리 자료.csv
+                    </th>
+                    <td style="width: 15%">
+                      <div class="row align-items-center">
+                        <img
+                          src="https://www.chosun.com/resizer/v2/DGKOZQCCQVBIHHS5GC7F7FQBKI.png?auth=cdba743fb5a8d14385151c684dcb6be4b6cd73aeb00331bcf184fe2861eca42b&width=616"
+                        />
+                        <span>&nbsp;Jacob</span>
+                      </div>
+                    </td>
+                    <td style="width: 15%">Thornton</td>
+                    <td style="width: 10%">@fat</td>
+                    <td style="width: 20%">Otto</td>
+                    <td style="width: 10%">
+                      <i class="fa-solid fa-download"></i>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th style="width: 30%" scope="row">
+                      <i class="fa-regular fa-image"></i>
+                      인사과 단체 사진
+                    </th>
+                    <td style="width: 15%" colspan="2">
+                      <div class="row align-items-center">
+                        <img
+                          src="https://www.chosun.com/resizer/v2/DGKOZQCCQVBIHHS5GC7F7FQBKI.png?auth=cdba743fb5a8d14385151c684dcb6be4b6cd73aeb00331bcf184fe2861eca42b&width=616"
+                        />
+                        &nbsp;Larry the Bird
+                      </div>
+                    </td>
+                    <td style="width: 15%">@twitter</td>
+                    <td style="width: 10%">Otto</td>
+                    <td style="width: 20%">Otto</td>
+                    <td style="width: 10%">
+                      <i class="fa-solid fa-download"></i>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
+          </div>
         </div>
 
         <div class="image-area" style="display: none;">
