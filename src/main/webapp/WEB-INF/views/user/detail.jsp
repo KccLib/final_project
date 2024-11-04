@@ -60,7 +60,9 @@
                 <div class="detail-infos" id="password-check-container">
                     <i class="fa-solid fa-square-check"></i>
                     <label for="detail-password-check">비밀번호 확인 &nbsp;</label>
-                    <input id="detail-password-check" name="password" placeholder="8~15자 특수문자, 대소 영문자로 작성해주세요." style="width: 20rem;" required>
+                    <input type="password" id="detail-password-check" name="password" placeholder="8~15자 특수문자, 대소 영문자로 작성해주세요." style="width: 20rem;" required>
+<%--                    <span id="watch-password"><i  class="fa-solid fa-eye"></i></span>--%>
+
                 </div>
             </form>
             <div id="detail-modify-buttons">

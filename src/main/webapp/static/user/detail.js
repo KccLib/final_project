@@ -239,3 +239,20 @@ detailProfileImg.addEventListener("click", function (event) {
     }
   });
 });
+
+/**
+ * password 보기 안보기
+ */
+
+// const passwordInput = document.getElementById("detail-password-check");
+// const toggleButton = document.getElementById("watch-password");
+//
+// toggleButton.addEventListener("click", () => {
+//   if (passwordInput.type === "password") {
+//     passwordInput.type = "text";
+//     toggleButton.textContent = "숨기기";
+//   } else {
+//     passwordInput.type = "password";
+//     toggleButton.textContent = "보기";
+//   }
+// });
