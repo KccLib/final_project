@@ -52,4 +52,6 @@ public interface EmployeeMapper {
     int updateEmployeeStatusMessage(Long employeeId, String message);
 
     int modifyEmployee(EmployeeInfo employeeInfo, Long employeeId);
+
+    int changeEmployeePassword(Long employeeId, String encodedPassword);
 }

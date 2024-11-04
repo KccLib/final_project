@@ -260,4 +260,16 @@ public class EmployeeService {
             return false;
         }
     }
+
+    @Transactional
+    public boolean changeEmployeePassword(Long employeeId, String password) {
+        String encodedPassword = passwordEncoder.encode(password);
+        int changePassword = employeeMapper.changeEmployeePassword(employeeId, encodedPassword);
+
+        if(changePassword == 1) {
+            return true;
+        } else{
+            return false;
+        }
+    }
 }

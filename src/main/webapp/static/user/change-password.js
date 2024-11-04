@@ -148,6 +148,26 @@ togglePasswordVisibility(thirdPassword, thirdInput);
  * 저장하기
  */
 
+changeAcceptButton.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  $.ajax({
+    url: "/employees/change-password",
+    method: "POST",
+    data: JSON.stringify({ password: newPasswordForCheck }),
+    contentType: "application/json",
+    success: function (response) {
+      console.log("비밀번호 변경에 성공하였습니다.");
+      Swal.fire(response).then(() => {
+        window.location.href = "/notifications";
+      });
+    },
+    error: function (error) {
+      console.log("비밀번호 변경에 실패하였습니다. " + error);
+    },
+  });
+});
+
 /**
  * 닫기
  */

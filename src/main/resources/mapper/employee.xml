@@ -385,5 +385,10 @@
         AND employee_id = #{employeeId}
     </update>
 
-
+    <update id="changeEmployeePassword" parameterType="map">
+        UPDATE employee
+        SET password = #{encodedPassword}
+        WHERE employee_id = #{employeeId}
+        AND is_deleted = 0
+    </update>
 </mapper>
