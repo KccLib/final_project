@@ -321,6 +321,17 @@
         <div class="file-area" style="display: none;">
             <div class="tag-input-area">
                 <div class="row">
+                    <div class="col-1">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                태그
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">태그</a></li>
+                                <li><a class="dropdown-item" href="#">파일명</a></li>
+                            </ul>
+                        </div>
+                    </div>
                     <div class="col-1 d-flex align-items-center justify-content-end">
                         <i class="fa-solid fa-tag"></i>
                     </div>
@@ -333,17 +344,15 @@
                                 autofocus
                         />
                     </div>
-                    <div class="col-3">
+                    <div class="col-2">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                태그
+                            <button type="button" class="btn btn-primary" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-magnifying-glass" style="font-size: 14px;"></i>
+                                조회
                             </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">태그</a></li>
-                                <li><a class="dropdown-item" href="#">파일명</a></li>
-                            </ul>
                         </div>
                     </div>
+
                 </div>
             </div>
             <div class="file-table">
@@ -368,6 +377,17 @@
         <div class="image-area" style="display: none;">
             <div class="tag-input-area">
                 <div class="row">
+                    <div class="col-1">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                태그
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">태그</a></li>
+                                <li><a class="dropdown-item" href="#">파일명</a></li>
+                            </ul>
+                        </div>
+                    </div>
                     <div class="col-1 d-flex align-items-center justify-content-end">
                         <i class="fa-solid fa-tag"></i>
                     </div>
@@ -380,15 +400,13 @@
                                 autofocus
                         />
                     </div>
-                    <div class="col-3">
+
+                    <div class="col-2">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                                태그
+                            <button type="button" class="btn btn-primary" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-magnifying-glass" style="font-size: 14px;"></i>
+                                조회
                             </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">태그</a></li>
-                                <li><a class="dropdown-item" href="#">파일명</a></li>
-                            </ul>
                         </div>
                     </div>
                 </div>
