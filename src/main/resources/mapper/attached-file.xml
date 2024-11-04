@@ -59,7 +59,11 @@
             af.chat_id
             , af.file_id
             , af.file_name
-            , TO_CHAR(af.write_dt, 'YYYY-MM-DD HH24:MI:SS') AS writeDt
+            , af.filename_extension AS fileExtension
+            , e.employee_id AS senderId
+            , e.name AS senderName
+            , e.profile_url AS senderProfileUrl
+            , TO_CHAR(af.write_dt, 'YYYY-MM-DD') AS writeDt
             , e.name AS sender
             , t.tags AS tags
             FROM

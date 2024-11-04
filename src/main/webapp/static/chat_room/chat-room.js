@@ -1555,12 +1555,16 @@ $(document).ready(function() {
             dataType: 'json',
             data: {offset: fileOffset, limit: 30, tags: searchTags, searchType: searchType},
             success: function (data) {
-                console.log(data);
-                if (data.length < limit) {
-                    fileMoreData = false; // 모든 데이터 로드 완료
+                if (offset === 0) {
+                    // 처음 로드이거나 필터가 변경되어 데이터를 초기화한 경우
+                    $('.file-table tbody').empty();
                 }
-                addFileContents(data);
-
+                if (data.length > 0) {
+                    appendDataToTable(data);
+                    offset += data.length;
+                } else {
+                    isEnd = true; // 더 이상 데이터 없음
+                }
             },
             error: function (xhr, status, error) {
                 console.error('채팅방 파일 데이터를 가져오는 데 실패했습니다:', error);
@@ -1581,6 +1585,7 @@ $(document).ready(function() {
             // 테이블 행 생성
             let tr = document.createElement('tr');
             tr.setAttribute('data-message-id', file.chatId); // 메시지 ID 저장
+            tr.setAttribute('data-file-id', file.fileId); // 메시지 ID 저장
             tr.innerHTML = `
             <td>${file.fileName}</td>
             <td>${file.writeDt}</td>
@@ -1595,14 +1600,11 @@ $(document).ready(function() {
         tableBody.dataset.loading = 'false';
     }
 
-    $('.file-table').on('click', '.fa-download', function() {
-        // 이벤트가 발생한 메시지 ID를 찾습니다.
-        var messageId = $(this).closest('tr').data('message-id');
-        var chatRoomId = currentChatRoomId; // 현재 채팅방 ID
-
-        // 파일 다운로드 요청
+    $(document).on('click', '.fa-download', function() {
+        let fileId = $(this).data('file-id');
+        // 파일 다운로드를 위한 URL 설정
         $.ajax({
-            url: `/api/chatrooms/chats/${messageId}/attached-file/download`,
+            url: `/api/chatrooms/image/${fileId}/download`,
             method: 'GET',
             xhrFields: {
                 responseType: 'blob' // 바이너리 데이터 수신을 위해 필요합니다.
@@ -2014,6 +2016,188 @@ $(document).ready(function() {
         setTimeout(function () {
             initializeDropzone();
         }, 0); // Using setTimeout to defer execution
+    }
+
+
+
+    $(document).on('mouseenter', '.preview-trigger', function() {
+        let fileId = $(this).closest('tr').find('.fa-download').data('file-id');
+
+        let previewContainer = $(this).closest('th').find('.file-preview');
+        let self = $(this); // Reference to the hovered element
+
+        // Show loading indicator
+        previewContainer.html('<p>Loading preview...</p>').show();
+
+        // Fetch the file preview
+        $.ajax({
+            url: `/api/attached-files/${fileId}/preview`,
+            method: 'GET',
+            xhrFields: {
+                responseType: 'blob'
+            },
+            success: function(blob, status, xhr) {
+                let contentType = xhr.getResponseHeader('Content-Type');
+
+                let contentHtml = '';
+                if (contentType.startsWith('image/')) {
+                    let url = URL.createObjectURL(blob);
+                    contentHtml = `<img src="${url}" alt="Image Preview" style="max-width: 400px; max-height: 400px;" />`;
+                } else if (contentType === 'application/pdf') {
+                    let url = URL.createObjectURL(blob);
+                    contentHtml = `<embed src="${url}" type="application/pdf" width="400px" height="400px" />`;
+                } else {
+                    contentHtml = '<p>No preview available for this file type.</p>';
+                }
+
+                // Set the content
+                previewContainer.html(contentHtml);
+
+                // Wait for the content to load
+                previewContainer.find('img, embed').on('load', function() {
+                    setPosition();
+                });
+
+                // For non-image/pdf content or if load event doesn't fire
+                setTimeout(setPosition, 100);
+
+                function setPosition() {
+                    // Get the actual dimensions of the preview container
+                    let previewWidth = previewContainer.outerWidth();
+                    let previewHeight = previewContainer.outerHeight();
+
+                    // Calculate positions
+                    let offset = self.offset();
+                    let leftPosition = offset.left + self.outerWidth();
+                    let topPosition = offset.top - $(window).scrollTop();
+
+                    // Adjust if the preview goes beyond the viewport width
+                    let viewportWidth = $(window).width();
+                    if (leftPosition + previewWidth > viewportWidth) {
+                        leftPosition = offset.left - previewWidth;
+                    }
+
+                    // Adjust if the preview goes beyond the viewport height
+                    let viewportHeight = $(window).height();
+                    if (topPosition + previewHeight > viewportHeight) {
+                        topPosition = viewportHeight - previewHeight;
+                        if (topPosition < 0) {
+                            topPosition = 0;
+                        }
+                    }
+
+                    // Set the position
+                    previewContainer.css({
+                        'top': topPosition+40 + 'px',
+                        'left': leftPosition - 330 + 'px',
+                        'position': 'fixed'
+                    });
+                }
+            },
+            error: function(xhr, status, error) {
+                previewContainer.html('<p>Failed to load preview.</p>');
+            }
+        });
+    });
+
+    $(document).on('mouseleave', '.preview-trigger, .file-preview', function() {
+        let previewContainer = $(this).closest('th').find('.file-preview');
+        previewContainer.hide().empty();
+    });
+
+    function appendDataToTable(data) {
+        let tbody = $('.file-table tbody');
+        $.each(data, function(index, item) {
+            let tags = '';
+            if (item.tags && item.tags.length > 0) {
+                $.each(item.tags, function(i, tag) {
+                    tags += '<span class="tag">' + tag + '</span>';
+                });
+            }
+            let row = `
+                <tr>
+                    <th style="width: 35%; margin-left: 10px;">
+                    <div class="row align-items-center preview-trigger" style="height: 30px;">
+                        <p class="file-name">
+                            <i class="${addExtensionIcon(item)}"></i>
+                            ${item.fileName}
+                        </p>
+                        </div>
+                        <div class="file-preview" style="display: none; position: absolute; z-index: 1000;">
+                          <!-- The preview content will be injected here -->
+                        </div>
+                    </th>
+                    <td style="width: 15%;">
+                        <div class="row align-items-center">
+                            <img src="${item.senderProfileUrl}" />
+                            &nbsp;${item.senderName}
+                        </div>
+                    </td>
+                    <td style="width: 10%;">
+                    <div class="row align-items-center" style="height: 30px;">
+                    ${item.writeDt}
+                    </div>
+                    </td>
+                    <td style="width: 30%;">
+                    <div class="row align-items-center" style="height: 30px;">
+                        ${tags}
+                        </div>
+                    </td>
+                    <td style="width: 10%;">
+                    <div class="row align-items-center" style="height: 30px; margin-left: 10px;">
+                    <i class="fa-solid fa-download" data-file-id="${item.fileId}"></i>
+                    </div>
+                    </td>
+                </tr>
+            `;
+            tbody.append(row);
+        });
+    }
+
+    function addExtensionIcon(item) {
+        let iconClass = 'fa-solid fa-file'; // 기본 아이콘
+        if (item.fileExtension) {
+            let ext = item.fileExtension.toLowerCase();
+            switch (ext) {
+                case 'pdf':
+                    iconClass = 'fa-solid fa-file-pdf';
+                    break;
+                case 'png':
+                case 'jpg':
+                case 'jpeg':
+                case 'gif':
+                    iconClass = 'fa-solid fa-file-image';
+                    break;
+                case 'csv':
+                    iconClass = 'fa-solid fa-file-csv';
+                    break;
+                case 'doc':
+                case 'docx':
+                    iconClass = 'fa-solid fa-file-word';
+                    break;
+                case 'xls':
+                case 'xlsx':
+                    iconClass = 'fa-solid fa-file-excel';
+                    break;
+                case 'ppt':
+                case 'pptx':
+                    iconClass = 'fa-solid fa-file-powerpoint';
+                    break;
+                case 'zip':
+                case 'rar':
+                case '7z':
+                    iconClass = 'fa-solid fa-file-zipper';
+                    break;
+                case 'mp4':
+                case 'avi':
+                case 'mkv':
+                    iconClass = 'fa-solid fa-file-video';
+                    break;
+                default:
+                    iconClass = 'fa-solid fa-file';
+            }
+        }
+        return iconClass
     }
 
 });

@@ -9,7 +9,12 @@ import java.util.List;
 public class AttachedFileInfo {
 
     private Long chatId;
+    private Long fileId;
     private String fileName;
+    private String fileExtension;
+    private Long senderId;
+    private String senderName;
+    private String senderProfileUrl;
     private String writeDt;
     private String sender;
     private List<String> tags;

@@ -17,6 +17,8 @@ $(document).ready(function() {
     // 디바운싱을 위한 타이머 변수
     let debounceTimer = null;
     let employeeDebounceTimer = null;
+    let hidePreviewTimer = null;
+    let showPreviewTimer = null;
 
     // 초기 데이터 로드
     loadData();
@@ -378,87 +380,121 @@ $(document).ready(function() {
     });
 
     $(document).on('mouseenter', '.preview-trigger', function() {
-        let fileId = $(this).closest('tr').find('.fa-download').data('file-id');
-        let previewContainer = $(this).closest('th').find('.file-preview');
-        let self = $(this); // Reference to the hovered element
+        let self = $(this);
+        let previewContainer = self.closest('th').find('.file-preview');
 
-        // Show loading indicator
-        previewContainer.html('<p>Loading preview...</p>').show();
+        // 미리보기를 표시하는 타이머 설정 (1초 후)
+        showPreviewTimer = setTimeout(function() {
+            let fileId = self.closest('tr').find('.fa-download').data('file-id');
 
-        // Fetch the file preview
-        $.ajax({
-            url: `/api/attached-files/${fileId}/preview`,
-            method: 'GET',
-            xhrFields: {
-                responseType: 'blob'
-            },
-            success: function(blob, status, xhr) {
-                let contentType = xhr.getResponseHeader('Content-Type');
+            // 로딩 인디케이터 표시
+            previewContainer.html('<p>Loading preview...</p>').show();
 
-                let contentHtml = '';
-                if (contentType.startsWith('image/')) {
-                    let url = URL.createObjectURL(blob);
-                    contentHtml = `<img src="${url}" alt="Image Preview" style="max-width: 400px; max-height: 400px;" />`;
-                } else if (contentType === 'application/pdf') {
-                    let url = URL.createObjectURL(blob);
-                    contentHtml = `<embed src="${url}" type="application/pdf" width="400px" height="400px" />`;
-                } else {
-                    contentHtml = '<p>No preview available for this file type.</p>';
-                }
+            // 파일 미리보기 요청
+            $.ajax({
+                url: `/api/attached-files/${fileId}/preview`,
+                method: 'GET',
+                xhrFields: {
+                    responseType: 'blob'
+                },
+                success: function(blob, status, xhr) {
+                    let contentType = xhr.getResponseHeader('Content-Type');
 
-                // Set the content
-                previewContainer.html(contentHtml);
-
-                // Wait for the content to load
-                previewContainer.find('img, embed').on('load', function() {
-                    setPosition();
-                });
-
-                // For non-image/pdf content or if load event doesn't fire
-                setTimeout(setPosition, 100);
-
-                function setPosition() {
-                    // Get the actual dimensions of the preview container
-                    let previewWidth = previewContainer.outerWidth();
-                    let previewHeight = previewContainer.outerHeight();
-
-                    // Calculate positions
-                    let offset = self.offset();
-                    let leftPosition = offset.left + self.outerWidth();
-                    let topPosition = offset.top - $(window).scrollTop();
-
-                    // Adjust if the preview goes beyond the viewport width
-                    let viewportWidth = $(window).width();
-                    if (leftPosition + previewWidth > viewportWidth) {
-                        leftPosition = offset.left - previewWidth;
+                    let contentHtml = '';
+                    if (contentType.startsWith('image/')) {
+                        let url = URL.createObjectURL(blob);
+                        contentHtml = `<img src="${url}" alt="Image Preview" style="max-width: 400px; max-height: 400px;" />`;
+                    } else if (contentType === 'application/pdf') {
+                        let url = URL.createObjectURL(blob);
+                        contentHtml = `<embed src="${url}" type="application/pdf" width="400px" height="400px" />`;
+                    } else {
+                        contentHtml = '<p>No preview available for this file type.</p>';
                     }
 
-                    // Adjust if the preview goes beyond the viewport height
-                    let viewportHeight = $(window).height();
-                    if (topPosition + previewHeight > viewportHeight) {
-                        topPosition = viewportHeight - previewHeight;
-                        if (topPosition < 0) {
-                            topPosition = 0;
-                        }
-                    }
+                    // 콘텐츠 설정
+                    previewContainer.html(contentHtml);
 
-                    // Set the position
-                    previewContainer.css({
-                        'top': topPosition + 'px',
-                        'left': leftPosition - 400 + 'px',
-                        'position': 'fixed'
+                    // 콘텐츠 로드 후 위치 설정
+                    previewContainer.find('img, embed').on('load', function() {
+                        setPosition();
                     });
+
+                    // 이미지가 아닌 경우에도 위치 설정
+                    setTimeout(setPosition, 100);
+
+                    function setPosition() {
+                        // 위치 계산 로직
+                        let previewWidth = previewContainer.outerWidth();
+                        let previewHeight = previewContainer.outerHeight();
+                        let offset = self.offset();
+                        let leftPosition = offset.left + self.outerWidth();
+                        let topPosition = offset.top - $(window).scrollTop();
+
+                        let viewportWidth = $(window).width();
+                        let viewportHeight = $(window).height();
+                        if (leftPosition + previewWidth > viewportWidth) {
+                            leftPosition = offset.left - previewWidth;
+                        }
+                        if (topPosition + previewHeight > viewportHeight) {
+                            topPosition = viewportHeight - previewHeight;
+                            if (topPosition < 0) {
+                                topPosition = 0;
+                            }
+                        }
+
+                        // 위치 설정
+                        previewContainer.css({
+                            'top': topPosition + 43 + 'px',
+                            'left': leftPosition - 400 + 'px',
+                            'position': 'fixed'
+                        }).show();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    previewContainer.html('<p>Failed to load preview.</p>');
                 }
-            },
-            error: function(xhr, status, error) {
-                previewContainer.html('<p>Failed to load preview.</p>');
-            }
-        });
+            });
+        }, 1000); // 1초 지연
+
+        // 만약 `hidePreviewTimer`가 설정되어 있으면 취소
+        if (hidePreviewTimer) {
+            clearTimeout(hidePreviewTimer);
+            hidePreviewTimer = null;
+        }
     });
 
-    $(document).on('mouseleave', '.preview-trigger, .file-preview', function() {
-        let previewContainer = $(this).closest('th').find('.file-preview');
-        previewContainer.hide().empty();
+    $(document).on('mouseenter', '.preview-trigger, .file-preview', function() {
+        if (hidePreviewTimer) {
+            clearTimeout(hidePreviewTimer);
+            hidePreviewTimer = null;
+        }
+    });
+
+    $(document).on('mouseleave', '.preview-trigger', function(event) {
+        // `showPreviewTimer`가 설정되어 있으면 취소
+        if (showPreviewTimer) {
+            clearTimeout(showPreviewTimer);
+            showPreviewTimer = null;
+        }
+
+        let relatedTarget = event.relatedTarget;
+        if ($(relatedTarget).closest('.file-preview').length > 0) {
+            // 마우스가 `.file-preview` 내부로 이동한 경우
+            return;
+        } else {
+            // 미리보기를 숨기는 타이머 설정
+            hidePreviewTimer = setTimeout(function() {
+                $('.file-preview').hide().empty();
+                hidePreviewTimer = null;
+            }, 100); // 필요에 따라 딜레이 시간 조절
+        }
+    });
+
+    $(document).on('mouseenter', '.preview-trigger, .file-preview', function() {
+        if (hidePreviewTimer) {
+            clearTimeout(hidePreviewTimer);
+            hidePreviewTimer = null;
+        }
     });
 
 });

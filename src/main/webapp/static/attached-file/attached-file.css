@@ -274,3 +274,7 @@ td img {
     background: #E9EEF6 !important;
     color: black !important;
 }
+
+.fa-download {
+    cursor: pointer !important;
+}

@@ -361,92 +361,13 @@
 /*
 */
 
-.file-table table {
-    border: 1px #a39485 solid;
-    font-size: .9em;
-    box-shadow: 0 2px 5px rgba(0,0,0,.25);
-    width: 100%;
-    border-collapse: collapse;
-    border-radius: 5px;
-    overflow: hidden;
-}
 
-.file-table th {
-    text-align: center !important;
-}
 
-.file-table thead {
-    font-weight: bold;
-    color: #fff;
-    background: #7AB7FA;
-    height: 30px;
-}
 
-.file-table td, .file-table th {
-    padding: 1em .5em !important;
-    vertical-align: middle !important;
-}
 
-.file-table td {
-    border-bottom: 1px solid rgba(0,0,0,.1);
-    background: #fff;
-    text-align: center !important;
-}
 
-.file-table {
-    position: relative;
-}
 
-.file-table table {
-    width: 100%;
-    border-collapse: collapse;
-    overflow: auto;
-}
-.table-container {
-    max-height: 32rem; /* 원하는 높이로 설정 */
-    overflow-y: auto;
-    position: relative;
-}
 
-.table-container thead th {
-    position: sticky;
-    top: 0;
-    background-color: #0056b3;
-    color: #fff;
-    z-index: 1;
-}
-
-@media all and (max-width: 768px) {
-
-    .file-table table, .file-table thead, .file-table tbody, .file-table th, .file-table td, .file-table tr {
-        display: block;
-    }
-
-    .file-table th {
-        text-align: center;  // 텍스트를 중앙으로 정렬
-        vertical-align: middle;  // 내용을 수직 중앙으로 정렬
-        line-height: 30px;  // 높이에 맞춰 line-height 조정
-    }
-
-    .file-table table {
-        position: relative;
-        padding-bottom: 0;
-        border: none;
-        box-shadow: 0 0 10px rgba(0, 0, 0, .2);
-    }
-
-    .file-table thead {
-        float: left;
-        white-space: nowrap;
-    }
-
-    .file-table tbody {
-        overflow-x: auto;
-        overflow-y: hidden;
-        position: relative;
-        white-space: nowrap;
-    }
-}
 
 .file-table .fa-download {
     cursor: pointer;
@@ -686,3 +607,89 @@
     color: white !important;
 }
 
+
+.file-table tbody tr:hover {
+    background-color: #E9EEF6;
+}
+
+td img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border: 1px solid #D9D9D9;
+    border-radius: 70%;
+}
+
+.fa-file-pdf {
+    color: #e10606 !important;
+}
+
+.fa-table {
+    color: #10a410 !important;
+}
+
+.fa-image {
+    color: red !important;
+}
+
+.fa-file-image {
+    color: red;
+}
+
+.fa-file-powerpoint {
+    color: #e74f0b !important;
+}
+
+.file-preview {
+    position: fixed;
+    background: #fff;
+    border: 1px solid #ccc;
+    padding: 10px;
+    max-width: 400px; /* Adjust as needed */
+    max-height: 400px; /* Adjust as needed */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.file-preview img {
+    width: 100%;
+    height: auto;
+}
+.file-table th, .file-table td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+td img {
+    width: 30px;
+    height: 30px;
+    object-fit: cover;
+    border: 1px solid #D9D9D9;
+    border-radius: 70%;
+}
+
+.file-table thead {
+    background-color: #0056b3;
+    font-weight: bold;
+}
+
+.file-table thead th {
+    color: white;
+}
+
+.file-table tbody {
+    overflow-y: auto;
+    max-height: 550px;
+    display: block;
+    width: 100%;
+}
+
+table thead, table tbody tr {
+    display: table;
+    width: 100%;
+}
+
+.file-table {
+    margin-top: 30px !important;
+}
