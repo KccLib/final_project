@@ -17,7 +17,8 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
       <jsp:include
         page="/WEB-INF/views/component/first-side-bar.jsp"
       ></jsp:include>
-      <div id="contents">
+      <div class="contents-list">
+      <div class="contents">
         <div
           id="popMenu"
           class="list-group"
@@ -195,6 +196,8 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
           </div>
         </div>
       </div>
+</div>
+
     </div>
     <script src="<%= request.getContextPath() %>/static/schedule/schedule.js"></script>
   </body>

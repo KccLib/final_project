@@ -323,7 +323,7 @@
                 <div class="row">
                     <div class="col-1">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                 태그
                             </button>
                             <ul class="dropdown-menu">
@@ -331,9 +331,6 @@
                                 <li><a class="dropdown-item" href="#">파일명</a></li>
                             </ul>
                         </div>
-                    </div>
-                    <div class="col-1 d-flex align-items-center justify-content-end">
-                        <i class="fa-solid fa-tag"></i>
                     </div>
                     <div class="col-8">
                         <input
@@ -346,7 +343,7 @@
                     </div>
                     <div class="col-2">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button type="button" class="btn select-button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-magnifying-glass" style="font-size: 14px;"></i>
                                 조회
                             </button>
@@ -379,7 +376,7 @@
                 <div class="row">
                     <div class="col-1">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                 태그
                             </button>
                             <ul class="dropdown-menu">
@@ -387,9 +384,6 @@
                                 <li><a class="dropdown-item" href="#">파일명</a></li>
                             </ul>
                         </div>
-                    </div>
-                    <div class="col-1 d-flex align-items-center justify-content-end">
-                        <i class="fa-solid fa-tag"></i>
                     </div>
                     <div class="col-8">
                         <input
@@ -403,7 +397,7 @@
 
                     <div class="col-2">
                         <div class="btn-group">
-                            <button type="button" class="btn btn-primary" data-bs-toggle="dropdown" aria-expanded="false">
+                            <button type="button" class="btn select-button" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa-solid fa-magnifying-glass" style="font-size: 14px;"></i>
                                 조회
                             </button>
