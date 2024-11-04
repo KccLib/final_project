@@ -44,7 +44,7 @@
     <div class="contents">
         <div class="contents-1-1">
             <div class="dept-sub">
-                <span class="top-department"></span> > <span class="sub-department"></span>
+                <i class="fa-regular fa-building"></i> <span class="top-department"></span> > <span class="sub-department"></span>
             </div>
             <div class="img2">
                 <img src="/static/component/kcc-logo.png">
@@ -60,11 +60,11 @@
                     <div class="comment-calendar">
                         <a href="#" class="chat-room-go">
                             <i class="fa-regular fa-comment"></i>
-                            <p style="padding-top: 10px; font-weight: bold;">대화하기</p>
+                            <p style="padding-top: 10px; font-color: red">대화하기</p>
                         </a>
                         <a href="#" class="comment-icon">
                             <i class="fa-solid fa-calendar-days"></i>
-                            <p style="padding-top: 10px; font-weight: bold;">일정 확인하기</p>
+                            <p style="padding-top: 10px;">일정 확인하기</p>
                         </a>
                     </div>
                 </div>
@@ -73,18 +73,22 @@
                 <div class="info-labels">
                     <p>회사</p>
                     <p>부서</p>
-                    <p style="padding-top: 40px;">직위</p>
-                    <p>직통전화</p>
+                    <p style="padding-top: 23px;">직위</p>
                     <p>핸드폰번호</p>
+                    <p> 사내 위치</p>
                 </div>
-                <div class="info-values">
-                    <p class="company-name">(주)KCC정보통신</p>
-                    <p class="department-name">SI영업3팀</p>
+                <div class="info-values" style="padding-left: 14px;">
+                    <p class="company-name" style="
+                        margin-bottom: 29px;
+                    ">(주)KCC정보통신</p>
+                    <p class="sub-department">SI영업3팀</p>
                     <p class="sub-info">
                         <span class="top-department"></span> > <span class="sub-department"></span>
                     </p>
-                    <p class="position">사원</p>
-                    <p class="phone-number">02-1234-5678</p>
+                    <p class="position" style="margin-top: 25px;">사원</p>
+                    <p class="phone-number" style="
+                        margin-bottom: 29px;
+                    ">010-0000-0007</p>
                     <p class="mobile-number">010-1234-5678</p>
                 </div>
             </div>
@@ -111,7 +115,7 @@
 
        // 하위부서를 클릭했을 때 사원 목록이 표시됨
        $(document).on('click', '.group', function (event) {
-           event.stopPropagation(); // 상위부서 이벤트 전파 방지
+           event.stopPropagation(); // 상위 부서 이벤트 전파 방지
 
            var $employees = $(this).siblings('ul.hide2'); // 'group' 요소의 형제 요소 중 'ul.hide2' 찾기
            var deptId = $(this).data('dept-id'); // 클릭한 부서의 deptId를 가져옴
@@ -120,7 +124,7 @@
 
            if ($employees.length > 0) {
                if (!$employees.hasClass('loaded')) {
-                   // 'loaded' 클래스가 없는 경우 (아직 사원 정보가 로드되지 않았을 때만 AJAX 호출)
+                   // 아직 사원 정보가 로드되지 않았을 때만 AJAX 호출
                    console.log("부서 ID " + deptId + "에 대한 사원 정보를 요청합니다.");
                    $.ajax({
                        url: "/departments/" + deptId + "/employees", // 부서 ID에 맞는 사원 정보 요청
@@ -143,15 +147,17 @@
 
                            $employees.html(employeeList); // 사원 리스트를 hide2 안에 출력
                            $employees.addClass('loaded'); // 한 번 로드된 후에는 다시 AJAX 호출 방지
+                           $employees.slideDown(); // 부드럽게 사원 목록 표시
                        },
                        error: function (jqXHR, textStatus, errorThrown) {
                            console.error("사원 정보를 불러오는데 실패했습니다.", textStatus, errorThrown);
                            alert("사원 정보를 불러오는데 실패했습니다.");
                        }
                    });
+               } else {
+                   // 이미 로드된 경우에는 토글로 표시
+                   $employees.slideToggle();
                }
-
-               $employees.slideToggle(); // 사원 목록 토글
            }
 
            $(this).toggleClass('selected'); // 선택된 부서 표시
@@ -160,6 +166,7 @@
            $('.top-department').text(topDeptName); // 최상위 부서 이름 설정
            $('.sub-department').text(subDeptName); // 하위 부서 이름 설정
        });
+
 
        // 직원 항목 클릭 시 contents-1-1과 dept-sub 및 contents-2 표시
        $(document).on('click', '.employee-item', function() {
@@ -192,6 +199,8 @@
                    $('.contents-2 .info-values p:eq(2)').text(data.subDeptName); // 하위 부서 이름
                    $('.contents-2 .info-values p:eq(3)').text(data.position); // 직위
                    $('.contents-2 .info-values p:eq(4)').text(data.phoneNum); // 핸드폰 번호
+                   $('.contents-2 .info-values p:eq(5)').text(data.location); // 위치
+
                },
                error: function(jqXHR, textStatus, errorThrown) {
                    console.error("직원 정보를 불러오는데 실패했습니다.", textStatus, errorThrown);

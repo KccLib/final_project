@@ -106,13 +106,17 @@
 
     <!-- 부서 수정 쿼리 -->
     <update id="updateDepartment" parameterType="com.kcc.trioffice.domain.department.dto.response.Department">
-      UPDATE department
-        SET name = #{departmentName}
-        , upper_dept_id = <if test="upperDeptId != null">#{upperDeptId}</if>
-         <if test="upperDeptId == null">NULL</if>
-        , dept_level = #{deptLevel}
+        UPDATE department
+        SET
+        name = #{departmentName},
+        upper_dept_id =
+        <choose>
+            <when test="upperDeptId != null">#{upperDeptId, jdbcType=NUMERIC}</when>
+            <otherwise>NULL</otherwise>
+        </choose>
         WHERE dept_id = #{deptId}
     </update>
+
 
     <!-- 부서 삭제 쿼리 -->
     <update id="deleteDepartment" parameterType="com.kcc.trioffice.domain.department.dto.response.Department">

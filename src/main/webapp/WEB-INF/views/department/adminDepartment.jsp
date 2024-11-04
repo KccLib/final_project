@@ -78,41 +78,42 @@
                 </div>
                 <br>
 
-                <div class="form-row">
-                    <label for="employee-name" style="margin-left: 130px; font-size: 20px;">이름(한글)</label>
-                    <input type="text" id="employee-name" class="form-control" style="margin-right: 80px; border: 1.5px solid black;" placeholder="사원명을 입력하세요">
-                </div>
-                <br>
-                <div class="form-row">
-                    <label for="employee-id" style="margin-left: 130px; font-size: 20px;">*아이디</label>
-                    <input type="text" id="employee-id" class="form-control" style="margin-right: 80px;border: 1.5px solid black;margin-left: 120px;" placeholder="아이디를 입력하세요">
-                </div>
-                <br>
-                <div class="form-row">
-                    <label for="employee-password" style="margin-left: 130px; font-size: 20px;">*비밀번호</label>
-                    <input type="text" id="employee-password2" class="form-control" style="margin-right: 80px;border: 1.5px solid black;margin-left: 102px;" placeholder="비밀번호를 입력하세요">
-                </div>
-                <br>
-                <div class="form-row">
-                    <label for="employee-password2" style="margin-left: 130px; font-size: 20px;">*비밀번호 확인</label>
-                    <input type="text" id="employee-password2" class="form-control" style="margin-right: 80px;border: 1.5px solid black;margin-left: 62px;" placeholder="비밀번호를 입력하세요">
-                </div>
-                <br>
+                <div class="form-row" style="margin-top: 15px;">
+                                    <label for="employee-name" style="margin-left: 70px;font-size: 20px;border-top-width: 3px;padding-top: 8px;">이름(한글)</label>
+                                    <input type="text" id="employee-name" class="form-control" style="margin-right: 80px;border: 1.5px solid black;width: 235.666666px;" placeholder="사원명을 입력하세요">
+                                </div>
+                <div class="form-row" style="margin-top: 9px;">
+                                    <label for="employee-id" style="margin-left: 70px;font-size: 20px;padding-top: 8px;">*아이디</label>
+                                    <input type="text" id="employee-id" class="form-control" style="margin-right: 80px;border: 1.5px solid black;margin-left: 120px;width: 235.666666px;" placeholder="아이디를 입력하세요">  @kcc.co.kr
+                                </div>
+                <div class="form-row" style="margin-top: 9px;">
+                                    <label for="employee-password" style="margin-left: 70px;font-size: 20px;padding-top: 8px;">*비밀번호</label>
+                                    <input type="text" id="employee-password2" class="form-control" style="margin-right: 80px;border: 1.5px solid black;margin-left: 102px;width: 235.666666px;" placeholder="비밀번호를 입력하세요">
+                                </div>
+                <div class="form-row" style="margin-top: 9px;">
+                                    <label for="employee-password2" style="margin-left: 70px;font-size: 20px;padding-top: 8px;">*비밀번호 확인</label>
+                                    <input type="text" id="employee-password2" class="form-control" style="margin-right: 80px;border: 1.5px solid black;margin-left: 62px;width: 235.666666px;" placeholder="비밀번호를 입력하세요">
+                                </div>
 
-                <div class="form-row" style="display: flex; align-items: center;">
-                    <label for="position" style="margin-left: 130px; font-size: 20px;">직위</label>
-                    <select id="position" class="form-control" style="margin-right: 160px;border: 1.5px solid black;margin-left: 145px;" onchange="updatePositionName(this)">
-                        <option value="">선택하세요</option>
-                        <c:forEach var="employee" items="${departmentTree}">
-                            <option value="${data.position}">${data.position}</option>
-                        </c:forEach>
-                    </select>
-                </div>
+                <div class="form-row" style="display: flex;align-items: center;margin-top: 9px;">
+                                    <label for="position" style="margin-left: 70px;font-size: 20px;">직위</label>
+                                    <select id="position" class="form-control" style="margin-right: 160px;border: 1.5px solid black;margin-left: 145px;width: 235.666666px;" onchange="updatePositionName(this)">
+                                        <option value="">선택하세요</option>
+                                        <option value="사원">사원</option>
+                                        <option value="대리">대리</option>
+                                        <option value="과장">과장</option>
+                                        <option value="차장">차장</option>
+                                        <option value="부장">부장</option>
+                                        <option value="이사">이사</option>
+                                        <option value="상무">상무</option>
+                                        <option value="전무">전무</option>
+                                        <option value="대표이사">대표이사</option>
+                                    </select>
+                                </div>
 
-                <br>
-                <div class="form-row" style="display: flex; align-items: center;">
-                    <label for="upper-dept" style="margin-left: 130px; font-size: 20px;">부서</label>
-                    <select id="upper-dept" class="form-control" style="margin-left: 145px;margin-right: 160px; border: 1.5px solid black;" onchange="updatePositionName(this)">
+                <div class="form-row" style="display: flex;align-items: center;margin-top: 9px;">
+                    <label for="upper-dept" style="margin-left: 70px; font-size: 20px;">부서</label>
+                    <select id="upper-dept" class="form-control" style="margin-left: 145px;margin-right: 160px; border: 1.5px solid black;width: 235.666666px;" onchange="updatePositionName(this)">
                         <option value="">kcc정보통신</option>
                         <c:forEach var="department" items="${departmentTree}">
                             <option value="${department.deptId}">${department.departmentName}</option>
@@ -126,34 +127,52 @@
 
 
 
-            <div class="edit-department-form" style="display: none;height: 422px;">
+            <div class="edit-department-form" style="display: none; height: 422px;">
                 <p style="margin-bottom: 55px;">부서 수정</p>
 
-                <div class="form-row" style="margin-bottom: 15px;font-size: 20px;">
-                    <label class="label-title" style="color: #333;font-weight: bold;width: 150px;margin-left: 50px;">부서명 (한글)</label>
-                    <div class="label-content" style="color: #555; background-color: #f0f0f0; padding: 5px 10px; border-radius: 5px;"></div> <!-- 부서명 -->
+                <div class="form-row" style="margin-bottom: 15px; font-size: 20px;">
+                    <label class="label-title" style="color: #333; font-weight: bold; width: 150px; margin-left: 50px;">부서명 (한글)</label>
+                    <div class="label-content" data-editable="false" style="color: #555; background-color: #f0f0f0; padding: 5px 10px; border-radius: 5px;">부서명</div>
+                    <i class="fa-solid fa-pen" style="margin-left: 10px; cursor: pointer;" onclick="enableEdit(this)"></i>
                 </div>
 
-                <div class="form-row" style="margin-bottom: 15px;font-size: 20px;">
-                    <label class="label-title" style="color: #333; font-weight: bold;width: 150px;margin-left: 50px;">상위 부서</label>
-                    <div class="label-content" style="color: #555; background-color: #f0f0f0; padding: 5px 10px; border-radius: 5px;"></div> <!-- 상위 부서 -->
+                <div class="form-row" style="margin-bottom: 15px; font-size: 20px;">
+                    <label class="label-title" style="color: #333; font-weight: bold; width: 150px; margin-left: 50px;">상위 부서</label>
+
+                    <div class="label-content" data-editable="false" style="color: #555; background-color: #f0f0f0; padding: 5px 10px; border-radius: 5px;">
+                        선택된 부서명
+                    </div>
+
+                    <!-- 상위 부서 선택 드롭다운 -->
+                    <select class="form-control top-department-dropdown" style="display: none;width: 160px;" onchange="updateSelectedDepartment(this)">
+                        <option value="">상위 부서 선택</option>
+                        <c:forEach var="department" items="${departmentTree}">
+                            <c:if test="${department.upperDeptId == null}">
+                                <option value="${department.deptId}">${department.departmentName}</option>
+                            </c:if>
+                        </c:forEach>
+                    </select>
+
+                    <!-- 수정 아이콘 -->
+                    <i class="fa-solid fa-pen" style="margin-left: 10px; cursor: pointer;" onclick="toggleDepartmentDropdown(this)"></i>
                 </div>
 
-                <div class="form-row" style="margin-bottom: 15px;font-size: 20px;">
-                    <label class="label-title" style="color: #333;font-weight: bold;width: 150px;margin-left: 50px;">하위 부서</label>
-                    <div class="label-content" style="color: #555; background-color: #f0f0f0; padding: 5px 10px; border-radius: 5px;"></div> <!-- 하위 부서 -->
+                <div class="form-row" style="margin-bottom: 15px; font-size: 20px;">
+                    <label class="label-title" style="color: #333; font-weight: bold; width: 150px; margin-left: 50px;">하위 부서</label>
+                    <div class="label-content" data-editable="false" style="color: #555; background-color: #f0f0f0; padding: 5px 10px; border-radius: 5px;">하위 부서명</div>
                 </div>
 
-                <div class="form-row" style="margin-bottom: 15px;font-size: 20px;">
-                    <label class="label-title" style="color: #333; font-weight: bold; width: 150px;margin-left: 50px;">생성일</label>
-                    <div class="label-content" style="color: #555; background-color: #f0f0f0; padding: 5px 10px; border-radius: 5px;"></div> <!-- 생성일 -->
+                <div class="form-row" style="margin-bottom: 15px; font-size: 20px;">
+                    <label class="label-title" style="color: #333; font-weight: bold; width: 150px; margin-left: 50px;">생성일</label>
+                    <div class="label-content" style="color: #555; background-color: #f0f0f0; padding: 5px 10px; border-radius: 5px;">YYYY-MM-DD</div>
                 </div>
 
                 <div class="button-row" style="display: flex; justify-content: center; gap: 10px; margin-top: 20px;">
-                    <button class="save-button" style="background-color: #0056b3;color: #fff;padding: 8px 20px;border: none;border-radius: 5px;font-size: 16px;cursor: pointer;margin-top:40px;width: 104px;height: 40px;">저장</button>
-                    <button class="cancel-button" style="background-color: #6c757d;color: #fff;padding: 8px 20px;border: none;border-radius: 5px;font-size: 16px;cursor: pointer;margin-top:40px;width: 104px;">취소</button>
+                    <button class="save-button" style="background-color: #0056b3; color: #fff; padding: 8px 20px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; margin-top: 40px; width: 104px; height: 40px;">저장</button>
+                    <button class="cancel-button" style="background-color: #6c757d; color: #fff; padding: 8px 20px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; margin-top: 40px; width: 104px;">취소</button>
                 </div>
             </div>
+
 
 
             <br>
@@ -201,8 +220,80 @@
 </div>
 
 <script>
+        // 드롭다운 표시/숨김 전환 함수
+        function toggleDepartmentDropdown(icon) {
+            const labelContent = icon.previousElementSibling.previousElementSibling;
+            const dropdown = icon.previousElementSibling;
+
+            if (dropdown.style.display === "none" || dropdown.style.display === "") {
+                labelContent.style.display = "none";
+                dropdown.style.display = "block";
+            } else {
+                labelContent.style.display = "block";
+                dropdown.style.display = "none";
+            }
+        }
+
+        let selectedOptionValue = null; // 전역 변수
+        let updatedDepartmentName = null;
+
+        // 드롭다운 선택 시 부서 ID 업데이트
+        function updateSelectedDepartment(selectElement) {
+            const selectedOptionText = selectElement.options[selectElement.selectedIndex].text; // 선택된 부서명
+            selectedOptionValue = selectElement.options[selectElement.selectedIndex].value; // 선택된 부서 ID를 전역 변수에 할당
+            const labelContent = selectElement.previousElementSibling;
+
+            // 선택된 부서명 표시
+            labelContent.innerText = selectedOptionText;
+            console.log("선택된 부서 ID:", selectedOptionValue); // 부서 ID 출력
+
+            // 드롭다운 숨기기 및 label-content 표시
+            selectElement.style.display = "none";
+            labelContent.style.display = "block";
+        }
+
         // 전역 변수로 upperDept 값을 저장
         let selectedUpperDept = null;
+
+        function enableEdit(icon) {
+            const labelContent = icon.previousElementSibling;
+
+            if (labelContent && labelContent.dataset.editable === "false") {
+                const text = labelContent.innerText;
+                const input = document.createElement("input");
+
+                input.type = "text";
+                input.value = text;
+                input.style.padding = "5px 10px";
+                input.style.borderRadius = "5px";
+                input.style.border = "1px solid #ccc";
+
+                labelContent.innerHTML = "";
+                labelContent.appendChild(input);
+                labelContent.dataset.editable = "true";
+
+                input.focus();
+
+                // Input 필드 벗어날 때 또는 다른 아이콘을 클릭할 때 수정된 값을 저장
+                input.addEventListener("blur", function () {
+                    updatedDepartmentName = input.value; // 전역 변수에 수정된 값 저장
+                    labelContent.innerText = updatedDepartmentName; // 화면에 표시된 텍스트 업데이트
+                    labelContent.dataset.editable = "false";
+                    console.log("수정된 부서 이름:", updatedDepartmentName); // 콘솔에 출력
+                });
+
+                // 다른 아이콘 클릭 시에도 수정된 값 저장
+                icon.addEventListener("click", function () {
+                    if (labelContent.dataset.editable === "true") {
+                        updatedDepartmentName = input.value; // 전역 변수에 수정된 값 저장
+                        labelContent.innerText = updatedDepartmentName; // 화면에 표시된 텍스트 업데이트
+                        labelContent.dataset.editable = "false";
+                        console.log("수정된 부서 이름:", updatedDepartmentName); // 콘솔에 출력
+                    }
+                });
+            }
+        }
+
 
         // 상위 부서 선택 시 호출되는 함수
         function updateDepartmentName2(element) {
@@ -243,59 +334,71 @@
                 $dropdownMenu.toggle(); // 드롭다운 메뉴 토글
             });
 
-            // 문서의 다른 부분 클릭 시 드롭다운 숨김
-            $(document).on('click', function() {
-                $('#dropdownMenu .dropdown-menu').hide(); // 드롭다운 메뉴 숨김
+            // 문서의 다른 부분을 클릭했을 때 드롭다운을 숨기기
+            $(document).on('click', function(e) {
+                var $dropdown = $('#dropdownMenu');
+
+                // 클릭한 요소가 드롭다운이나 menu3 또는 ellipsis-icon2가 아닌 경우에만 드롭다운 숨김
+                if (!$dropdown.is(e.target) && $dropdown.has(e.target).length === 0 &&
+                    !$(e.target).closest('.menu3').length && !$(e.target).closest('.ellipsis-icon2').length) {
+                    $dropdown.hide();
+                }
             });
 
             // 하위부서를 클릭했을 때 사원 목록이 표시됨
             $(document).on('click', '.group', function (event) {
-                event.stopPropagation();
-                var $employees = $(this).siblings('ul.hide2');
-                var deptId = $(this).data('dept-id');
-                var subDeptName = $(this).text();
-                var topDeptName = $(this).closest('.menu').find('.menu2 a').text();
+                event.stopPropagation(); // 상위 부서 이벤트 전파 방지
+
+                var $employees = $(this).siblings('ul.hide2'); // 'group' 요소의 형제 요소 중 'ul.hide2' 찾기
+                var deptId = $(this).data('dept-id'); // 클릭한 부서의 deptId를 가져옴
+                var subDeptName = $(this).text(); // 클릭한 하위 부서의 이름 가져오기
+                var topDeptName = $(this).closest('.menu').find('.menu2 a').text(); // 최상위 부서 이름 가져오기
 
                 if ($employees.length > 0) {
                     if (!$employees.hasClass('loaded')) {
+                        // 아직 사원 정보가 로드되지 않았을 때만 AJAX 호출
+                        console.log("부서 ID " + deptId + "에 대한 사원 정보를 요청합니다.");
                         $.ajax({
-                            url: "/departments/" + deptId + "/employees",
+                            url: "/departments/" + deptId + "/employees", // 부서 ID에 맞는 사원 정보 요청
                             type: "GET",
                             success: function (data) {
+                                console.log("사원 정보를 성공적으로 받았습니다.", data);
                                 var employeeList = "";
                                 $.each(data, function (index, employee) {
                                     employeeList += "<li class='employee-item' data-emp-id='" + employee.employeeId + "'>" +
                                         "<div class='profile'>" +
                                         "<img src='" + employee.profileUrl + "' alt='Profile' />" +
                                         "</div>" +
-                                        "<a>" + employee.name + "</a>" +
-                                        "<div class='menu4'>" +
-                                        "<i class='fa-solid fa-ellipsis-vertical'></i>" +
-                                        "</div>" +
-                                        "</li>";
+                                        employee.name + "</li>";
                                 });
 
+                                // 사원 목록이 비어있을 경우 메시지 추가
                                 if (employeeList === "") {
                                     employeeList = "<li>사원이 없습니다</li>";
                                 }
 
-                                $employees.html(employeeList);
-                                $employees.addClass('loaded');
+                                $employees.html(employeeList); // 사원 리스트를 hide2 안에 출력
+                                $employees.addClass('loaded'); // 한 번 로드된 후에는 다시 AJAX 호출 방지
+                                $employees.slideDown(); // 부드럽게 사원 목록 표시
                             },
                             error: function (jqXHR, textStatus, errorThrown) {
                                 console.error("사원 정보를 불러오는데 실패했습니다.", textStatus, errorThrown);
                                 alert("사원 정보를 불러오는데 실패했습니다.");
                             }
                         });
+                    } else {
+                        // 이미 로드된 경우에는 토글로 표시
+                        $employees.slideToggle();
                     }
-
-                    $employees.slideToggle();
                 }
 
-                $(this).toggleClass('selected');
-                $('.top-department').text(topDeptName);
-                $('.sub-department').text(subDeptName);
+                $(this).toggleClass('selected'); // 선택된 부서 표시
+
+                // 부서 이름 업데이트
+                $('.top-department').text(topDeptName); // 최상위 부서 이름 설정
+                $('.sub-department').text(subDeptName); // 하위 부서 이름 설정
             });
+
 
             // 직원 항목 클릭 시 정보 표시
             $(document).on('click', '.employee-item', function() {
@@ -328,14 +431,18 @@
 
 
             // menu3 클릭 시 드롭다운 표시
-            $(document).on('click', '.menu3', function(e) {
+            $(document).on('click', '.menu3, .ellipsis-icon2', function(e) {
+                console.log('Clicked element:', this); // 클릭된 요소 출력
                 e.stopPropagation(); // 클릭 이벤트 전파 방지
                 var $fixedMenu = $(this).closest('.second-side-bar');
                 var dropdown = $('#dropdownMenu');
 
-                // 클릭한 menu3의 부모인 .menu 요소 선택
-                const selectedMenu = $(this).closest('.menu2'); // 클릭한 menu3의 부모 .menu 선택
-                console.log('선택한 메뉴:', selectedMenu); // 선택한 menu 요소 출력하여 확인
+                // 클릭한 요소가 menu3인지 ellipsis-icon2인지에 따라 부모 요소 선택
+                const selectedMenu = $(this).hasClass('menu3')
+                    ? $(this).closest('.menu2') // menu3 클릭 시 부모 .menu2 선택
+                    : $(this).closest('.group'); // ellipsis-icon2 클릭 시 부모 .group 선택
+
+                console.log('선택한 메뉴:', selectedMenu); // 선택한 menu 또는 group 요소 출력하여 확인
 
                 // 부서 ID 가져오기
                 selectedDeptId = selectedMenu.data('dept-id'); // 부서 ID 저장
@@ -373,14 +480,16 @@
             });
 
 
+
             // 드롭다운 메뉴 항목 클릭 이벤트 처리
             $(document).on('click', '.dropdown-item', function(e) {
                 e.preventDefault(); // 기본 클릭 동작 방지
 
                 // 선택된 부서 ID를 사용하여 원하는 작업 수행
-                console.log("부서 ID:", selectedDeptId); // 부서 ID 출력
+                console.log("내가 누른 부서 ID:", selectedDeptId); // 부서 ID 출력
                 const action = $(this).text(); // 클릭한 항목의 텍스트 가져오기
                 console.log("선택한 작업:", action); // 선택한 작업 출력
+                $('#dropdownMenu').hide();
 
                 // 여기에 부서 추가, 수정, 등록, 삭제 로직 추가
             });
@@ -395,6 +504,7 @@
                     // 저장 버튼 클릭 시 AJAX 처리
                     $(document).on('click', '#save-dept', function(e) {
                         e.preventDefault();
+                        $dropdown.hide();
                         var upperDept = selectedUpperDept;  // 전역 변수에서 값 가져오기
                         console.log("upperDept: " + upperDept);
                         if (upperDept == null || "") {
@@ -419,6 +529,7 @@
                                 alert("부서가 성공적으로 추가되었습니다.");
                                 $('.add-department-form').hide();
                                 $('#department-list').append('<li>' + deptName + (upperDept ? ' (상위부서: ' + upperDept + ')' : '') + '</li>');
+                                location.href = data; // 성공하면 페이지 리로드 또는 리다이렉트
                             },
                             error: function(jqXHR, textStatus, errorThrown) {
                                 console.error("부서 추가에 실패했습니다.", textStatus, errorThrown);
@@ -437,31 +548,22 @@
                     });
 
 
-
-
-
-
-
             // 부서 수정
             $(document).on('click', '.dropdown-item.modify', function(e) {
                 e.preventDefault(); // 기본 클릭 동작 방지
-                // 부서 ID 가져오기 (선택된 부서의 ID)
                 let deptId = $("#deptId").val();
-
-                console.log("선택된 부서 ID:", deptId); // 부서 ID 출력
 
                 // AJAX 요청으로 부서 정보 가져오기
                 $.ajax({
                     url: '/api/departments/' + deptId, // 부서 정보를 가져올 API 엔드포인트
                     type: 'GET',
                     success: function(data) {
-                        console.log("AJAX 응답 데이터:", data); // 응답 데이터 전체 확인
-                        console.log("부서 이름:", data.departmentName); // 특정 필드 확인
+                        console.log("내가찍은data:", data);
 
                         if (data) {
                             // 부서 수정 폼에 부서 정보 출력
                             $('.edit-department-form .label-content').eq(0).text(data.departmentName); // 부서명 설정
-                            $('.edit-department-form .label-content').eq(1).text(data.upperDeptName || '없음'); // 상위 부서 설정
+                            $('.edit-department-form .label-content').eq(1).text(data.upperDptName || '없음'); // 상위 부서 설정
 
                             // 생성일 출력
                             let writeDt = data.writeDt; // writeDt를 변수에 저장
@@ -507,6 +609,38 @@
                     }
                 });
             });
+
+
+            // 저장 버튼 클릭 이벤트
+            $('.save-button').on('click', function(e) {
+                e.preventDefault(); // 기본 클릭 동작 방지
+
+                console.log("내가 저장할 버튼 id야", selectedDeptId);
+                console.log("잘들어오나?:", updatedDepartmentName); // 전역 변수 출력
+
+
+                // AJAX 요청으로 부서 수정
+                $.ajax({
+                    url: '/api/update/' + selectedDeptId, // 부서 수정 API 엔드포인트
+                    type: 'PUT',
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        deptId: selectedDeptId,
+                        departmentName: updatedDepartmentName,
+                        upperDeptId: selectedOptionValue
+                    }),
+                    success: function(response) {
+                        alert("부서가 성공적으로 수정되었습니다.");
+                        // 수정 후 필요에 따라 UI 업데이트
+                        $('.edit-department-form').hide(); // 수정 폼 숨기기
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+                        console.error("부서 수정 실패:", textStatus, errorThrown);
+                        alert("부서 수정에 실패했습니다.");
+                    }
+                });
+            });
+
 
 
 
@@ -565,6 +699,7 @@
                     });
                 }
             });
+
 
         });
     </script>
