@@ -56,24 +56,4 @@ public class DepartmentController {
 
 
 
-    // 부서 수정 처리
-    @PostMapping("/updateDepartment/{deptId}")
-    public String updateDepartment(@PathVariable Long deptId, @RequestParam Long upperDeptId, @RequestParam String departmentName) {
-        Department department = new Department();
-        department.setDeptId(deptId);
-        department.setUpperDeptId(upperDeptId);
-        department.setDepartmentName(departmentName);
-
-        departmentService.updateDepartment(department); // 부서 수정
-
-        return "redirect:/departments/admin"; // 부서 목록으로 리다이렉트
-    }
-
-    // 부서 삭제 처리
-//    @DeleteMapping("/delete/{deptId}")
-//    public void deleteDepartment(@PathVariable Long deptId) {
-//        System.out.println("Deleting department with id: " + deptId);
-//        departmentService.deleteDepartment(deptId);
-//    }
-
 }

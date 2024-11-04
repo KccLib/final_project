@@ -114,7 +114,7 @@ li {
 
 .img2 {
     position: absolute;
-    padding-top: 190px;
+    padding-top: 220px;
     margin-right: 50px;
     opacity: 0.3;
 }
@@ -213,7 +213,7 @@ li {
     top: 260px;
     /* 위쪽 위치를 원하는 대로 조정 */
     width: 400px;
-    height: 350px;
+    height: 330px;
     background-color: #ffffff;
     margin-right: 5000px;
     display: none;
@@ -239,11 +239,8 @@ li {
 
 .comment-calendar {
     display: flex;
-    /* Flexbox를 사용하여 버튼 정렬 */
     justify-content: center;
-    /* 가운데 정렬 */
     gap: 50px;
-    /* 버튼 사이의 간격 조절 (선택사항) */
     padding-top: 40px;
 }
 
@@ -260,27 +257,26 @@ li {
 
 .dept-emp {
     font-size: 20px;
-    font-weight: bold;
+    // font-weight: bold;
     margin: 5px 0;
 }
 
 .email {
-    font-weight: bold;
+    // font-weight: bold;
 }
 
 .dept-sub {
-    font-size: 35px;
+    font-size: 30px;
     font-weight: bold;
-    padding-top: 25px;
-    padding-left: 30px;
+    padding-top: 30px;
     display: none;
 }
 
 .info-labels {
     width: 150px;
     font-size: 22px;
-    font-weight: bold;
-    margin: 34px 20px;
+    // font-weight: bold;
+    margin: 34px 20px 34px 34px;
     color: #242222;
 }
 
@@ -289,14 +285,14 @@ li {
     height: 270px;
     position: absolute;
     left: 150px;
-    top: 40px;
+    top: 35px;
     font-size: 23px;
-    font-weight: bold;
 }
 
 .info-labels p,
 .info-values p {
     margin-bottom: 30px;
+    padding-left: 14px;
 }
 
 .info-values p:nth-child(2) {
@@ -308,8 +304,9 @@ li {
 }
 
 .info-values p.sub-info {
-    color: gray;
-    font-size: 17px;
+    color: #b3b3b3;
+    width: 217px;
+    font-size: 15px;
     margin-top: 10px;
     margin-bottom: 15px;
 }

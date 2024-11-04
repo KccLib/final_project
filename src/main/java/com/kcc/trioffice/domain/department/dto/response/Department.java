@@ -13,10 +13,12 @@ import java.util.List;
 public class Department {
     private Long deptId;
     private String departmentName;
+    private String phoneNum;
     private Long upperDeptId;
     private int deptLevel;
     private String writeDt;
     private Company company;
+    private String Location;
 
     private List<Department> subDepartments = new ArrayList<>();
     private List<EmployeeInfo> employees = new ArrayList<>();

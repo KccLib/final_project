@@ -6,6 +6,7 @@ import com.kcc.trioffice.domain.department.service.DepartmentService;
 import com.kcc.trioffice.global.auth.PrincipalDetail;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -70,5 +71,19 @@ public class DepartmentRestController {
         System.out.println("Deleting department with id: " + deptId);
         departmentService.deleteDepartment(deptId);
     }
+
+
+    // 부서 수정 메서드
+    @PutMapping("/api/update/{deptId}")
+    public void updateDepartment(@PathVariable Long deptId, @RequestBody Department updatedDepartment) {
+        System.out.println("deptId" + deptId);
+        System.out.println("updatedDepartment" + updatedDepartment);
+
+        System.out.println("하이영두");
+        updatedDepartment.setDeptId(deptId); // 기존 deptId 설정 (클라이언트에서 받은 deptId와 일치)
+        System.out.println("하이영두");
+        departmentService.updateDepartment(updatedDepartment);
+    }
+
 
 }
