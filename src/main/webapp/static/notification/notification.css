@@ -14,10 +14,6 @@
     color: #007bff;
 }
 
-.notification-list > .row {
-    width: 100%;
-}
-
 .notification-title {
     font-size: 20px;
     font-weight: bold;
@@ -25,15 +21,20 @@
 
 .notification-contents {
     font-size: 15px;
-    margin-top: 15px !important;
     white-space: nowrap;
     text-overflow: ellipsis;
 }
 
 .notification-item {
-    padding: 20px 18px;
-    border-bottom: 2px solid #e0e0e0;
+    padding: 15px 0px;
     cursor: pointer;
+    margin: 5px 10px !important;
+    border-radius: 20px;
+}
+
+.notification-item.active, .notification-item:hover {
+    background-color: rgba(255, 255, 255, 0.8); /* 밝은 흰색 배경 */
+    box-shadow: 0 0 0 1px rgba(200, 200, 200, 0.5) inset; /* 테두리 색을 부드러운 회색으로 변경 */
 }
 
 #detail-contents {
@@ -49,6 +50,10 @@
 
 #detail-container.hidden {
     display: none;
+}
+
+.detail-container {
+    padding: 20px;
 }
 
 .detail-title {
@@ -144,6 +149,7 @@
     border: 1px solid darkgray;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,.25);
+    height: 85vh;
 }
 
 .start-date-box {
@@ -164,19 +170,20 @@
     color: #FFFFFF ;           /* 검정색 글씨 */
 }
 
-.notification-contents p {
+.notification-list p {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin-top: 10px;
 }
 
-#detail-text-contents {
-    margin-top: 5px;
-    width: 100%;
-    padding: 7px;
-    height: 200px;
-    border: 1px solid #d2dae1;
-    line-height: 1.2;
+.notification-contents #detail-text-contents {
+    margin-top: 5px !important;
+    width: 100% !important;
+    padding: 7px !important;
+    height: 160px !important;
+    border: 1px solid #d2dae1 !important;
+    line-height: 1.2 !important;
 }
 
 #detail-people-tbody {
@@ -223,6 +230,23 @@
     height: 98% !important;
 }
 
-.notification-item.active {
-    background-color: rgba(0, 123, 255, 0.5)
+.second-side-bar {
+    width: 100% !important;
+    height: 100%!important;
+    border-radius: 30px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    border: 1px solid #e4e4e4;
+}
+
+.contents-list {
+    width: 100%;
+    height: 100%;
+    background-color: #ebebeb;
+    padding: 10px 47px 10px 10px;
+}
+
+.contents {
+    border-radius: 30px;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+    border: 1px solid #e4e4e4;
 }

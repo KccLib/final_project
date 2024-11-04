@@ -133,7 +133,7 @@
 }
 
 .chat {
-    width: 73%;
+    width: 70%;
     height: 73%;
     overflow-y: auto;
     position: absolute;
@@ -143,7 +143,7 @@
 }
 
 .chat-send-box {
-    width: 73%;
+    width: 70%;
     position: absolute;
     bottom: 30px;
 }
@@ -403,7 +403,7 @@
     overflow: auto;
 }
 .table-container {
-    max-height: 41rem; /* 원하는 높이로 설정 */
+    max-height: 32rem; /* 원하는 높이로 설정 */
     overflow-y: auto;
     position: relative;
 }
@@ -411,7 +411,7 @@
 .table-container thead th {
     position: sticky;
     top: 0;
-    background-color: #7AB7FA;
+    background-color: #0056b3;
     color: #fff;
     z-index: 1;
 }
@@ -454,19 +454,46 @@
 
 .image-area {
     padding: 40px;
+
 }
 
 .image-box {
     width: 100%;
     height: 300px;
     overflow: hidden;
+    padding-right: 3px;
+    padding-bottom: 3px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.image-box::after {
+    content: "\f00e"; /* 폰트어썸의 검색 아이콘 예시 */
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: rgba(255, 255, 255, 0);
+    font-size: 50px;
+    transition: color 0.3s ease;
+}
+
+.image-box:hover::after {
+    color: rgba(255, 255, 255, 0.8); /* 호버 시 아이콘 나타나기 */
+}
+
+.image-box:hover img {
+    filter: brightness(70%); /* 호버 시 이미지 어둡게 */
 }
 
 .images {
-    width: 74rem;
-    height: 40rem;
+    width: 69rem;
+    height: 38rem;
     overflow-y: auto;
     margin-top: 40px;
+    padding: 0px 40px;
 }
 
 .image-box img {
@@ -597,5 +624,9 @@
     width: 100%;
     height: 100%;
     background-color: #ebebeb;
-    padding: 10px;
+    padding: 10px 47px 10px 10px;
+}
+
+.btn-primary {
+    background-color: #0056b3 !important;
 }

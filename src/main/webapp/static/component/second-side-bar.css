@@ -37,3 +37,12 @@
   width: 100%;
   height: calc(100vh - 50px);
 }
+
+.second-side-bar-container {
+  flex: 0 0 22%;
+  max-width: 500px;
+  min-width: 260px;
+  height: 100%;
+  padding: 10px;
+  background-color: #ebebeb;
+}

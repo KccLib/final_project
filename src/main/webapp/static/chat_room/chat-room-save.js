@@ -3,7 +3,14 @@ let whitelist = [];
 
 $(document).ready(function() {
     // 화이트리스트 초기화
-
+    $(document).on('submit', "form[name='create-chatroom-form']", function(e) {
+        console.log('폼 제출 시 화이트리스트 확인:', tagify.value);
+        // 태그가 있는지 확인
+        if (tagify.value.length === 0) {
+            e.preventDefault(); // 폼 제출 막기
+            alert('채팅방에 최소한 한 명의 사용자를 추가해야 합니다.');
+        }
+    });
 
     // AJAX를 통해 직원 목록 가져오기
     $.ajax({
@@ -62,12 +69,6 @@ $(document).ready(function() {
                     enabled: 0    // 0으로 설정하면 입력한 글자 수와 상관없이 항상 드롭다운을 표시
                 }
             });
-
-            // 이벤트 리스너 등록 및 기타 Tagify 관련 설정
-            // 만일 모든 태그 지우기 기능 버튼을 구현한다면
-            document
-                .querySelector("버튼")
-                .addEventListener("click", tagify.removeAllTags.bind(tagify));
 
             // tagify 전용 이벤트 리스터
             tagify
@@ -244,4 +245,6 @@ $(document).ready(function() {
         $('#add-department-chat-modal').modal('hide');
     });
 
+
 });
+

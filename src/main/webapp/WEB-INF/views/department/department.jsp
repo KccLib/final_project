@@ -24,7 +24,7 @@
     <div class="layout-container">
 
     <jsp:include page="/WEB-INF/views/component/first-side-bar.jsp" />
-
+    <div class="second-side-bar-container">
     <div class="second-side-bar">
         <ul>
             <p id="department-title">조직도</p>
@@ -38,7 +38,9 @@
             %>
         </ul>
     </div>
+    </div>
 
+    <div class="contents-list">
     <div class="contents">
         <div class="contents-1-1">
             <div class="dept-sub">
@@ -88,7 +90,7 @@
             </div>
         </div>
     </div>
-
+</div>
 </div>
 
 
