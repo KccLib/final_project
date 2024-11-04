@@ -108,6 +108,7 @@ passwordCheckContainer.addEventListener("change", (e) => {
   var password = e.target.value;
   console.log("서버로 보내지는 password + " + password);
 
+  // 기존 메시지 제거
   const existingMessage = document.getElementById("alram-password-check");
   if (existingMessage) {
     existingMessage.remove();
@@ -120,15 +121,25 @@ passwordCheckContainer.addEventListener("change", (e) => {
     data: JSON.stringify({ password: password }),
     dataType: "json",
     success: function (response) {
+      // 메시지 추가를 위한 p 요소 생성
+      const messageElement = document.createElement("p");
+      messageElement.id = "alram-password-check";
+      messageElement.style.marginTop = "5px";
+
       if (response.passwordCheck === 2) {
-        passwordCheckContainer.innerHTML += `<p id="alram-password-check" style="margin-top: 5px; color: red">비밀번호가 일치하지 않습니다.</p>`;
+        messageElement.textContent = "비밀번호가 일치하지 않습니다.";
+        messageElement.style.color = "red";
         passwordCheck = false;
         modifyApply.disabled = true;
       } else if (response.passwordCheck === 1) {
-        passwordCheckContainer.innerHTML += `<p id="alram-password-check" style="margin-top: 5px; color: #10B97B">비밀번호가 일치합니다.</p>`;
+        messageElement.textContent = "비밀번호가 일치합니다.";
+        messageElement.style.color = "#10B97B";
         passwordCheck = true;
         modifyApply.disabled = false;
       }
+
+      // 메시지 추가
+      passwordCheckContainer.appendChild(messageElement);
     },
     error: function (xhr, status, error) {
       console.log("비밀번호 조회에 실패하였습니다." + error);
@@ -161,7 +172,6 @@ modifyApply.addEventListener("click", (e) => {
         externalEmail: document.getElementById("detail-external-email").value,
         phoneNum: document.getElementById("detail-phone-number").value,
         fax: document.getElementById("detail-fax-number").value,
-        // 필요 시 다른 필드 추가
       };
 
       $.ajax({

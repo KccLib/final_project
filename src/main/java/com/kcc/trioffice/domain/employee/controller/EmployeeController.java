@@ -77,4 +77,9 @@ public class EmployeeController { // 'Contoller' -> 'Controller' 오타 수정
     }
   }
 
+  @GetMapping("/employees/change-password")
+  public String changePassword() {
+    return "user/change-password";
+  }
+
 }
