@@ -170,7 +170,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
             </div>
           </div>
         </div>
-        <div class="contents">
+        <div class="contents" id="main-contents-top-bar">
           <div id="close-button-container">
             <div id="other-employee-schedule-close">
               <button id="other-employee-schedule-close-button">닫기</button>
