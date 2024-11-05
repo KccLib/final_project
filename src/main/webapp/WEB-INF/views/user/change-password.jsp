@@ -20,7 +20,7 @@
 
                 <div id="password-check-container">
                     <div id="existing-password">
-                        <i class="fa-solid fa-square-check"></i>
+                        <i class="fa-solid fa-key"></i>
                         <label for="existing-password-input">기존 비밀번호 &nbsp;</label>
                         <input type="password" id="existing-password-input" name="password" placeholder="8~15자 특수문자, 대소 영문자로 작성해주세요." style="width: 20rem;" required>
                         <span class="watch-password" id="first-password"><i  class="fa-solid fa-eye"></i></span>

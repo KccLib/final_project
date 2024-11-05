@@ -24,7 +24,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
   <body>
     <div class="top-bar">
       <div class="logo">
-        <a href="/"
+        <a href="/notifications"
           ><img
             src="<%= request.getContextPath() %>/static/component/kcc-logo.png"
         /></a>
