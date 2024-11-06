@@ -19,6 +19,7 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -75,6 +76,7 @@ public class ScheduleService {
     }
 
     @Transactional
+    @Async
     public void saveSchedule(String employeeEmail, SaveSchedule saveSchedule)
         throws BadRequestException, ParseException, MessagingException {
       EmployeeInfo employeeInfo = employeeMapper.getEmployeeInfoFindByEmail(employeeEmail)

@@ -51,7 +51,7 @@ function formatDateToISO(dateString) {
   const localDate = new Date(year, month - 1, day, hour, minute, second);
 
   const isoDate = new Date(
-    localDate.getTime() - localDate.getTimezoneOffset() * 60000
+    localDate.getTime() - localDate.getTimezoneOffset() * 60000,
   ).toISOString();
 
   return isoDate.replace(".000Z", ""); // 초까지 포함된 형식을 유지
@@ -183,7 +183,7 @@ document.addEventListener("DOMContentLoaded", function () {
       // data-schedule-id 속성 추가
       info.el.setAttribute(
         "data-schedule-id",
-        info.event.extendedProps.scheduleId
+        info.event.extendedProps.scheduleId,
       );
 
       // 이벤트에 우클릭 이벤트 리스너 추가
@@ -211,6 +211,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // 상세보기 구현
     eventClick: function (info) {
+      const inviteCount = document.getElementById("count");
+      let inviteMemberCount = 0;
       //수정을 위한
       scheduleIdForModify = info.event.extendedProps.scheduleId;
       const detailTitle = document.getElementById("detail-title");
@@ -226,7 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const endDateTime = new Date(info.event.endStr);
         endDateTime.setDate(endDateTime.getDate() - 1);
         const tempEndDate = formatDateTime(
-          endDateTime.toISOString().split(".")[0]
+          endDateTime.toISOString().split(".")[0],
         ); // ISO 형식으로 변환 후 포맷
 
         detailEndDate.value = tempEndDate.split(" ")[0];
@@ -274,6 +276,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
           // 사원 정보 출력
           scheduleDetail.scheduleDetailEmployees.forEach(function (employee) {
+            inviteMemberCount++;
             console.log("현재 회원의 상태 : " + employee.isParticipated);
             // 참석 여부에 따라 표시할 텍스트를 결정
             let participationStatus;
@@ -296,6 +299,9 @@ document.addEventListener("DOMContentLoaded", function () {
                           </tr>
                       `;
           });
+
+          //수정에 총원 보여주기 위해서 count
+          inviteCount.innerText = inviteMemberCount; // innerText로 값 설정
 
           // 테이블 닫기
           tableHTML += `
@@ -326,7 +332,7 @@ document.addEventListener("DOMContentLoaded", function () {
           // HTML 가져오기
           const htmlContent = tmpQuill.root.innerHTML; // Quill 에디터의 root에서 HTML 가져오기
           console.log(
-            "quill로 파싱하기 전 내용 : " + JSON.stringify(quillDelta)
+            "quill로 파싱하기 전 내용 : " + JSON.stringify(quillDelta),
           ); // JSON 형태로 보기 좋게 출력
           console.log("quill로 파싱한 내용 : " + htmlContent); // 변환된 HTML 출력
 
@@ -346,7 +352,7 @@ document.addEventListener("DOMContentLoaded", function () {
           //****************  일정수정 확인 누르면 일정의 데이터를 일정 등록 페이지에 넣어두기
           modifyButton.addEventListener("click", function () {
             const addScheduleButton = document.getElementById(
-              "add-schedule-modal-buttons"
+              "add-schedule-modal-buttons",
             );
             addScheduleButton.innerHTML =
               '<button type="submit" id="submit-add-schedule">일정 수정</button><br>' +
@@ -392,7 +398,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     const endDateTime = new Date(info.event.endStr);
                     endDateTime.setDate(endDateTime.getDate() - 1);
                     tempEndDate = formatDateTime(
-                      endDateTime.toISOString().split(".")[0]
+                      endDateTime.toISOString().split(".")[0],
                     );
                     document.getElementById("end-date").value =
                       tempEndDate.split(" ")[0];
@@ -400,19 +406,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
                   //일정에 초대된 사람들 가져오기
                   const existingEmployees =
-                    scheduleDetail.scheduleDetailEmployees.map(function (
-                      employee
-                    ) {
-                      return {
-                        name:
-                          employee.employeeName +
-                          "/" +
-                          employee.position +
-                          "/" +
-                          employee.deptName,
-                        value: employee.employeeId.toString(),
-                      };
-                    });
+                    scheduleDetail.scheduleDetailEmployees.map(
+                      function (employee) {
+                        return {
+                          name:
+                            employee.employeeName +
+                            "/" +
+                            employee.position +
+                            "/" +
+                            employee.deptName,
+                          value: employee.employeeId.toString(),
+                        };
+                      },
+                    );
                   makeTagify(existingEmployees);
 
                   // 일정 내용 가져오기
@@ -430,7 +436,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 },
                 error: function (error) {
                   console.log(
-                    "수정을 위한 일정의 상세를 가져올 수 없습니다" + error
+                    "수정을 위한 일정의 상세를 가져올 수 없습니다" + error,
                   );
                 },
               });
@@ -498,18 +504,20 @@ function formatDateTime(dateTimeStr) {
 const addScheduleButton = document.getElementById("add-schedule-button");
 var modalContainer = document.getElementById("add-schedule-container");
 
-// 버튼 클릭 시 모달 열기
+// 버튼 클릭 시 일정등록 열기
 addScheduleButton.onclick = function () {
   modalContainer.classList.remove("hidden");
   closeModelButtonSwitching();
   makeTagify();
+  const inviteCount = document.getElementById("count");
+  inviteCount.innerText = 0; // innerText로 값 설정
 };
 
 var closeButton = document.getElementById("close-button");
 
 function closeModelButtonSwitching() {
   const addScheduleButton = document.getElementById(
-    "add-schedule-modal-buttons"
+    "add-schedule-modal-buttons",
   );
   addScheduleButton.innerHTML =
     '<button type="submit" id="submit-add-schedule">일정 추가</button><br>' +
@@ -642,7 +650,7 @@ function validateDates() {
       }
     } else {
       console.error(
-        "Invalid Date: startDate 또는 endDate가 유효하지 않습니다."
+        "Invalid Date: startDate 또는 endDate가 유효하지 않습니다.",
       );
     }
   }
@@ -774,7 +782,7 @@ function makeTagify(existingEmployees = []) {
           "onRemoveTag:",
           e.detail,
           "tagify instance value:",
-          tagify.value
+          tagify.value,
         );
         const inviteCount = document.getElementById("count");
         inviteCount.innerText = tagify.value.length; // innerText로 값 설정
@@ -850,7 +858,7 @@ function submitAndModifySchedule(submitType) {
           startDate,
           endDate,
           selectedEmployeeIds,
-          deltaContentJson
+          deltaContentJson,
         );
         var emailCheck;
         const checkedEmailSend = document.getElementById("email-alram");
@@ -930,7 +938,7 @@ function submitAndModifySchedule(submitType) {
           startDate,
           endDate,
           selectedEmployeeIds,
-          deltaContentJson
+          deltaContentJson,
         );
         var emailCheck;
         const checkedEmailSend = document.getElementById("email-alram");

@@ -20,7 +20,7 @@
 #employee-detail-contents {
   width: 45rem;
   height: 46rem;
-  border-radius: 5px;
+  border-radius: 30px;
   border: 1.5px solid #d8d8d8;
   box-shadow: 2px 2px 2px #d3d3d3;
   display: flex;
@@ -95,7 +95,7 @@
 #detail-employee-title {
   font-family: "One Mobile Title", sans-serif;
   font-size: 30px;
-  padding-right: 30rem;
+  padding-right: 33rem;
   color: cornflowerblue;
   border-bottom: 2px solid;
   padding-bottom: 4px;

@@ -1,695 +1,692 @@
 .category .chat-room-name {
-    font-size: 30px;
-    font-weight: bold;
+  font-size: 30px;
+  font-weight: bold;
 }
 
 .chat-room-profile {
-    width: 50px;
-    height: 50px;
-    overflow: hidden;
-    position: absolute;
-    top: -25px;
-    left: 35px;
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  position: absolute;
+  top: -25px;
+  left: 35px;
 }
 
 .chat-room-profile img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border: 1px solid #D9D9D9;
-    border-radius: 70%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 1px solid #d9d9d9;
+  border-radius: 70%;
 }
 
 .chat-room-selection {
-    background: white;
+  background: white;
 }
 
 .chat-room-selection > div {
-    padding: 0px;
+  padding: 0px;
 }
 
 .selection a {
-    font-size: 20px;
+  font-size: 20px;
 }
 
 .selection a:hover {
-    font-weight: bold;
-    text-decoration: none;
+  font-weight: bold;
+  text-decoration: none;
 }
 
 .fa-user-group {
-    font-size: 20px;
+  font-size: 20px;
 }
 
-.active a{
-    font-weight: bold;
-    color: #0056B3;
+.active a {
+  font-weight: bold;
+  color: #0056b3;
 }
 
 .emp-count {
-    font-size: 20px;
-    font-weight: bold;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .chat-profile {
-    width: 50px;
-    height: 50px;
-    overflow: hidden;
-    position: absolute;
-    left: 35px;
+  width: 50px;
+  height: 50px;
+  overflow: hidden;
+  position: absolute;
+  left: 35px;
 }
 
 .chat-profile img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border: 1px solid #D9D9D9;
-    border-radius: 70%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 1px solid #d9d9d9;
+  border-radius: 70%;
 }
 
 .emp-name {
-    font-size: 20px;
-    font-weight: bold;
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .chat-content {
-    display: inline-block;  /* 너비를 내용에 맞게 조정 */
-    padding: 10px 20px;
-    border-radius: 10px;
-    padding: 7px 12px;
-    background: #F5F5F5;
-    min-height: 50px;
-    white-space: normal;
-    word-wrap: break-word;
+  display: inline-block; /* 너비를 내용에 맞게 조정 */
+  padding: 10px 20px;
+  border-radius: 10px;
+  padding: 7px 12px;
+  background: #f5f5f5;
+  min-height: 50px;
+  white-space: normal;
+  word-wrap: break-word;
 }
 
 .my-chat-content {
-    display: inline-block;  /* 너비를 내용에 맞게 조정 */
-    padding: 10px 20px;
-    border-radius: 10px;
-    padding: 7px 12px;
-    background: #7AB7FA;
-    color: white;
-    min-height: 50px;
-    white-space: normal;
-    word-wrap: break-word;
+  display: inline-block; /* 너비를 내용에 맞게 조정 */
+  padding: 10px 20px;
+  border-radius: 10px;
+  padding: 7px 12px;
+  background: #7ab7fa;
+  color: white;
+  min-height: 50px;
+  white-space: normal;
+  word-wrap: break-word;
 }
 
 .chat-bubble-container {
-    display: flex;
-    align-items: center; /* 세로 중앙 정렬 */
-    margin-bottom: 10px; /* 여백 설정 */
+  display: flex;
+  align-items: center; /* 세로 중앙 정렬 */
+  margin-bottom: 10px; /* 여백 설정 */
 }
 
 .chat-time {
-    font-size: 12px;
-    color: #666;
-    white-space: nowrap;
-    margin-left: 10px;
-    padding-bottom: 5px;
+  font-size: 12px;
+  color: #666;
+  white-space: nowrap;
+  margin-left: 10px;
+  padding-bottom: 5px;
 }
 .my-chat-time {
-    font-size: 12px;
-    color: #666;
-    white-space: nowrap;
-    margin-right: 10px;
-    padding-bottom: 5px;
+  font-size: 12px;
+  color: #666;
+  white-space: nowrap;
+  margin-right: 10px;
+  padding-bottom: 5px;
 }
 
 .chat-content p {
-    font-size: 18px;
-    text-align: left;
+  font-size: 18px;
+  text-align: left;
 }
 
 .my-chat-content p {
-    font-size: 18px;
-    text-align: left;
+  font-size: 18px;
+  text-align: left;
 }
 
 .chat-area {
-    width: 100%;
-    height: 100%; /* 또는 원하는 높이 값 */
-    display: flex;
+  width: 100%;
+  height: 100%; /* 또는 원하는 높이 값 */
+  display: flex;
 }
 
 .chat {
-    width: 70%;
-    height: 73%;
-    overflow-y: auto;
-    position: absolute;
-    display: flex;
-    flex-direction: column !important;
-    background-color: white;
+  width: 70%;
+  height: 73%;
+  overflow-y: auto;
+  position: absolute;
+  display: flex;
+  flex-direction: column !important;
+  background-color: white;
 }
 
 .chat-send-box {
-    width: 70%;
-    position: absolute;
-    bottom: 30px;
+  width: 70%;
+  position: absolute;
+  bottom: 30px;
 }
 
 .chat-send-box input {
-    width: 95% !important;
-    height: 50px;
-    border: 1px solid #DDD; /* Standard light grey border */
-    padding: 11px 15px; /* Padding inside the input */
-    font-size: 20px; /* Font size */
-    color: #333; /* Text color */
-    width: 100%; /* Full width */
-    box-sizing: border-box; /* Border and padding included in width */
-    background-color: #fff; /* White background */
+  width: 95% !important;
+  height: 50px;
+  border: 1px solid #ddd; /* Standard light grey border */
+  padding: 11px 15px; /* Padding inside the input */
+  font-size: 20px; /* Font size */
+  color: #333; /* Text color */
+  width: 100%; /* Full width */
+  box-sizing: border-box; /* Border and padding included in width */
+  background-color: #fff; /* White background */
 }
 
 .send-box {
-    position: relative;
+  position: relative;
 }
 
 .fa-file {
-    position: absolute;
-    right: 150px;
-    top: 10px;
-    font-size: 30px;
-    color: #0056B3;
-    cursor: pointer;
+  position: absolute;
+  right: 150px;
+  top: 10px;
+  font-size: 30px;
+  color: #0056b3;
+  cursor: pointer;
 }
 
 .fa-paper-plane {
-    position: absolute;
-    right: 90px;
-    top: 10px;
-    font-size: 30px;
-    color: #0056B3;
-    cursor: pointer;
+  position: absolute;
+  right: 90px;
+  top: 10px;
+  font-size: 30px;
+  color: #0056b3;
+  cursor: pointer;
 }
 
 .chat-send-input {
-    width: 100%;
-    height: 50px;
-    position: relative;
-    display: flex;
-    padding-left: 6%;
+  width: 100%;
+  height: 50px;
+  position: relative;
+  display: flex;
+  padding-left: 6%;
 }
 
-
 .chat-send-input form {
-    width: 90%;
+  width: 90%;
 }
 
 .emoticon-boxes {
-    margin-bottom: 10px !important;
+  margin-bottom: 10px !important;
 }
 
 .emoticon-box {
-    align-items: center; /* 버튼을 세로 중앙에 배치 */
-    width: 30%; /* 컨테이너의 전체 너비를 사용 */
-    display: flex;
-    justify-content: start; /* 버튼을 가로 중앙에 배치 */
-    padding-right: 15px;
-    border-radius: 10px;
+  align-items: center; /* 버튼을 세로 중앙에 배치 */
+  width: 30%; /* 컨테이너의 전체 너비를 사용 */
+  display: flex;
+  justify-content: start; /* 버튼을 가로 중앙에 배치 */
+  padding-right: 15px;
+  border-radius: 10px;
 }
 
 .inactive-emoticon {
-    width: 5%;
-    height: 100%;
-    border: 1px solid #B0B0B0;
-    border-radius: 10px;
-    align-items: center;
+  width: 5%;
+  height: 100%;
+  border: 1px solid #b0b0b0;
+  border-radius: 10px;
+  align-items: center;
 }
 
 .emoticon-button {
-    height: 100%;
-    background: white;
-    border: 1px solid #0056B3;
-    border-radius: 10px;
-    align-items: center;
+  height: 100%;
+  background: white;
+  border: 1px solid #0056b3;
+  border-radius: 10px;
+  align-items: center;
 }
 
 .emoticon-button i {
-    font-size: 12px;
+  font-size: 12px;
 }
 
 .emoticon-button span {
-    font-size: 15px;
+  font-size: 15px;
 }
 
-
 .emoticon-button:focus {
-    outline: none;
-    background: #7AB7FA;
-    border: 1px solid #0056B3;
+  outline: none;
+  background: #7ab7fa;
+  border: 1px solid #0056b3;
 }
 
 .blank {
-    width: 10%;
+  width: 10%;
 }
 
 .emoticon-chat-bubble-container {
-    display: flex;
-    align-items: center; /* 세로 중앙 정렬 */
+  display: flex;
+  align-items: center; /* 세로 중앙 정렬 */
 }
 
 .unread-count-box {
-    margin: 0px 10px;
-    padding-bottom: 4px;
+  margin: 0px 10px;
+  padding-bottom: 4px;
 }
 
 .unread-count {
-    color: #7AB7FA;
-    font-size: 15px;
-    font-weight: bold;
+  color: #7ab7fa;
+  font-size: 15px;
+  font-weight: bold;
 }
 
 #emoticon-box {
-    display: none; /* Hidden by default */
-    position: absolute;
-    border: 1px solid #ccc;
-    background-color: #fff;
-    padding: 10px;
-    z-index: 1000; /* Ensures it appears on top of other elements */
-    cursor: pointer;
-    font-size: 20px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
-    border-radius: 10px;
+  display: none; /* Hidden by default */
+  position: absolute;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  padding: 10px;
+  z-index: 1000; /* Ensures it appears on top of other elements */
+  cursor: pointer;
+  font-size: 20px;
+  box-shadow:
+    0 10px 20px rgba(0, 0, 0, 0.19),
+    0 6px 6px rgba(0, 0, 0, 0.23);
+  border-radius: 10px;
 }
 
 .heart-icon {
-    color: #FF585B;
+  color: #ff585b;
 }
 
 .fa-thumbs-up {
-    color: #AD18CB;
+  color: #ad18cb;
 }
 
 .fa-face-smile {
-    color: #FFC14E;
+  color: #ffc14e;
 }
 
 .fa-face-sad-cry {
-    color: #FFC14E;
+  color: #ffc14e;
 }
 
 #emoticon-box i {
-    margin: 0px 5px;
+  margin: 0px 5px;
 }
 
 .active-button {
-    background: #7AB7FA;
+  background: #7ab7fa;
 }
 
 .emp-count-box {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .group-name {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .file-box {
-    padding: 10px;
-    background-color: white;
-    border-radius: 10px;
+  padding: 10px;
+  background-color: white;
+  border-radius: 10px;
 }
 
 .file-box p {
-    color: black;
+  color: black;
 }
 
 .file-box i {
-    color: black;
-    font-size: 20px;
-    cursor: pointer;
+  color: black;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 .tag-box span {
-    color: white;
-    border-radius: 10px;
-    padding: 5px;
-    background: #7AB7FA;
-    margin-right: 5px;
+  color: white;
+  border-radius: 10px;
+  padding: 5px;
+  background: #7ab7fa;
+  margin-right: 5px;
 }
 
 .tag {
-    color: white;
-    border-radius: 10px;
-    padding: 5px;
-    background: #003d80;
-    margin-right: 5px;
+  color: white;
+  border-radius: 10px;
+  padding: 5px;
+  background: #003d80;
+  margin-right: 5px;
 }
 
 .tag-box i {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
 .tag-box {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 .file-area {
-    padding: 40px;
+  padding: 40px;
 }
 
 .tag-input-area i {
-    font-size: 30px;
+  font-size: 30px;
 }
 
 .file-table {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 /*
 */
 
-
-
-
-
-
-
-
-
 .file-table .fa-download {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .image-area {
-    padding: 40px;
-
+  padding: 40px;
 }
 
 .image-box {
-    width: 100%;
-    height: 300px;
-    overflow: hidden;
-    padding-right: 3px;
-    padding-bottom: 3px;
-    border-radius: 10px;
-    cursor: pointer;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  padding-right: 3px;
+  padding-bottom: 3px;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
 .image-box::after {
-    content: "\f00e"; /* 폰트어썸의 검색 아이콘 예시 */
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: rgba(255, 255, 255, 0);
-    font-size: 50px;
-    transition: color 0.3s ease;
+  content: "\f00e"; /* 폰트어썸의 검색 아이콘 예시 */
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgba(255, 255, 255, 0);
+  font-size: 50px;
+  transition: color 0.3s ease;
 }
 
 .image-box:hover::after {
-    color: rgba(255, 255, 255, 0.8); /* 호버 시 아이콘 나타나기 */
+  color: rgba(255, 255, 255, 0.8); /* 호버 시 아이콘 나타나기 */
 }
 
 .image-box:hover img {
-    filter: brightness(70%); /* 호버 시 이미지 어둡게 */
+  filter: brightness(70%); /* 호버 시 이미지 어둡게 */
 }
 
 .images {
-    width: 69rem;
-    height: 38rem;
-    overflow-y: auto;
-    margin-top: 40px;
-    padding: 0px 40px;
+  width: 69rem;
+  height: 38rem;
+  overflow-y: auto;
+  margin-top: 40px;
+  padding: 0px 40px;
 }
 
 .image-box img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    border: 1px solid #D9D9D9;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 1px solid #d9d9d9;
 }
 
 .images .col-3 {
-    padding: 0px !important;
+  padding: 0px !important;
 }
 
 .layout-container {
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: 100vh; /* 전체 화면 높이 */
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 100vh; /* 전체 화면 높이 */
 }
 
 @media screen and (max-width: 1400px) {
-    .chat-room-profile img,
-    .chat-room-profile div,
-    .chat-room-profile i {
-        display: none !important;
-    }
-    .chat-profile {
-        display: none !important;
-    }
+  .chat-room-profile img,
+  .chat-room-profile div,
+  .chat-room-profile i {
+    display: none !important;
+  }
+  .chat-profile {
+    display: none !important;
+  }
 
-    .chat {
-        width: 72%;
-    }
-    .chat-send-box {
-        width: 72%;
-    }
+  .chat {
+    width: 72%;
+  }
+  .chat-send-box {
+    width: 72%;
+  }
 }
 
 @media screen and (max-width: 1000px) {
-    .chat {
-        width: 65%;
-    }
-    .chat-send-box {
-        width: 65%;
-    }
+  .chat {
+    width: 65%;
+  }
+  .chat-send-box {
+    width: 65%;
+  }
 }
 
 .sub-text p {
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .chat-container {
-    display: flex;
-    flex-direction: column;
-    margin-top: auto; /* Pushes content to bottom when not enough messages */
+  display: flex;
+  flex-direction: column;
+  margin-top: auto; /* Pushes content to bottom when not enough messages */
 }
 
 .chat::-webkit-scrollbar-thumb {
-    background: rgba(176, 176, 176, 0); /* 투명하게 설정 */
-    border-radius: 20px;
+  background: rgba(176, 176, 176, 0); /* 투명하게 설정 */
+  border-radius: 20px;
 }
 
 .chat::-webkit-scrollbar-track {
-    background: rgba(239, 239, 239, 0); /* 투명하게 설정 */
-    border-radius: 20px;
+  background: rgba(239, 239, 239, 0); /* 투명하게 설정 */
+  border-radius: 20px;
 }
 
 /* .second-side-bar가 호버 상태일 때 스크롤바 색상을 복원 */
 .chat:hover::-webkit-scrollbar-thumb {
-    background: rgba(176, 176, 176, 1); /* 원래 색상으로 복원 */
+  background: rgba(176, 176, 176, 1); /* 원래 색상으로 복원 */
 }
 
 .chat:hover::-webkit-scrollbar-track {
-    background: rgba(239, 239, 239, 1); /* 원래 색상으로 복원 */
+  background: rgba(239, 239, 239, 1); /* 원래 색상으로 복원 */
 }
 
 .input-container {
-    position: relative;
-    width: 95%; /* Adjust as needed */
+  position: relative;
+  width: 95%; /* Adjust as needed */
 }
 
 .chat-input {
-    width: 100%;
-    height: 52px; /* Define a fixed height or adjust min-height as needed */
-    padding: 15px 150px 15px 10px; /* Adjust top and bottom padding to center text */
-    font-size: 20px;
-    border: 1px solid #DDD;
-    box-sizing: border-box;
-    resize: none; /* Prevent manual resizing */
-    overflow-y: auto; /* Add vertical scroll if content exceeds max height */
-    display: flex;
-    align-items: center; /* Vertically center content */
-    border-radius: 10px;
-
+  width: 100%;
+  height: 52px; /* Define a fixed height or adjust min-height as needed */
+  padding: 15px 150px 15px 10px; /* Adjust top and bottom padding to center text */
+  font-size: 20px;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  resize: none; /* Prevent manual resizing */
+  overflow-y: auto; /* Add vertical scroll if content exceeds max height */
+  display: flex;
+  align-items: center; /* Vertically center content */
+  border-radius: 10px;
 }
 .attach-icon,
 .send-icon {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 30px;
-    color: #0056B3;
-    cursor: pointer;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 30px;
+  color: #0056b3;
+  cursor: pointer;
 }
 
 .attach-icon {
-    right: 100px; /* Position it inside the input */
+  right: 100px; /* Position it inside the input */
 }
 
 .send-icon {
-    right: 35px; /* Position it inside the input */
+  right: 35px; /* Position it inside the input */
 }
 
 /* Adjust icon hover effects if desired */
 .attach-icon:hover,
 .send-icon:hover {
-    color: #003d80;
+  color: #003d80;
 }
 
 .contents {
-    border-radius: 30px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-    border: 1px solid #e4e4e4;
+  border-radius: 30px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  border: 1px solid #e4e4e4;
 }
 
 .contents-list {
-    width: 100%;
-    height: 100%;
-    background-color: #ebebeb;
-    padding: 10px 47px 10px 10px;
+  width: 100%;
+  height: 100%;
+  background-color: #ebebeb;
+  padding: 10px 47px 10px 10px;
 }
 
-.file-area .tagify, .image-area .tagify {
-    width: 100%;
-    max-width: 100%;
-    border-radius: 10px;
-    background: #E9EEF6;
-    border: 1px solid rgba(130, 138, 145, .5);
+.file-area .tagify,
+.image-area .tagify {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 10px;
+  background: #e9eef6;
+  border: 1px solid rgba(130, 138, 145, 0.5);
 }
 
-.file-area .tagify:focus, .image-area .tagify:focus {
-    border-color: #E9EEF6;
-    outline-color: #E9EEF6;
-    box-shadow: 0 0 0 .2rem rgba(130, 138, 145, .5);
+.file-area .tagify:focus,
+.image-area .tagify:focus {
+  border-color: #e9eef6;
+  outline-color: #e9eef6;
+  box-shadow: 0 0 0 0.2rem rgba(130, 138, 145, 0.5);
 }
 
-.file-area .tagify:hover, .image-area .tagify:hover {
-    border-color: #E9EEF6;
-    outline-color: #E9EEF6;
-    box-shadow: 0 0 0 .2rem rgba(130, 138, 145, .5);
+.file-area .tagify:hover,
+.image-area .tagify:hover {
+  border-color: #e9eef6;
+  outline-color: #e9eef6;
+  box-shadow: 0 0 0 0.2rem rgba(130, 138, 145, 0.5);
 }
 
-.file-area .dropdown-toggle, .image-area .dropdown-toggle {
-    background: #E9EEF6 !important;
-    color: black;
-    border: none;
-    border-radius: 10px;
+.file-area .dropdown-toggle,
+.image-area .dropdown-toggle {
+  background: #e9eef6 !important;
+  color: black;
+  border: none;
+  border-radius: 10px;
 }
 
-.dropdown-item:hover, .dropdown-item:focus {
-    background: #E9EEF6 !important;
-    color: black !important;
+.dropdown-item:hover,
+.dropdown-item:focus {
+  background: #e9eef6 !important;
+  color: black !important;
 }
 
 .dropdown-item:active {
-    background: #E9EEF6 !important;
-    color: black !important;
+  background: #e9eef6 !important;
+  color: black !important;
 }
 
-.file-area .dropdown-menu, .image-area .dropdown-menu {
-    border-radius: 10px;
-    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+.file-area .dropdown-menu,
+.image-area .dropdown-menu {
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 }
 
 .dropdown-toggle:focus {
-    border-color: #545b62;
-    outline-color: #545b62;
-    box-shadow: 0 0 0 .3rem rgba(130, 138, 145, .5) !important;
+  border-color: #545b62;
+  outline-color: #545b62;
+  box-shadow: 0 0 0 0.3rem rgba(130, 138, 145, 0.5) !important;
 }
 
 .dropdown-toggle:hover {
-    border-color: #545b62;
-    outline-color: #545b62;
-    box-shadow: 0 0 0 .3rem rgba(130, 138, 145, .5) !important;
+  border-color: #545b62;
+  outline-color: #545b62;
+  box-shadow: 0 0 0 0.3rem rgba(130, 138, 145, 0.5) !important;
 }
 
 .select-button {
-    background: #0056b3 !important;
-    color: white !important;
+  background: #0056b3 !important;
+  color: white !important;
 }
 
-
 .file-table tbody tr:hover {
-    background-color: #E9EEF6;
+  background-color: #e9eef6;
 }
 
 td img {
-    width: 30px;
-    height: 30px;
-    object-fit: cover;
-    border: 1px solid #D9D9D9;
-    border-radius: 70%;
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border: 1px solid #d9d9d9;
+  border-radius: 70%;
 }
 
 .fa-file-pdf {
-    color: #e10606 !important;
+  color: #e10606 !important;
 }
 
 .fa-table {
-    color: #10a410 !important;
+  color: #10a410 !important;
 }
 
 .fa-image {
-    color: red !important;
+  color: red !important;
 }
 
 .fa-file-image {
-    color: red;
+  color: red;
 }
 
 .fa-file-powerpoint {
-    color: #e74f0b !important;
+  color: #e74f0b !important;
 }
 
 .file-preview {
-    position: fixed;
-    background: #fff;
-    border: 1px solid #ccc;
-    padding: 10px;
-    max-width: 400px; /* Adjust as needed */
-    max-height: 400px; /* Adjust as needed */
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    z-index: 1000;
+  position: fixed;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 10px;
+  max-width: 400px; /* Adjust as needed */
+  max-height: 400px; /* Adjust as needed */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
 
 .file-preview img {
-    width: 100%;
-    height: auto;
+  width: 100%;
+  height: auto;
 }
-.file-table th, .file-table td {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+.file-table th,
+.file-table td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 td img {
-    width: 30px;
-    height: 30px;
-    object-fit: cover;
-    border: 1px solid #D9D9D9;
-    border-radius: 70%;
+  width: 30px;
+  height: 30px;
+  object-fit: cover;
+  border: 1px solid #d9d9d9;
+  border-radius: 70%;
 }
 
 .file-table thead {
-    background-color: #0056b3;
-    font-weight: bold;
+  background-color: #0056b3;
+  font-weight: bold;
 }
 
 .file-table thead th {
-    color: white;
+  color: white;
 }
 
 .file-table tbody {
-    overflow-y: auto;
-    max-height: 550px;
-    display: block;
-    width: 100%;
+  overflow-y: auto;
+  max-height: 550px;
+  display: block;
+  width: 100%;
 }
 
-table thead, table tbody tr {
-    display: table;
-    width: 100%;
+.file-table table thead,
+.file-table table tbody tr {
+  display: table;
+  width: 100%;
 }
 
 .file-table {
-    margin-top: 30px !important;
+  margin-top: 30px !important;
 }
