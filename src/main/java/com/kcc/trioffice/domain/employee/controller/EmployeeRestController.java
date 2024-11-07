@@ -107,4 +107,11 @@ public class EmployeeRestController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/employees")
+    public void saveEmployee(@RequestBody EmployeeInfo employeeInfo,
+                             @AuthenticationPrincipal PrincipalDetail principalDetail) {
+        log.info("employeInfo: {}", employeeInfo);
+        employeeService.saveEmployee(principalDetail.getEmployeeId(), employeeInfo);
+    }
+
 }

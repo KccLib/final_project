@@ -50,4 +50,6 @@ public interface EmployeeMapper {
     int updateEmployeeProfile(String profileUrl, Long employeeId);
 
     int updateEmployeeStatusMessage(Long employeeId, String message);
+
+    int saveEmployee(EmployeeInfo employeeInfo, Long writer);
 }
