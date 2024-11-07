@@ -118,6 +118,12 @@ public class ScheduleService {
       saveSchedule.setIsDeleted("0");
       List<String> employeesEmail = new ArrayList<>();
 
+      // saveSchedule 메서드 호출
+      scheduleMapper.saveSchedule(saveSchedule, startedDt, endedDt);
+      // 이후 saveScheduleInvite 호출
+      scheduleMapper.saveScheduleInvite(saveSchedule);
+      saveSchedule.setWriter(employeeInfo.getEmployeeId());
+
       // mail을 보내기 위한 검사
       if (saveSchedule.getEmailCheck() == 1) {
         List<Long> sendEmailEmployeesList = saveSchedule.getEmployeeIds();
@@ -163,17 +169,14 @@ public class ScheduleService {
               "</div>" +
               "</div>";
 
+
           helper.setText(htmlContent, true);
 
           mailSender.send(message);
         }
       }
 
-      // saveSchedule 메서드 호출
-      scheduleMapper.saveSchedule(saveSchedule, startedDt, endedDt);
-      // 이후 saveScheduleInvite 호출
-      scheduleMapper.saveScheduleInvite(saveSchedule);
-      saveSchedule.setWriter(employeeInfo.getEmployeeId());
+
 
       // 알림 생성
 
