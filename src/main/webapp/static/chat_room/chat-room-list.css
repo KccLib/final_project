@@ -133,13 +133,13 @@
 }
 
 .chat {
-  width: 70%;
-  height: 73%;
-  overflow-y: auto;
-  position: absolute;
-  display: flex;
-  flex-direction: column !important;
-  background-color: white;
+    width: 69%;
+    height: 73%;
+    overflow-y: auto;
+    position: absolute;
+    display: flex;
+    flex-direction: column !important;
+    background-color: white;
 }
 
 .chat-send-box {
