@@ -17,7 +17,8 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
       <jsp:include
         page="/WEB-INF/views/component/first-side-bar.jsp"
       ></jsp:include>
-      <div id="contents">
+      <div class="contents-list">
+      <div class="contents">
         <div
           id="popMenu"
           class="list-group"
@@ -65,8 +66,8 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
                 />
               </div>
 
-              <div class="add-sche-date">
-                <label for="start-date"><i class="fa-regular fa-calendar-check"></i>&nbsp;시작일</label>
+              <div class="add-sche-date" >
+                <label for="start-date" id="start-date-label"><i class="fa-regular fa-calendar-check"></i>&nbsp;시작일</label>
                 <input
                   type="text"
                   placeholder="날짜를 선택해주세요."
@@ -75,7 +76,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
                   required
                 />
 
-                <label for="end-date" id="end-date-label"><i class="fa-regular fa-calendar-check"></i> 종료일</label>
+                <label for="end-date" class="end-date-label"><i class="fa-regular fa-calendar-check"></i> 종료일</label>
                 <input
                   type="text"
                   placeholder="날짜를 선택해주세요."
@@ -158,7 +159,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
                 />
               </div>
               <div class="detail-dates">
-                <label for="start-date"><i class="fa-regular fa-calendar-check"></i>&nbsp;시작일</label>
+                <label for="start-date" class="start-date-label"><i class="fa-regular fa-calendar-check"></i>&nbsp;시작일</label>
                 <input
                   type="text"
                   value=""
@@ -167,7 +168,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
                   readonly
                 />
 
-                <label for="end-date" id="end-date-label"><i class="fa-regular fa-calendar-check"></i>&nbsp;종료일</label>
+                <label for="end-date" class="end-date-label"><i class="fa-regular fa-calendar-check"></i>&nbsp;종료일</label>
                 <input
                   type="text"
                   id="end-date-detail"
@@ -195,6 +196,8 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
           </div>
         </div>
       </div>
+</div>
+
     </div>
     <script src="<%= request.getContextPath() %>/static/schedule/schedule.js"></script>
   </body>

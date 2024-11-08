@@ -1,8 +1,13 @@
 package com.kcc.trioffice.domain.employee.controller;
 
+import com.kcc.trioffice.domain.common.domain.EmployeeInfoWithDept;
+import com.kcc.trioffice.domain.employee.RequestPassword;
 import com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo;
 import com.kcc.trioffice.domain.employee.service.EmployeeService; // EmployeeService를 임포트합니다.
+import com.kcc.trioffice.global.auth.PrincipalDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -54,6 +59,41 @@ public class EmployeeController { // 'Contoller' -> 'Controller' 오타 수정
   @GetMapping("/")
   public String index(Model model) {
       return "redirect:/login";
+  }
+
+  @GetMapping("/employees/detail")
+  public String employeeDetail(Model model, @AuthenticationPrincipal PrincipalDetail principalDetail) {
+    EmployeeInfoWithDept employeeInfoWithDept = employeeService.getEmployeeInfoWithDept(principalDetail.getEmployeeId());
+    model.addAttribute("employee", employeeInfoWithDept);
+    return "user/detail";
+  }
+
+  @PostMapping("/employees/modify")
+  public ResponseEntity<String> modifyEmployee(@RequestBody EmployeeInfo employeeInfo, @AuthenticationPrincipal PrincipalDetail principalDetail) {
+    boolean isModified = employeeService.modifyEmployee(employeeInfo, principalDetail.getEmployeeId());
+
+    if (isModified) {
+      return ResponseEntity.ok("성공적으로 수정되었습니다.");
+    } else {
+      return ResponseEntity.status(500).body("수정에 실패하였습니다.");
+    }
+  }
+
+  @GetMapping("/employees/change-password")
+  public String changePassword() {
+    return "user/change-password";
+  }
+
+  @PostMapping("employees/change-password")
+  public ResponseEntity<String> changePassword(@AuthenticationPrincipal PrincipalDetail principalDetail, @RequestBody RequestPassword requestPassword) {
+    System.out.println("변경할 password " + requestPassword.getPassword());
+    boolean isChanged = employeeService.changeEmployeePassword(principalDetail.getEmployeeId(), requestPassword.getPassword());
+
+    if (isChanged) {
+      return ResponseEntity.ok("비밀번호가 변경되었습니다.");
+    } else {
+      return ResponseEntity.status(500).body("비밀번호 변경에 실패하였습니다.");
+    }
   }
 
 }

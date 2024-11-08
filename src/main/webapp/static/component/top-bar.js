@@ -781,3 +781,12 @@ otherEmployeeChatRoom.addEventListener("click", function (event) {
   document.body.appendChild(form);
   form.submit();
 });
+
+/**
+ *
+ * 정보수정 페이지
+ */
+const modifyStatus = document.getElementById("modify-status");
+modifyStatus.addEventListener("click", function () {
+  window.location.href = "/employees/detail";
+});
