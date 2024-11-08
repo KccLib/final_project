@@ -108,6 +108,13 @@ public class EmployeeRestController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/employees")
+    public void saveEmployee(@RequestBody EmployeeInfo employeeInfo,
+                             @AuthenticationPrincipal PrincipalDetail principalDetail) {
+        log.info("employeInfo: {}", employeeInfo);
+        employeeService.saveEmployee(principalDetail.getEmployeeId(), employeeInfo);
+    }
+
     @PostMapping("/employees/detail/check")
     public ResponseEntity<Map<String, Integer>> detailPasswordCheck(@AuthenticationPrincipal PrincipalDetail principalDetail, @RequestBody RequestPassword requestPassword) {
         System.out.println("받은 password + " + requestPassword.getPassword());

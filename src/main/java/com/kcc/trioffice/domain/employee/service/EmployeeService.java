@@ -193,6 +193,26 @@ public class EmployeeService {
         }
     }
 
+    @Transactional
+    public void saveEmployee(Long employeeId, EmployeeInfo employeeInfo) throws EmployeeSaveException {
+        // 비밀번호 인코딩
+        EmployeeInfo loginEmployeeInfo = getEmployeeInfo(employeeId);
+
+        String password = employeeInfo.getPassword();
+        String incodingPassword = passwordEncoder.encode(password);
+        employeeInfo.setPassword(incodingPassword);
+        employeeInfo.setCompanyId(loginEmployeeInfo.getCompanyId());
+        employeeInfo.setStatus(3L);
+
+        // 회원저장
+        int isSuccess = employeeMapper.saveEmployee(employeeInfo, loginEmployeeInfo.getEmployeeId());
+
+        if (isSuccess == 0) {
+            throw new EmployeeSaveException("Employee 등록이 실패하였습니다.");
+        }
+    }
+
+
     // 모든 포지션을 조회하는 메서드 추가
     public List<String> getAllPositions() {
         return employeeMapper.getAllPositions(); // EmployeeMapper에서 모든 포지션 정보 조회
