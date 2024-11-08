@@ -193,6 +193,26 @@ public class EmployeeService {
         }
     }
 
+    @Transactional
+    public void saveEmployee(Long employeeId, EmployeeInfo employeeInfo) throws EmployeeSaveException {
+        // 비밀번호 인코딩
+        EmployeeInfo loginEmployeeInfo = getEmployeeInfo(employeeId);
+
+        String password = employeeInfo.getPassword();
+        String incodingPassword = passwordEncoder.encode(password);
+        employeeInfo.setPassword(incodingPassword);
+        employeeInfo.setCompanyId(loginEmployeeInfo.getCompanyId());
+        employeeInfo.setStatus(3L);
+
+        // 회원저장
+        int isSuccess = employeeMapper.saveEmployee(employeeInfo, loginEmployeeInfo.getEmployeeId());
+
+        if (isSuccess == 0) {
+            throw new EmployeeSaveException("Employee 등록이 실패하였습니다.");
+        }
+    }
+
+
     // 모든 포지션을 조회하는 메서드 추가
     public List<String> getAllPositions() {
         return employeeMapper.getAllPositions(); // EmployeeMapper에서 모든 포지션 정보 조회
@@ -232,5 +252,44 @@ public class EmployeeService {
         Map<String, String> employeeStatusMessage = new HashMap<>();
         employeeStatusMessage.put("statusContents", message);
         return employeeStatusMessage;
+    }
+
+    public Map<String, Integer> detailPasswordCheck(Long employeeId, String password) {
+        EmployeeInfo employeeInfo = employeeMapper.getEmployeeInfo(employeeId).orElseThrow(() -> new NotFoundException("일치하는 회원 정보가 없습니다."));
+        String encodedPassword = employeeInfo.getPassword();
+        Map<String, Integer> responsePasswordCheck = new HashMap<>();
+        //평문 먼저, 암호화 나중에 ***
+        if (passwordEncoder.matches(password, encodedPassword)) {
+            responsePasswordCheck.put("passwordCheck", 1);
+            System.out.println("비밀번호가 같습니다.");
+        } else {
+            responsePasswordCheck.put("passwordCheck", 2);
+            System.out.println("비밀번호가 일치하지 않습니다.");
+        }
+
+        return responsePasswordCheck;
+    }
+
+    @Transactional
+    public boolean modifyEmployee(EmployeeInfo employeeInfo, Long employeeId) {
+        int modifyCheck = employeeMapper.modifyEmployee(employeeInfo, employeeId);
+
+        if (modifyCheck == 1) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    @Transactional
+    public boolean changeEmployeePassword(Long employeeId, String password) {
+        String encodedPassword = passwordEncoder.encode(password);
+        int changePassword = employeeMapper.changeEmployeePassword(employeeId, encodedPassword);
+
+        if(changePassword == 1) {
+            return true;
+        } else{
+            return false;
+        }
     }
 }
