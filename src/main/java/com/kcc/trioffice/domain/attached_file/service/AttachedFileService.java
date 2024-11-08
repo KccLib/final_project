@@ -143,11 +143,12 @@ public class AttachedFileService {
                     .chatContents(s3UploadFile.getFileUrl())
                     .chatId(chatMessage.getChatId())
                     .senderName(employeeInfo.getName())
+                    .senderProfileUrl(employeeInfo.getProfileUrl())
                     .senderId(employeeId)
                     .chatType(ChatType.IMAGE.toString())
                     .roomId(chatRoomId)
-                     .tags(tags)
-                     .unreadMessageCount(unreadCount)
+                    .tags(tags)
+                    .unreadMessageCount(unreadCount)
                     .build();
         } else {
             chatMessageInfo = ChatMessageInfo.builder()
@@ -155,6 +156,7 @@ public class AttachedFileService {
                     .chatContents(s3UploadFile.getFileName())
                     .chatId(chatMessage.getChatId())
                     .senderName(s3UploadFile.getFileName())
+                    .senderProfileUrl(employeeInfo.getProfileUrl())
                     .senderId(employeeId)
                     .chatType(ChatType.FILE.toString())
                     .roomId(chatRoomId)
