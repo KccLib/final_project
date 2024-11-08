@@ -190,8 +190,8 @@ document.addEventListener("DOMContentLoaded", function () {
       info.el.addEventListener("contextmenu", function (event) {
         event.preventDefault(); // 브라우저 기본 우클릭 메뉴를 막음
         // alert("이벤트를 우클릭했습니다: " + info.event.title);
-        var x = event.pageX + -70 + "px"; // 현재 마우스의 X좌표
-        var y = event.pageY + -30 + "px"; // 현재 마우스의 Y좌표
+        var x = event.pageX + "px"; // 현재 마우스의 X좌표
+        var y = event.pageY + "px"; // 현재 마우스의 Y좌표
 
         schduleIdForDelete = info.event.extendedProps.scheduleId;
         // 디버깅을 위한 로그
