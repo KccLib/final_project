@@ -189,12 +189,12 @@
   padding-top: 20px;
   padding-bottom: 15px;
   font-weight: bold;
-  color: #4695df;
+  color: #6d8dff;
   display: flex;
   justify-content: center;
   font-size: 30px;
   font-family: "One Mobile Title", sans-serif;
-  box-shadow: inset 0px 1px 3px 2px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #ccc;
 }
 
 /* 모달 애니메이션 */
@@ -376,6 +376,17 @@ input[name="employees[]"] {
   margin-top: 15px;
 }
 
+.start-date-label,
+.end-date-label {
+  font-weight: bold;
+}
+#start-date-label {
+  font-weight: bold;
+}
+
+.end-date-label {
+  margin-left: 9px;
+}
 .add-people {
   margin-top: 20px;
 }
@@ -470,6 +481,7 @@ input[name="employees[]"] {
 
 #schedule-master {
   margin-top: 15px;
+  font-weight: bold;
 }
 
 #master-name {

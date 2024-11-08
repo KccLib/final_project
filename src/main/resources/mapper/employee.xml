@@ -181,54 +181,6 @@
           AND is_deleted = 0
     </update>
 
-    <insert id="saveEmployee">
-    INSERT INTO employee (
-      employee_id
-      , dept_id
-      , company_id
-      , email
-      , password
-      , phone_num
-      , external_email
-      , name
-      , birth
-      , profile_url
-      , fax
-      , location
-      , is_receive_notification
-      , position
-      , status
-      , status_message
-      , writer
-      , write_dt
-      , modifier
-      , modified_dt
-      , is_deleted
-    ) VALUES (
-      seq_employee.nextval
-      , #{deptId}
-      , #{companyId}
-      , #{email}
-      , #{password}
-      , #{phoneNum}
-      , #{externalEmail}
-      , #{name}
-      , #{birth}
-      , #{profileUrl}
-      , #{fax}
-      , #{location}
-      , #{isReceiveNotification}
-      , #{position}
-      , #{status}
-      , #{statusMessage, jdbcType=VARCHAR} <!-- 여기에서 JDBC 타입 설정 -->
-      , #{writer}
-      , sysdate
-      , #{modifier}
-      , sysdate
-      , 0
-    )
-    </insert>
-
     <select id="getAdminInfo" resultType="com.kcc.trioffice.domain.employee.dto.response.AdminInfo">
     SELECT name
            , phone_num
@@ -318,6 +270,42 @@
         )
     </insert>
 
+    <insert id="saveEmployee" parameterType="com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo">
+        INSERT INTO employee (
+        employee_id,
+        dept_id,
+        company_id,
+        email,
+        password,
+        external_email,
+        name,
+        profile_url,
+        position,
+        status,
+        writer,
+        write_dt,
+        modifier,
+        modified_dt,
+        is_deleted
+        ) VALUES (
+        seq_employee.nextval,
+        #{employeeInfo.deptId},
+        #{employeeInfo.companyId},
+        #{employeeInfo.email},
+        #{employeeInfo.password},
+        #{employeeInfo.externalEmail},
+        #{employeeInfo.name},
+        #{employeeInfo.profileUrl},
+        #{employeeInfo.position},
+        #{employeeInfo.status},
+        #{writer},
+        sysdate,
+        #{writer},
+        sysdate,
+        0
+        )
+    </insert>
+
 
     <!-- 사원 수정 쿼리 -->
     <update id="updateEmployee" parameterType="com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo">
@@ -372,8 +360,23 @@
         UPDATE employee
         SET status_message = #{message}
         WHERE is_deleted = 0
-          AND employee_id = #{employeeId}
+        AND employee_id = #{employeeId}
     </update>
 
+    <update id="modifyEmployee" parameterType="map">
+        UPDATE employee
+        SET location = #{employeeInfo.location}
+            , external_email = #{employeeInfo.externalEmail}
+            , phone_num = #{employeeInfo.phoneNum}
+            , fax = #{employeeInfo.fax}
+        WHERE is_deleted = 0
+        AND employee_id = #{employeeId}
+    </update>
 
+    <update id="changeEmployeePassword" parameterType="map">
+        UPDATE employee
+        SET password = #{encodedPassword}
+        WHERE employee_id = #{employeeId}
+        AND is_deleted = 0
+    </update>
 </mapper>

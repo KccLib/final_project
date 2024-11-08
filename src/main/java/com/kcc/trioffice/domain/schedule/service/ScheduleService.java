@@ -19,6 +19,7 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -75,6 +76,7 @@ public class ScheduleService {
     }
 
     @Transactional
+    @Async
     public void saveSchedule(String employeeEmail, SaveSchedule saveSchedule)
         throws BadRequestException, ParseException, MessagingException {
       EmployeeInfo employeeInfo = employeeMapper.getEmployeeInfoFindByEmail(employeeEmail)
@@ -115,6 +117,12 @@ public class ScheduleService {
       saveSchedule.setModifier(employeeInfo.getEmployeeId());
       saveSchedule.setIsDeleted("0");
       List<String> employeesEmail = new ArrayList<>();
+
+      // saveSchedule 메서드 호출
+      scheduleMapper.saveSchedule(saveSchedule, startedDt, endedDt);
+      // 이후 saveScheduleInvite 호출
+      scheduleMapper.saveScheduleInvite(saveSchedule);
+      saveSchedule.setWriter(employeeInfo.getEmployeeId());
 
       // mail을 보내기 위한 검사
       if (saveSchedule.getEmailCheck() == 1) {
@@ -161,17 +169,14 @@ public class ScheduleService {
               "</div>" +
               "</div>";
 
+
           helper.setText(htmlContent, true);
 
           mailSender.send(message);
         }
       }
 
-      // saveSchedule 메서드 호출
-      scheduleMapper.saveSchedule(saveSchedule, startedDt, endedDt);
-      // 이후 saveScheduleInvite 호출
-      scheduleMapper.saveScheduleInvite(saveSchedule);
-      saveSchedule.setWriter(employeeInfo.getEmployeeId());
+
 
       // 알림 생성
 

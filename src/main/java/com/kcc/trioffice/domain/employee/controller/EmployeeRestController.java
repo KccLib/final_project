@@ -1,6 +1,7 @@
 package com.kcc.trioffice.domain.employee.controller;
 
 import com.kcc.trioffice.domain.common.domain.EmployeeInfoWithDept;
+import com.kcc.trioffice.domain.employee.RequestPassword;
 import com.kcc.trioffice.domain.employee.dto.request.SaveFcmToken;
 import com.kcc.trioffice.domain.employee.dto.request.UpdateStatus;
 import com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo;
@@ -107,4 +108,18 @@ public class EmployeeRestController {
         return ResponseEntity.ok(response);
     }
 
+    @PostMapping("/employees")
+    public void saveEmployee(@RequestBody EmployeeInfo employeeInfo,
+                             @AuthenticationPrincipal PrincipalDetail principalDetail) {
+        log.info("employeInfo: {}", employeeInfo);
+        employeeService.saveEmployee(principalDetail.getEmployeeId(), employeeInfo);
+    }
+
+    @PostMapping("/employees/detail/check")
+    public ResponseEntity<Map<String, Integer>> detailPasswordCheck(@AuthenticationPrincipal PrincipalDetail principalDetail, @RequestBody RequestPassword requestPassword) {
+        System.out.println("받은 password + " + requestPassword.getPassword());
+
+        Map<String, Integer> response = employeeService.detailPasswordCheck(principalDetail.getEmployeeId(), requestPassword.getPassword());
+        return ResponseEntity.ok(response);
+    }
 }

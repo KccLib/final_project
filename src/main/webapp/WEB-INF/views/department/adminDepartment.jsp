@@ -4,7 +4,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.kcc.trioffice.domain.department.dto.response.Department" %>
 <%@ page import="com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo" %>
-
+<%@ page import="com.kcc.trioffice.domain.department.dto.response.DepartmentUtils" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,26 +24,74 @@
     <jsp:include page="/WEB-INF/views/component/top-bar.jsp" />
     <div class="layout-container">
     <jsp:include page="/WEB-INF/views/component/first-side-bar.jsp" />
-
+    <div class="second-side-bar-container">
     <div class="second-side-bar">
         <ul>
-            <p>조직도</p>
+            <p id="department-title">조직도</p>
             <%
                 List<Department> departmentTree = (List<Department>) request.getAttribute("departmentTree");
                 for (Department dept : departmentTree) {
-                    if (dept.getUpperDeptId() == null) { // upperDeptId가 null인 부서가 최상위 부서
-                        out.print("<li class='menu' data-dept-id='" + dept.getDeptId() + "' data-dept-name='" + dept.getDepartmentName() + "'>");
-                        out.print(renderDept(dept)); // 최상위 부서만 출력
-                        out.print("</li>");
+                    if (dept.getUpperDeptId() == null) { // 최상위 부서인 경우
+                        out.print(DepartmentUtils.renderDept(dept)); // renderDept 호출
                     }
                 }
             %>
         </ul>
     </div>
+    </div>
 
-
+    <div class="contents-list">
     <div class="contents">
         <div class="contents-1-1">
+        <div class="dept-sub">
+                        <i class="fa-regular fa-building"></i> <span class="top-department"></span> > <span class="sub-department"></span>
+                    </div>
+
+                    <div class="contents-1">
+                                    <div class="profile2">
+                                        <img src="https://e7.pngegg.com/pngimages/1/723/png-clipart-graphy-business-portrait-business-people-public-relations.png">
+                                    </div>
+                                    <div class="employee-impl">
+                                        <p class="employee-name">우영두 사원</p>
+                                        <p class="dept-emp">SI영업3팀 사원</p>
+                                        <p class="email">yd12@kcc1.co.co</p>
+                                        <div class="comment-calendar">
+                                            <a href="#" class="chat-room-go">
+                                                <i class="fa-regular fa-comment"></i>
+                                                <p style="padding-top: 10px; font-color: red">대화하기</p>
+                                            </a>
+                                            <a href="#" class="comment-icon">
+                                                <i class="fa-solid fa-calendar-days"></i>
+                                                <p style="padding-top: 10px;">일정 확인하기</p>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="contents-2" style="display: none;"> <!-- 처음에는 숨김 -->
+                                    <div class="info-labels">
+                                        <p>회사</p>
+                                        <p>부서</p>
+                                        <p style="padding-top: 23px;">직위</p>
+                                        <p>핸드폰번호</p>
+                                        <p> 사내 위치</p>
+                                    </div>
+                                    <div class="info-values" style="padding-left: 14px;">
+                                        <p class="company-name" style="
+                                            margin-bottom: 29px;
+                                        ">(주)KCC정보통신</p>
+                                        <p class="sub-department">SI영업3팀</p>
+                                        <p class="sub-info">
+                                            <span class="top-department"></span> > <span class="sub-department"></span>
+                                        </p>
+                                        <p class="position" style="margin-top: 25px;">사원</p>
+                                        <p class="phone-number" style="
+                                            margin-bottom: 29px;
+                                        ">010-0000-0007</p>
+                                        <p class="mobile-number">010-1234-5678</p>
+                                    </div>
+                                </div>
+
+
                 <div class="add-department-form" style="display: none;">
                     <p>부서 추가</p>
                     <div class="form-row">
@@ -88,7 +136,7 @@
                                 </div>
                 <div class="form-row" style="margin-top: 9px;">
                                     <label for="employee-password" style="margin-left: 70px;font-size: 20px;padding-top: 8px;">*비밀번호</label>
-                                    <input type="text" id="employee-password2" class="form-control" style="margin-right: 80px;border: 1.5px solid black;margin-left: 102px;width: 235.666666px;" placeholder="비밀번호를 입력하세요">
+                                    <input type="text" id="employee-password" class="form-control" style="margin-right: 80px;border: 1.5px solid black;margin-left: 102px;width: 235.666666px;" placeholder="비밀번호를 입력하세요">
                                 </div>
                 <div class="form-row" style="margin-top: 9px;">
                                     <label for="employee-password2" style="margin-left: 70px;font-size: 20px;padding-top: 8px;">*비밀번호 확인</label>
@@ -205,6 +253,7 @@
             </div>
 
         </div>
+    </div>
     </div>
 </div>
 
@@ -346,88 +395,100 @@
             });
 
             // 하위부서를 클릭했을 때 사원 목록이 표시됨
-            $(document).on('click', '.group', function (event) {
-                event.stopPropagation(); // 상위 부서 이벤트 전파 방지
+                   $(document).on('click', '.group', function (event) {
+                       event.stopPropagation(); // 상위 부서 이벤트 전파 방지
 
-                var $employees = $(this).siblings('ul.hide2'); // 'group' 요소의 형제 요소 중 'ul.hide2' 찾기
-                var deptId = $(this).data('dept-id'); // 클릭한 부서의 deptId를 가져옴
-                var subDeptName = $(this).text(); // 클릭한 하위 부서의 이름 가져오기
-                var topDeptName = $(this).closest('.menu').find('.menu2 a').text(); // 최상위 부서 이름 가져오기
+                       var $employees = $(this).siblings('ul.hide2'); // 'group' 요소의 형제 요소 중 'ul.hide2' 찾기
+                       var deptId = $(this).data('dept-id'); // 클릭한 부서의 deptId를 가져옴
+                       var subDeptName = $(this).text(); // 클릭한 하위 부서의 이름 가져오기
+                       var topDeptName = $(this).closest('.menu').find('.menu2 a').text(); // 최상위 부서 이름 가져오기
 
-                if ($employees.length > 0) {
-                    if (!$employees.hasClass('loaded')) {
-                        // 아직 사원 정보가 로드되지 않았을 때만 AJAX 호출
-                        console.log("부서 ID " + deptId + "에 대한 사원 정보를 요청합니다.");
-                        $.ajax({
-                            url: "/departments/" + deptId + "/employees", // 부서 ID에 맞는 사원 정보 요청
-                            type: "GET",
-                            success: function (data) {
-                                console.log("사원 정보를 성공적으로 받았습니다.", data);
-                                var employeeList = "";
-                                $.each(data, function (index, employee) {
-                                    employeeList += "<li class='employee-item' data-emp-id='" + employee.employeeId + "'>" +
-                                        "<div class='profile'>" +
-                                        "<img src='" + employee.profileUrl + "' alt='Profile' />" +
-                                        "</div>" +
-                                        employee.name + "</li>";
-                                });
+                       if ($employees.length > 0) {
+                           if (!$employees.hasClass('loaded')) {
+                               // 아직 사원 정보가 로드되지 않았을 때만 AJAX 호출
+                               console.log("부서 ID " + deptId + "에 대한 사원 정보를 요청합니다.");
+                               $.ajax({
+                                   url: "/departments/" + deptId + "/employees", // 부서 ID에 맞는 사원 정보 요청
+                                   type: "GET",
+                                   success: function (data) {
+                                       console.log("사원 정보를 성공적으로 받았습니다.", data);
+                                       var employeeList = "";
+                                       $.each(data, function (index, employee) {
+                                           employeeList += "<li class='employee-item' data-emp-id='" + employee.employeeId + "'>" +
+                                               "<div class='profile'>" +
+                                               "<img src='" + employee.profileUrl + "' alt='Profile' />" +
+                                               "</div>" +
+                                               employee.name + "</li>";
+                                       });
 
-                                // 사원 목록이 비어있을 경우 메시지 추가
-                                if (employeeList === "") {
-                                    employeeList = "<li>사원이 없습니다</li>";
-                                }
+                                       // 사원 목록이 비어있을 경우 메시지 추가
+                                       if (employeeList === "") {
+                                           employeeList = "<li>사원이 없습니다</li>";
+                                       }
 
-                                $employees.html(employeeList); // 사원 리스트를 hide2 안에 출력
-                                $employees.addClass('loaded'); // 한 번 로드된 후에는 다시 AJAX 호출 방지
-                                $employees.slideDown(); // 부드럽게 사원 목록 표시
-                            },
-                            error: function (jqXHR, textStatus, errorThrown) {
-                                console.error("사원 정보를 불러오는데 실패했습니다.", textStatus, errorThrown);
-                                alert("사원 정보를 불러오는데 실패했습니다.");
-                            }
-                        });
-                    } else {
-                        // 이미 로드된 경우에는 토글로 표시
-                        $employees.slideToggle();
-                    }
-                }
+                                       $employees.html(employeeList); // 사원 리스트를 hide2 안에 출력
+                                       $employees.addClass('loaded'); // 한 번 로드된 후에는 다시 AJAX 호출 방지
+                                       $employees.slideDown(); // 부드럽게 사원 목록 표시
+                                   },
+                                   error: function (jqXHR, textStatus, errorThrown) {
+                                       console.error("사원 정보를 불러오는데 실패했습니다.", textStatus, errorThrown);
+                                       alert("사원 정보를 불러오는데 실패했습니다.");
+                                   }
+                               });
+                           } else {
+                               // 이미 로드된 경우에는 토글로 표시
+                               $employees.slideToggle();
+                           }
+                       }
 
-                $(this).toggleClass('selected'); // 선택된 부서 표시
+                       $(this).toggleClass('selected'); // 선택된 부서 표시
 
-                // 부서 이름 업데이트
-                $('.top-department').text(topDeptName); // 최상위 부서 이름 설정
-                $('.sub-department').text(subDeptName); // 하위 부서 이름 설정
-            });
+                       // 부서 이름 업데이트
+                       $('.top-department').text(topDeptName); // 최상위 부서 이름 설정
+                       $('.sub-department').text(subDeptName); // 하위 부서 이름 설정
+                   });
 
 
-            // 직원 항목 클릭 시 정보 표시
-            $(document).on('click', '.employee-item', function() {
-                $('.contents-1-1').show();
-                $('.dept-sub').show();
-                $('.contents-1').show();
-                $('.contents-2').show();
+            // 직원 항목 클릭 시 contents-1-1과 dept-sub 및 contents-2 표시
+                   $(document).on('click', '.employee-item', function() {
+                       // contents-1-1, dept-sub, contents-1, contents-2 div를 보이게 함
+                       $('.contents-1-1').show(); // contents-1-1 보이기
+                       $('.dept-sub').show(); // dept-sub 보이기
+                       $('.img2').hide();
+                       $('.contents-1').show(); // contents-1 보이기 (여기 추가)
+                       $('.contents-2').show(); // contents-2 보이기 (slideDown으로 부드러운 전환)
 
-                var employeeId = $(this).data('emp-id');
-                $.ajax({
-                    url: "/api/employees/" + employeeId,
-                    type: "GET",
-                    success: function(data) {
-                        $('.contents-1 .employee-name').text(data.name);
-                        $('.contents-1 .dept-emp').text(data.position);
-                        $('.contents-1 .email').text(data.email);
-                        $('.contents-1 .profile2 img').attr('src', data.profileUrl);
-                        $('.contents-2 .info-values p:eq(0)').text(data.companyName);
-                        $('.contents-2 .info-values p:eq(1)').text(data.deptName);
-                        $('.contents-2 .info-values p:eq(2)').text(data.subDeptName);
-                        $('.contents-2 .info-values p:eq(3)').text(data.position);
-                        $('.contents-2 .info-values p:eq(4)').text(data.phoneNum);
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-                        console.error("직원 정보를 불러오는데 실패했습니다.", textStatus, errorThrown);
-                        alert("직원 정보를 불러오는데 실패했습니다.");
-                    }
-                });
-            });
+                       // 클릭한 직원의 정보를 contents-1에 표시
+                       var employeeId = $(this).data('emp-id');
+                       var employeeName = $(this).text();
+
+                       $.ajax({
+                           url: "/api/employees/" + employeeId, // 직원 ID에 맞는 정보 요청
+                           type: "GET",
+                           success: function(data) {
+                               console.log("직원 정보를 성공적으로 받았습니다.", data);
+                               // 정보를 contents-1에 표시
+                               $('.contents-1 .employee-name').text(data.name); // 직원 이름
+                               $('.contents-1 .dept-emp').text(data.position); // 직원의 부서
+                               $('.contents-1 .email').text(data.email); // 직원 이메일
+                               $('.contents-1 .profile2 img').attr('src', data.profileUrl); // 직원 프로필 이미지
+
+
+                               // 추가 정보 표시
+                               $('.contents-2 .info-values p:eq(0)').text(data.companyName); // 회사 이름
+                               $('.contents-2 .info-values p:eq(1)').text(data.deptName); // 부서 이름
+                               $('.contents-2 .info-values p:eq(2)').text(data.subDeptName); // 하위 부서 이름
+                               $('.contents-2 .info-values p:eq(3)').text(data.position); // 직위
+                               $('.contents-2 .info-values p:eq(4)').text(data.phoneNum); // 핸드폰 번호
+                               $('.contents-2 .info-values p:eq(5)').text(data.location); // 위치
+
+                           },
+                           error: function(jqXHR, textStatus, errorThrown) {
+                               console.error("직원 정보를 불러오는데 실패했습니다.", textStatus, errorThrown);
+                               alert("직원 정보를 불러오는데 실패했습니다.");
+                           }
+                       });
+                   });
 
 
             // menu3 클릭 시 드롭다운 표시
@@ -459,8 +520,10 @@
                     top: $(this).offset().top - 960 + 'px', // 메뉴 아래
                     left: $fixedMenu.offset().left + $fixedMenu.outerWidth() - 2 + 'px', // fixed-menu 오른쪽으로 정렬
                     backgroundColor: '#f5f5f5', // 배경 색상 설정
-                    border: '1.4px solid rgb(0 0 0)' // 경계선 설정
+                    border: '1.5px solid rgb(224, 224, 224)', // 경계선 설정
+                    borderRadius: '10px' // 모서리를 둥글게 설정
                 });
+
 
                 // 내부 li 항목에 스타일 적용
                 $('.dropdown-menu2 li').css({
@@ -504,14 +567,11 @@
                     // 저장 버튼 클릭 시 AJAX 처리
                     $(document).on('click', '#save-dept', function(e) {
                         e.preventDefault();
-                        $dropdown.hide();
-                        var upperDept = selectedUpperDept;  // 전역 변수에서 값 가져오기
-                        console.log("upperDept: " + upperDept);
+                        var upperDept = selectedUpperDept;
                         if (upperDept == null || "") {
-                            upperDept = 0;
+                            upperDept = 0; // 상위 부서가 없을 경우 0으로 설정
                         }
                         var deptName = $('#dept-name').val();
-                        console.log("deptName: " + deptName);
 
                         if (deptName.trim() === "") {
                             alert("부서명을 입력하세요.");
@@ -522,22 +582,24 @@
                             url: "/api/departments/save",
                             type: "POST",
                             data: {
-                                upperDeptId: upperDept,  // upperDept가 null일 경우 null로 설정
+                                upperDeptId: upperDept,
                                 departmentName: deptName
                             },
-                            success: function(response) {
-                                alert("부서가 성공적으로 추가되었습니다.");
-                                $('.add-department-form').hide();
-                                $('#department-list').append('<li>' + deptName + (upperDept ? ' (상위부서: ' + upperDept + ')' : '') + '</li>');
-                                location.href = data; // 성공하면 페이지 리로드 또는 리다이렉트
-                            },
+                            success: function(departmentHTML) {
+                                    alert("부서가 성공적으로 추가되었습니다.");
+                                    $('.add-department-form').hide();
+
+                                    // 여기에 HTML을 추가합니다
+                                    $('.second-side-bar ul').append(departmentHTML); // HTML 추가
+                                },
                             error: function(jqXHR, textStatus, errorThrown) {
                                 console.error("부서 추가에 실패했습니다.", textStatus, errorThrown);
                                 alert("부서 추가에 실패했습니다. 오류: " + errorThrown);
                             }
                         });
-
                     });
+
+
 
                     // 취소 버튼 클릭 시 폼 숨기기 및 초기화
                     $(document).on('click', '#cancel-dept', function(e) {
@@ -660,14 +722,35 @@
                 $(document).on('click', '#save-employee', function(e) {
                     e.preventDefault();  // 기본 form 제출 방지
                     var employeeName = $('#employee-name').val();    // 입력한 사원명
-                    var employeeEmail = $('#employee-email').val();  // 입력한 이메일
+                    var employeeEmail = $('#employee-id').val();  // 입력한 이메일
+                    var employeePassword = $('#employee-password').val();  // 입력한 이메일
+                    var position = $('#position').val();                    // 선택한 직위
+                    var upperDeptId = $('#upper-dept').val();
 
                     if (employeeName === "" || employeeEmail === "") {
                         alert("모든 필드를 입력하세요.");
                     } else {
                         // 데이터 저장을 위한 처리 (AJAX 요청 또는 form 제출 로직 추가 가능)
-                        alert("사원이 등록되었습니다.");
-                        $('.add-employee-form').hide();  // 사원 등록 폼 숨기기
+                        $.ajax({
+                            url: '/api/employees',
+                            method: 'POST',
+                            contentType: 'application/json',
+                            data: JSON.stringify({
+                                name: employeeName,
+                                email: employeeEmail,
+                                password: employeePassword,
+                                position: position,
+                                deptId: upperDeptId,
+                                profileUrl: "gg",
+                                externalEmail: "gg"
+                            }),
+                            success: function (response) {
+                                $('.add-employee-form').hide();
+                            },
+                            error: function (xhr, status, error) {
+                                console.error('이모티콘 추가에 실패했습니다:', error);
+                            }
+                                    });
                     }
                 });
 
@@ -691,6 +774,8 @@
                         type: "DELETE",
                         success: function(response) {
                             alert(selectedDeptName + " 부서가 삭제되었습니다.");
+                            // 페이지를 새로고침하여 변경 사항 반영
+                            location.reload(); // 페이지 리로드
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
                             console.error("부서 삭제에 실패했습니다.", textStatus, errorThrown);
@@ -699,6 +784,8 @@
                     });
                 }
             });
+
+
 
 
         });

@@ -44,10 +44,15 @@ public interface EmployeeMapper {
 
     List<String> getAllPositions();
 
-
     int updateEmployeeStatus(int status, Long employeeId);
 
     int updateEmployeeProfile(String profileUrl, Long employeeId);
 
     int updateEmployeeStatusMessage(Long employeeId, String message);
+
+    int saveEmployee(EmployeeInfo employeeInfo, Long writer);
+  
+    int modifyEmployee(EmployeeInfo employeeInfo, Long employeeId);
+
+    int changeEmployeePassword(Long employeeId, String encodedPassword);
 }
