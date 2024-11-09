@@ -389,7 +389,7 @@ $(document).ready(function() {
 
         return `
         <div class="row" data-message-id="${message.chatId}">
-            <div class="col-10">
+            <div class="col-10 add-emoticon-point">
                 ${nameHtml}
                 <div class="row">
                     ${profileHtml}
@@ -446,7 +446,7 @@ $(document).ready(function() {
 
         return `
         <div class="row" data-message-id="${message.chatId}">
-            <div class="col-10">
+            <div class="col-10 add-emoticon-point">
                 ${nameHtml}
                 <div class="row">
                     ${profileHtml}
@@ -482,7 +482,7 @@ $(document).ready(function() {
 
     function createMyImageMessageHtml(message) {
         return `<div class="row d-flex justify-content-end" data-message-id="${message.chatId}">
-            <div class="col-10">
+            <div class="col-10 add-emoticon-point">
                 <div class="row d-flex justify-content-end">
                     <div class="col-9">
                         <div class="chat-bubble-container d-flex align-items-end justify-content-end">
@@ -528,7 +528,7 @@ $(document).ready(function() {
 
     function createMyFileMessageHtml(message) {
         return `<div class="row d-flex justify-content-end" data-message-id="${message.chatId}">
-            <div class="col-10">
+            <div class="col-10 add-emoticon-point">
                 <div class="row d-flex justify-content-end">
                     <div class="col-9">
                         <div class="chat-bubble-container d-flex align-items-end justify-content-end">
@@ -566,7 +566,7 @@ $(document).ready(function() {
     function createMyMessageHtml(message) {
         return `
         <div class="row d-flex justify-content-end" data-message-id="${message.chatId}">
-            <div class="col-10">
+            <div class="col-10 add-emoticon-point">
                 <div class="row d-flex justify-content-end">
                     <div class="col-9">
                         <div class="chat-bubble-container d-flex align-items-end justify-content-end">
@@ -607,7 +607,7 @@ $(document).ready(function() {
 
         return `
         <div class="row" data-message-id="${message.chatId}">
-            <div class="col-10">
+            <div class="col-10 add-emoticon-point">
                 ${nameHtml}
                 <div class="row">
                     ${profileHtml}
@@ -850,7 +850,7 @@ $(document).ready(function() {
                 console.log(emoticonHtml);
 
                 // 새로운 이모티콘 박스 DOM에 추가
-                messageRow.find('.col-10').append(emoticonHtml);
+                messageRow.find('.add-emoticon-point').append(emoticonHtml);
             },
             error: function (xhr, status, error) {
                 console.error('이모티콘 추가에 실패했습니다:', error);
@@ -1685,8 +1685,8 @@ $(document).ready(function() {
     });
 
     $('.cancel-button').on('click', function () {
-       $('.save-contents').hide();
-       $('.chat-contents').show();
+       $('.contents').hide();
+       $('.default-contents').show();
     });
 
     $('.chat-rooms-list').on('click', '.chat-room-item', function() {
