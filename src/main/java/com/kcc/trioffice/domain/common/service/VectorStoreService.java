@@ -60,8 +60,8 @@ public class VectorStoreService {
 
 
         redisTemplate.opsForValue().set(button1, "https://care.daouoffice.co.kr/hc/ko/sections/24482900933913-%EA%B7%B8%EB%A3%B9%EC%9B%A8%EC%96%B4FAQ 여기에서 자주하는 질문 10개를 뽑아서 보여줘"); // Redis에 저장
-        redisTemplate.opsForValue().set(button2, "간결하고 구체적으로 알려줘");
-        redisTemplate.opsForValue().set(button3, "https://main.kcc.co.kr/html/e-book/ecatalog5.php?Dir=50&catimage=에서 KCC정보통신의 신간호를 보고 내용 요약해줘 \n" +
+        redisTemplate.opsForValue().set(button3, "간결하고 구체적으로 알려줘");
+        redisTemplate.opsForValue().set(button2, "https://main.kcc.co.kr/html/e-book/ecatalog5.php?Dir=50&catimage=에서 KCC정보통신의 신간호를 보고 내용 요약해줘 \n" +
                 "10줄로 답변해주고\n" +
                 "무슨 링크인지 설명하지말고 각 페이지별로 뭐가 있는지 설명해줘 \n" +
                 "한글로 답변해줘 \n" +
