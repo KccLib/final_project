@@ -5,13 +5,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
+import com.kcc.trioffice.domain.common.service.EmailService;
 import com.kcc.trioffice.domain.notification.mapper.NotificationMapper;
 import com.kcc.trioffice.global.enums.NotificationType;
 import com.kcc.trioffice.global.enums.ScheduleInviteType;
@@ -19,7 +17,6 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -39,11 +36,11 @@ import com.kcc.trioffice.global.exception.type.ScheduleDeleteException;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -54,6 +51,7 @@ public class ScheduleService {
     private final EmployeeMapper employeeMapper;
     private final NotificationMapper notificationMapper;
     private final JavaMailSender mailSender;
+    private final EmailService emailService;
 
     Timestamp timestamp = Timestamp.valueOf(LocalDateTime.now());
 
@@ -75,118 +73,90 @@ public class ScheduleService {
       return schedules;
     }
 
-    @Transactional
-    @Async
-    public void saveSchedule(String employeeEmail, SaveSchedule saveSchedule)
-        throws BadRequestException, ParseException, MessagingException {
-      EmployeeInfo employeeInfo = employeeMapper.getEmployeeInfoFindByEmail(employeeEmail)
-          .orElseThrow(() -> new NotFoundException("일치하는 회원이 없습니다."));
 
-      // 문자열을 Timestamp로 변환
-      String startedDtStr = saveSchedule.getStartedDt(); // "2024-10-16" 또는 "2024-10-16 17:50"
-      String endedDtStr = saveSchedule.getEndedDt(); // "2024-10-16" 또는 "2024-10-16 17:50"
-
-      // 시간을 포함한 형식과 날짜만 있는 형식 모두 처리
-      SimpleDateFormat fullDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-      SimpleDateFormat shortDateFormat = new SimpleDateFormat("yyyy-MM-dd");
-
-      java.util.Date parsedDateStart;
-      java.util.Date parsedDateEnd;
-
-      if (startedDtStr.length() > 10) {
-        parsedDateStart = fullDateFormat.parse(startedDtStr); // 시간이 포함된 경우
-      } else {
-        parsedDateStart = shortDateFormat.parse(startedDtStr); // 날짜만 있는 경우
-      }
-
-      if (endedDtStr.length() > 10) {
-        parsedDateEnd = fullDateFormat.parse(endedDtStr); // 시간이 포함된 경우
-      } else {
-        parsedDateEnd = shortDateFormat.parse(endedDtStr); // 날짜만 있는 경우
-        // 종료 날짜를 +1일 증가시킴
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(parsedDateEnd);
-        cal.add(Calendar.DATE, 1); // +1일
-        parsedDateEnd = cal.getTime();
-      }
-
-      Timestamp startedDt = new Timestamp(parsedDateStart.getTime());
-      Timestamp endedDt = new Timestamp(parsedDateEnd.getTime());
-
-      saveSchedule.setWriter(employeeInfo.getEmployeeId());
-      saveSchedule.setModifier(employeeInfo.getEmployeeId());
-      saveSchedule.setIsDeleted("0");
-      List<String> employeesEmail = new ArrayList<>();
-
-      // saveSchedule 메서드 호출
-      scheduleMapper.saveSchedule(saveSchedule, startedDt, endedDt);
-      // 이후 saveScheduleInvite 호출
-      scheduleMapper.saveScheduleInvite(saveSchedule);
-      saveSchedule.setWriter(employeeInfo.getEmployeeId());
-
-      // mail을 보내기 위한 검사
-      if (saveSchedule.getEmailCheck() == 1) {
-        List<Long> sendEmailEmployeesList = saveSchedule.getEmployeeIds();
-        try {
-          employeesEmail = employeeMapper.getEmployeeEmailforSend(sendEmailEmployeesList);
-        } catch (Exception e) {
-          log.info("회원 이메일 가져오기 실패 : " + e);
-          throw new BadRequestException("회원 이메일 가져오기 실패 ");
-        }
-        for (int i = 0; i < employeesEmail.size(); i++) {
-          System.out.println("회원들의 이메일 : " + employeesEmail.get(i));
-        }
-
-          Set<String> uniqueEmails = new HashSet<>(employeesEmail);
-
-        for (String oneEmployeeEmail : uniqueEmails) {
-
-          // 이메일 메시지 설정
-          MimeMessage message = mailSender.createMimeMessage();
-          MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-
-          helper.setFrom("noreply@kcc.com");
-          helper.setTo(oneEmployeeEmail);
-          helper.setSubject("KCC정보통신 | " + saveSchedule.getName() + " 일정 초대 알림");
-          String htmlContent = "<div class='email-container' style='max-width: 600px; margin: 20px auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);'>"
-              +
-              "<div class='header' style='background-color: #0056b3; color: #ffffff; padding: 20px; text-align: center; border-top-left-radius: 8px; border-top-right-radius: 8px; font-size: 24px;'>"
-              +
-              "    일정 초대" +
-              "</div>" +
-              "<div class='content' style='padding: 20px; line-height: 1.6;'>" +
-              "    <h2 style='color: #333333;'>안녕하세요,</h2>" +
-              "    <p>귀하는 다음 일정에 초대되었습니다:</p>" +
-              "    <p><strong>일정 제목:</strong> " + saveSchedule.getName() + "</p>" +
-              "    <p><strong>일정 기간:</strong> " + saveSchedule.getStartedDt() + " ~ " + saveSchedule.getEndedDt()
-              + "</p>" +
-              "    <a href='trioffice.site/notifications' class='button' style='display: inline-block; padding: 10px 20px; margin-top: 20px; background-color: #0056b3; color: #ffffff; text-decoration: none; border-radius: 5px; font-weight: bold;'>일정 확인하기</a>"
-              +
-              "</div>" +
-              "<div class='footer' style='text-align: center; padding: 10px; font-size: 12px; color: #999999; border-top: 1px solid #dddddd; margin-top: 20px;'>"
-              +
-              "    <p>본 알림은 시스템에 의해 자동 생성되었습니다.</p>" +
-              "</div>" +
-              "</div>";
+  @Transactional
+  public void saveSchedule(String employeeEmail, SaveSchedule saveSchedule)
+          throws BadRequestException, ParseException, MessagingException {
 
 
-          helper.setText(htmlContent, true);
+    Logger log = LoggerFactory.getLogger(this.getClass());
+    long startTime = System.currentTimeMillis(); // 전체 시작 시간 기록
 
-          mailSender.send(message);
-        }
-      }
+    EmployeeInfo employeeInfo = employeeMapper.getEmployeeInfoFindByEmail(employeeEmail)
+            .orElseThrow(() -> new NotFoundException("일치하는 회원이 없습니다."));
 
+    // 문자열을 Timestamp로 변환
+    String startedDtStr = saveSchedule.getStartedDt();
+    String endedDtStr = saveSchedule.getEndedDt();
 
+    SimpleDateFormat fullDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    SimpleDateFormat shortDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 
-      // 알림 생성
+    java.util.Date parsedDateStart;
+    java.util.Date parsedDateEnd;
 
-      saveSchedule.getEmployeeIds().stream().filter(e -> !e.equals(employeeInfo.getEmployeeId())).forEach(e -> {
-        notificationMapper.saveNotification(e, saveSchedule.getScheduleId(), NotificationType.SCHEDULE.getValue(), "일정 초대", saveSchedule.getName() + " 일정 초대되셨습니다.", employeeInfo.getEmployeeId());
-      });
-
+    if (startedDtStr.length() > 10) {
+      parsedDateStart = fullDateFormat.parse(startedDtStr);
+    } else {
+      parsedDateStart = shortDateFormat.parse(startedDtStr);
     }
 
-    public ScheduleDetail getScheduleDetail(String scheduleId, Long employeeId) {
+    if (endedDtStr.length() > 10) {
+      parsedDateEnd = fullDateFormat.parse(endedDtStr);
+    } else {
+      parsedDateEnd = shortDateFormat.parse(endedDtStr);
+      Calendar cal = Calendar.getInstance();
+      cal.setTime(parsedDateEnd);
+      cal.add(Calendar.DATE, 1);
+      parsedDateEnd = cal.getTime();
+    }
+
+    Timestamp startedDt = new Timestamp(parsedDateStart.getTime());
+    Timestamp endedDt = new Timestamp(parsedDateEnd.getTime());
+
+    saveSchedule.setWriter(employeeInfo.getEmployeeId());
+    saveSchedule.setModifier(employeeInfo.getEmployeeId());
+    saveSchedule.setIsDeleted("0");
+    List<String> employeesEmail = new ArrayList<>();
+
+    long scheduleStartTime = System.currentTimeMillis();
+    scheduleMapper.saveSchedule(saveSchedule, startedDt, endedDt);
+    scheduleMapper.saveScheduleInvite(saveSchedule);
+    long scheduleEndTime = System.currentTimeMillis();
+    log.info("스케줄 저장 소요 시간: " + (scheduleEndTime - scheduleStartTime) + " 밀리초");
+
+    if (saveSchedule.getEmailCheck() == 1) {
+      List<Long> sendEmailEmployeesList = saveSchedule.getEmployeeIds();
+      try {
+        employeesEmail = employeeMapper.getEmployeeEmailforSend(sendEmailEmployeesList);
+      } catch (Exception e) {
+        log.info("회원 이메일 가져오기 실패 : " + e);
+        throw new BadRequestException("회원 이메일 가져오기 실패 ");
+      }
+
+      Set<String> uniqueEmails = new HashSet<>(employeesEmail);
+
+      long emailStartTime = System.currentTimeMillis();
+      for (String oneEmployeeEmail : uniqueEmails) {
+        // EmailService로 메일 발송 처리
+        emailService.sendScheduleInvitation(oneEmployeeEmail, saveSchedule);
+      }
+      long emailEndTime = System.currentTimeMillis();
+      log.info("이메일 전송 소요 시간: " + (emailEndTime - emailStartTime) + " 밀리초");
+    }
+
+    saveSchedule.getEmployeeIds().stream()
+            .filter(e -> !e.equals(employeeInfo.getEmployeeId()))
+            .forEach(e -> notificationMapper.saveNotification(
+                    e, saveSchedule.getScheduleId(), NotificationType.SCHEDULE.getValue(),
+                    "일정 초대", saveSchedule.getName() + " 일정 초대되셨습니다.", employeeInfo.getEmployeeId()));
+
+    long endTime = System.currentTimeMillis();
+    log.info("전체 saveSchedule 메서드 실행 시간: " + (endTime - startTime) + " 밀리초");
+  }
+
+
+  public ScheduleDetail getScheduleDetail(String scheduleId, Long employeeId) {
       // 스케줄의 내용과 생성자
       ScheduleDetail scheduleDetail = scheduleMapper.getScheduleDetail(scheduleId)
           .orElseThrow(() -> new NotFoundException("일정 상세 정보를 가져올 수 없습니다."));
