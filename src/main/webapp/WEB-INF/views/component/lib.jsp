@@ -125,5 +125,11 @@ uri="http://www.springframework.org/security/tags" %>
       }
     </style>
   </head>
-  <body></body>
+  <body>
+  <div id="loading-spinner" style="display: none;">
+    <div class="spinner"></div>
+    <div style="margin-top: 10px;">로딩 중입니다...</div>
+  </div>
+
+  </body>
 </html>

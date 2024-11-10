@@ -11,44 +11,67 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <script type="text/javascript">
-        messaging.requestPermission()
-            .then(function () {
-                return messaging.getToken(); // FCM 토큰을 요청합니다.
-            })
-            .then(function (token) {
-                console.log(token); // 토큰을 콘솔에 출력합니다.
-                localStorage.setItem('Fcmtoken', token); // 토큰을 로컬 스토리지에 저장합니다.
-                console.log(localStorage.getItem('Fcmtoken')); // 저장된 토큰을 콘솔에 출력합니다.
-
-                $.ajax({
-                    url: '/api/employees/fcm-token',
-                    method: 'POST',
-                    contentType: 'application/json',
-                    data: JSON.stringify({fcmToken: localStorage.getItem('Fcmtoken')}),
-                    success: function (data) {
-                        console.log('FCM을 저장하는데에 성공했습니다.');
-                    },
-                    error: function (xhr, status, error) {
-                        console.error('FCM을 저장하는데에 실패했습니다.:', error);
-                    }
-                });
-            })
-            .catch(function (error) {
-                // 오류 발생 시 콘솔에 오류를 출력합니다.
-                console.error('Unable to get permission to notify.', error);
-                // 여기서 추가적인 오류 처리 로직을 구현할 수 있습니다.
-                // 예를 들어, 사용자에게 오류 메시지를 표시하거나, 특정 기능의 접근을 제한할 수 있습니다.
-            });
-        setTimeout(function() {
-            window.location.href = "/chatrooms";
-        }, 1500);
-    </script>
-
 
     <title>Insert title here</title>
 </head>
 <body>
+<div id="loading-spinner" style="display: none;">
+    <div class="spinner"></div>
+    <div>로딩 중입니다...</div>
+</div>
+<script type="text/javascript">
+    // 로딩 스피너를 표시합니다.
+    document.getElementById('loading-spinner').style.display = 'flex';
+    var loadingStartTime = Date.now(); // 로딩 시작 시간
+
+    messaging.requestPermission()
+        .then(function () {
+            return messaging.getToken();
+        })
+        .then(function (token) {
+            console.log('FCM 토큰:', token);
+            localStorage.setItem('Fcmtoken', token);
+
+            // 서버에 FCM 토큰 저장 요청
+            $.ajax({
+                url: '/api/employees/fcm-token',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify({fcmToken: token}),
+                success: function (data) {
+                    console.log('FCM 토큰 저장 성공');
+                    // 최소 로딩 시간 계산
+                    var minimumLoadingTime = 1500; // 최소 로딩 시간 (밀리초)
+                    var elapsedTime = Date.now() - loadingStartTime;
+                    var remainingTime = minimumLoadingTime - elapsedTime;
+
+                    if (remainingTime > 0) {
+                        // 남은 시간만큼 대기 후 페이지 이동
+                        setTimeout(function() {
+                            document.getElementById('loading-spinner').style.display = 'none';
+                            window.location.href = "/chatrooms";
+                        }, remainingTime);
+                    } else {
+                        // 즉시 페이지 이동
+                        document.getElementById('loading-spinner').style.display = 'none';
+                        window.location.href = "/chatrooms";
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error('FCM 토큰 저장 실패:', error);
+                    document.getElementById('loading-spinner').style.display = 'none';
+                    alert('FCM 토큰 저장에 실패했습니다. 네트워크 상태를 확인해주세요.');
+                    window.location.href = "/chatrooms";
+                }
+            });
+        })
+        .catch(function (error) {
+            console.error('알림 권한 요청 실패 또는 오류 발생:', error);
+            document.getElementById('loading-spinner').style.display = 'none';
+            alert('알림 권한이 필요합니다. 설정에서 알림 권한을 허용해주세요.');
+            window.location.href = "/chatrooms";
+        });
+</script>
 
 </body>
 
