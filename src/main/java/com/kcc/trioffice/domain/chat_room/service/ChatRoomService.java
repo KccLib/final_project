@@ -285,6 +285,9 @@ public class ChatRoomService {
         List<EmployeeInfo> employeeInfos = participationEmployeeMapper.getFcmTokenByChatRoomId(chatRoomId);
         employeeInfos.forEach(e -> {
             log.info("fcm token : {}", e.getFcmToken());
+            if (e.getFcmToken() == null) {
+                return;
+            }
             redisService.collectMessage(e.getEmployeeId().toString(), SendPushDto.of(chatRoomName, message, chatProfileImageUrl));
 //            fcmService.sendPush(SendPushDto.of(chatRoomName, message, chatProfileImageUrl), e.getEmployeeId());
         });

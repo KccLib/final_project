@@ -74,6 +74,7 @@ public class FcmService {
             String response = FirebaseMessaging.getInstance().send(message);
             log.info("Successfully sent message: " + response);
         } catch (FirebaseMessagingException e) {
+            log.info("error: " + e.getMessage());
             throw new ServerException("푸시 알림 전송에 실패하였습니다.");
         }
 
