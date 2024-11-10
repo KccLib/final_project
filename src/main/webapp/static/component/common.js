@@ -94,3 +94,52 @@ function updateUserStatus(status) {
     },
   });
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+  var links = document.querySelectorAll('a');
+
+  links.forEach(function(link) {
+    link.addEventListener('click', function(event) {
+      var href = link.getAttribute('href');
+
+      // 외부 링크나 특정 조건에서는 제외
+      if (href.startsWith('http') || href.startsWith('mailto:') || href === '#') {
+        return;
+      }
+
+      // 로딩 스피너 표시
+      document.getElementById('loading-spinner').style.display = 'flex';
+
+      // 최소 로딩 시간 설정 (예: 500ms)
+      var startTime = Date.now();
+
+      // 페이지 이동을 약간 지연시킵니다.
+      setTimeout(function() {
+        var elapsedTime = Date.now() - startTime;
+        var delay = elapsedTime < 500 ? 500 - elapsedTime : 0;
+
+        setTimeout(function() {
+          window.location.href = href;
+        }, delay);
+      }, 0);
+
+      // 기본 링크 동작 방지
+      event.preventDefault();
+    });
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  var forms = document.querySelectorAll('form');
+
+  forms.forEach(function(form) {
+    form.addEventListener('submit', function(event) {
+      // 로딩 스피너 표시
+      document.getElementById('loading-spinner').style.display = 'flex';
+    });
+  });
+});
+
+window.addEventListener('load', function() {
+  document.getElementById('loading-spinner').style.display = 'none';
+});
