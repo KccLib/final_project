@@ -173,6 +173,7 @@
         , e.fax
         , e.location
         , e.is_receive_notification
+        , e.fcm_token
         , e.position
         , e.status
         , e.status_message
