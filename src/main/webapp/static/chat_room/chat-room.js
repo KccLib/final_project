@@ -816,7 +816,7 @@ $(document).ready(function() {
                 </div>
             </div>`;
 
-        $('.chat').append(chatRow);
+        $('.chat-container').append(chatRow);
     }
 
     function updateEmoticon(emoticonMessage) {
@@ -1640,7 +1640,7 @@ $(document).ready(function() {
     });
 
     // 파일 다운로드 버튼 이벤트 리스너
-    $('.chat').on('click', '.fa-download', function() {
+    $('.chat').on('click', '.file-box .fa-download', function() {
         // 이벤트가 발생한 메시지 ID를 찾습니다.
         var messageId = $(this).closest('.row[data-message-id]').data('message-id');
         var chatRoomId = currentChatRoomId; // 현재 채팅방 ID
@@ -1660,8 +1660,11 @@ $(document).ready(function() {
                     var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
                     var matches = filenameRegex.exec(disposition);
                     if (matches != null && matches[1]) {
-                        filename = matches[1].replace(/['"]/g, '');
+                        filename = decodeURIComponent(matches[1].replace(/['"]/g, ''));
                     }
+                } else {
+                    // 파일명이 없을 경우 기본값 설정
+                    filename = "downloaded_file";
                 }
 
                 // Blob 객체 생성 후 다운로드
