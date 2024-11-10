@@ -22,7 +22,7 @@ public class CustomLoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         // 로그인 성공 후 리디렉션 처리
-        String redirectUrl = "/chatrooms";
+        String redirectUrl = "/token";
         request.getSession().setMaxInactiveInterval(60 * 60 * 8); // 세션 유지 시간 설정 (8시간)
 
         EmployeeInfo employeeInfo = employeeMapper.getEmployeeInfoFindByEmail(authentication.getName()).orElseThrow(() -> new NotFoundException("해당 직원이 존재하지 않습니다."));
