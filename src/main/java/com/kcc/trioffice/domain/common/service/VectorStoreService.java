@@ -48,27 +48,31 @@ public class VectorStoreService {
 
     public void defaultButton(String message) {
 
-        if (redisTemplate.hasKey(message)) {
+        if (redisTemplate.hasKey("doc:"+message)) {
             System.out.println("이미 존재하는 defaultButton Message. 저장을 중단합니다.");
             return;
         }
         String button1 = "doc:자주하는 질문";
-        String button2 = "doc:챗봇 답변을 잘받는 TIP";
-        String button3 = "doc:챗봇 답변을 잘받는 TIP❗\n" +
-                "\n";
+        String button2 = "doc:신규기능 활용 세미나\uD83D\uDE0A";
+        String button3 = "doc:챗봇 답변을 잘받는 TIP";
         String button4 = "doc:맞춤법 검사를 부탁해요";
 
 
-        redisTemplate.opsForValue().set(button1, "https://care.daouoffice.co.kr/hc/ko/sections/24482900933913-%EA%B7%B8%EB%A3%B9%EC%9B%A8%EC%96%B4FAQ 여기에서 자주하는 질문 10개를 뽑아서 보여줘"); // Redis에 저장
-        redisTemplate.opsForValue().set(button2, "간결하고 구체적으로 알려줘");
-        redisTemplate.opsForValue().set(button3, "https://main.kcc.co.kr/html/e-book/ecatalog5.php?Dir=50&catimage=에서 KCC정보통신의 신간호를 보고 내용 요약해줘 \n" +
+        redisTemplate.opsForValue().set(button1, "https://care.daouoffice.co.kr/hc/ko/sections/24482900933913-%EA%B7%B8%EB%A3%B9%EC%9B%A8%EC%96%B4FAQ 여기에서 자주하는 질문 10개를 뽑아서 보여줘");
+        redisTemplate.opsForValue().set(button3, "간결하고 구체적으로 알려줘");
+        redisTemplate.opsForValue().set(button2, "https://main.kcc.co.kr/html/e-book/ecatalog5.php?Dir=50&catimage=에서 KCC정보통신의 신간호를 보고 내용 요약해줘 \n" +
                 "10줄로 답변해주고\n" +
                 "무슨 링크인지 설명하지말고 각 페이지별로 뭐가 있는지 설명해줘 \n" +
                 "한글로 답변해줘 \n" +
                 "그리고 상세 링크를 마지막에 줘");
-        redisTemplate.opsForValue().set(button4, "맞춤법 검사가 끝나고 몇자인지 출력해줘."); // Redis에 저장
-
+        redisTemplate.opsForValue().set(button4, "맞춤법 검사가 끝나고 몇자인지 출력해줘.");
     }
+
+    /**
+     *
+     * 시간 정보가 없는 질의 시
+     * @param vectorInsert
+     */
 
     //employee가 했던 질문 redis에 저장하기
     public void add(Map<String, String> vectorInsert) {
@@ -89,7 +93,7 @@ public class VectorStoreService {
                 .filter(Objects::nonNull)
                 .toList();
 
-        System.out.println(allKeys.size());
+        System.out.println("redis에 담겨있는 keys count: "+allKeys.size());
 
         // 모든 문서 값을 가져오기
         List<String> allDocuments = allKeys.stream()
