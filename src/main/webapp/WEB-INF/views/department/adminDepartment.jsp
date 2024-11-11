@@ -67,27 +67,46 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="contents-2" style="display: none;"> <!-- 처음에는 숨김 -->
-                                    <div class="info-labels">
-                                        <p>회사</p>
-                                        <p>부서</p>
-                                        <p style="padding-top: 23px;">직위</p>
-                                        <p>핸드폰번호</p>
-                                        <p> 사내 위치</p>
+                                <div class="contents-2" style="display: none; padding: 10px"> <!-- 처음에는 숨김 -->
+                                    <div class="row info-labels">
+                                        <div class="col-5 info-title">
+                                            <p>회사</p>
+                                        </div>
+                                        <div class="col-7">
+                                             <p class="company-name">(주)KCC정보통신</p>
+                                         </div>
                                     </div>
-                                    <div class="info-values" style="padding-left: 14px;">
-                                        <p class="company-name" style="
-                                            margin-bottom: 29px;
-                                        ">(주)KCC정보통신</p>
-                                        <p class="sub-department">SI영업3팀</p>
-                                        <p class="sub-info">
-                                            <span class="top-department"></span> > <span class="sub-department"></span>
-                                        </p>
-                                        <p class="position" style="margin-top: 25px;">사원</p>
-                                        <p class="phone-number" style="
-                                            margin-bottom: 29px;
-                                        ">010-0000-0007</p>
-                                        <p class="mobile-number">010-1234-5678</p>
+                                    <div class="row info-labels">
+                                        <div class="col-5">
+                                            <p>부서</p>
+                                        </div>
+                                        <div class="col-7">
+                                             <p class="sub-department">(주)KCC정보통신</p>
+                                         </div>
+                                    </div>
+                                    <div class="row info-labels">
+                                        <div class="col-5">
+                                            <p>직위</p>
+                                        </div>
+                                        <div class="col-7">
+                                             <p class="position">사원</p>
+                                         </div>
+                                    </div>
+                                    <div class="row info-labels">
+                                        <div class="col-5">
+                                            <p>핸드폰 번호</p>
+                                        </div>
+                                        <div class="col-7">
+                                             <p class="phone-number">010-3333-3333</p>
+                                         </div>
+                                    </div>
+                                    <div class="row info-labels">
+                                        <div class="col-5">
+                                            <p>사내 위치</p>
+                                        </div>
+                                        <div class="col-7">
+                                             <p class="phone-number">동측 기둥</p>
+                                         </div>
                                     </div>
                                 </div>
 
@@ -731,7 +750,21 @@
                         alert("모든 필드를 입력하세요.");
                     } else {
                         // 데이터 저장을 위한 처리 (AJAX 요청 또는 form 제출 로직 추가 가능)
-                        $.ajax({
+                        Swal.fire({
+                            title: "사원 추가",
+                            text: "사원을 추가하시겠습니까?",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            confirmButtonText: "확인",
+                            cancelButtonText: "취소",
+                            cancelButtonColor: "#d33",
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                Swal.fire({
+                                    title: "사원 추가",
+                                    text: "완료되었습니다.",
+                                });
+                                $.ajax({
                             url: '/api/employees',
                             method: 'POST',
                             contentType: 'application/json',
@@ -751,6 +784,9 @@
                                 console.error('이모티콘 추가에 실패했습니다:', error);
                             }
                                     });
+                            }
+                        })
+
                     }
                 });
 
@@ -768,13 +804,26 @@
                 console.log("id!!!" + selectedDeptId);
 
                 // 확인 후 삭제 진행
-                if (confirm(selectedDeptName + " 부서를 정말 삭제하시겠습니까?")) {
-                    $.ajax({
+                Swal.fire({
+                    title: "삭제하시겠습니까?",
+                    text: "되돌릴 수 없습니다!",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    confirmButtonText: "삭제",
+                    cancelButtonText: "취소",
+                    cancelButtonColor: "#d33",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Swal.fire({
+                            title: "삭제",
+                            text: "삭제 완료 되었습니다.",
+                        });
+                        // 2초 후 채팅방 삭제
+                        setTimeout(function() {
+                            $.ajax({
                         url: "/api/delete/" + selectedDeptId,
                         type: "DELETE",
                         success: function(response) {
-                            alert(selectedDeptName + " 부서가 삭제되었습니다.");
-                            // 페이지를 새로고침하여 변경 사항 반영
                             location.reload(); // 페이지 리로드
                         },
                         error: function(jqXHR, textStatus, errorThrown) {
@@ -782,7 +831,11 @@
                             alert("부서 삭제에 실패했습니다.");
                         }
                     });
-                }
+                        }, 2000);
+                    }
+                })
+
+
             });
 
 

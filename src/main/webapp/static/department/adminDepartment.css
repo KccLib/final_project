@@ -336,10 +336,10 @@ li {
     /* 절대 위치 지정 */
     left: 150px;
     /* 좌측 위치 설정 */
-    top: 230px;
+    top: 245px;
     /* 위쪽 위치를 원하는 대로 조정 */
     width: 400px;
-    height: 350px;
+    height: 323px;
     background-color: #ffffff;
     border: 1px solid #000000;
     margin-right: 5000px;
@@ -389,6 +389,7 @@ li {
     font-size: 30px;
     font-weight: bold;
     margin: 10px 0;
+    margin-left: 133px;
 }
 
 .dept-emp {
@@ -414,10 +415,9 @@ li {
 }
 
 .info-labels {
-    width: 150px;
     font-size: 22px;
     font-weight: bold;
-    margin: 34px 20px;
+    margin-top: 10px !important;
     color: #242222;
 }
 
