@@ -282,12 +282,13 @@
   border-radius: 5px;
   background-color: #e0e0e0;
   position: absolute;
-  top: 133px;
+  top: 134px;
   left: 10px;
   word-wrap: break-word;
   word-break: break-all;
   resize: none;
   border: 0px solid black;
+  padding: 5px;
 }
 
 #status-message-contents {

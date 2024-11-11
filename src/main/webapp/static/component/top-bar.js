@@ -355,16 +355,33 @@ const messagePen = document.getElementById("status-message-buttons");
 const statusMessageButtons = document.getElementById("status-message-buttons");
 messagePen.addEventListener("click", function (event) {
   const targetPen = event.target.closest("#message-pen");
-
   if (targetPen) {
-    statusMessageButtons.innerHTML = "";
-    userStatusMessageContents.innerHTML =
-      "<textarea  id='tmp-employee-contents' type='text' placeholder='메시지를 입력하세요' maxlength='80'></textarea>";
+    let targetEmployeeMessage;
 
-    statusMessageButtons.innerHTML = `<div id="message-save"><i class="fa-solid fa-circle-chevron-down"></i></div>
-              <div id="message-trash">
-                <i class="fa-solid fa-trash-can"></i>
-              </div>`;
+    $.ajax({
+      url: "/api/employees/current-employee",
+      method: "GET",
+      dataType: "json",
+      success: function (employeeInfo) {
+        console.log("가져온 user의 상태메세지 " + employeeInfo.statusMessage);
+        targetEmployeeMessage = employeeInfo.statusMessage;
+
+        userStatusMessageContents.innerHTML = `<textarea id="tmp-employee-contents" placeholder="메시지를 입력하세요" maxlength="80">${targetEmployeeMessage}</textarea>`;
+
+        statusMessageButtons.innerHTML = `
+        <div id="message-save">
+          <i class="fa-solid fa-circle-chevron-down" style="color: limegreen;"></i>
+        </div>
+        <div id="message-trash">
+          <i class="fa-solid fa-trash-can"></i>
+        </div>`;
+
+        console.log("가져온 user의 변환 " + targetEmployeeMessage);
+      },
+      error: function (xhr, status, error) {
+        console.error("회원정보를 가져올 수 없습니다. " + error);
+      },
+    });
   }
 });
 
