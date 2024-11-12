@@ -64,8 +64,8 @@ public class EmployeeService {
     public int employeeSave(SaveEmployee saveEmployee) throws EmployeeSaveException {
         // 비밀번호 인코딩
         String password = saveEmployee.getPassword();
-        String incodingPassword = passwordEncoder.encode(password);
-        saveEmployee.setPassword(incodingPassword);
+        String encodingPassword = passwordEncoder.encode(password);
+        saveEmployee.setPassword(encodingPassword);
 
         // 회원저장
         int isSuccess = employeeMapper.saveEmployee(saveEmployee);
@@ -179,8 +179,8 @@ public class EmployeeService {
     public int saveEmployeeFindById(EmployeeInfo employeeInfo) throws EmployeeSaveException {
         // 비밀번호 인코딩
         String password = employeeInfo.getPassword();
-        String incodingPassword = passwordEncoder.encode(password);
-        employeeInfo.setPassword(incodingPassword);
+        String encodingPassword = passwordEncoder.encode(password);
+        employeeInfo.setPassword(encodingPassword);
 
         // 회원저장
         int isSuccess = employeeMapper.saveEmployeeFindById(employeeInfo);
@@ -199,8 +199,8 @@ public class EmployeeService {
         EmployeeInfo loginEmployeeInfo = getEmployeeInfo(employeeId);
 
         String password = employeeInfo.getPassword();
-        String incodingPassword = passwordEncoder.encode(password);
-        employeeInfo.setPassword(incodingPassword);
+        String encodingPassword = passwordEncoder.encode(password);
+        employeeInfo.setPassword(encodingPassword);
         employeeInfo.setCompanyId(loginEmployeeInfo.getCompanyId());
         employeeInfo.setStatus(3L);
 
@@ -221,6 +221,9 @@ public class EmployeeService {
     public EmployeeInfoWithDept getEmployeeInfoWithDept(Long employeeId) {
         EmployeeInfoWithDept employeeInfoWithDept = otherEmployeeMapper.getEmployeeInfoWithDept(employeeId).orElseThrow(() -> new NotFoundException("회원정보를 조회할 수 없습니다."));
 
+        if(employeeInfoWithDept.getProfileUrl()== null) {
+            employeeInfoWithDept.setProfileUrl("https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y");
+        }
         return  employeeInfoWithDept;
     }
 
