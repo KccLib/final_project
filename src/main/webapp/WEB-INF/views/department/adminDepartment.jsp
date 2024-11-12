@@ -597,25 +597,39 @@
                             return;
                         }
 
-                        $.ajax({
-                            url: "/api/departments/save",
-                            type: "POST",
-                            data: {
-                                upperDeptId: upperDept,
-                                departmentName: deptName
-                            },
-                            success: function(departmentHTML) {
-                                    alert("부서가 성공적으로 추가되었습니다.");
-                                    $('.add-department-form').hide();
-
-                                    // 여기에 HTML을 추가합니다
-                                    $('.second-side-bar ul').append(departmentHTML); // HTML 추가
-                                },
-                            error: function(jqXHR, textStatus, errorThrown) {
-                                console.error("부서 추가에 실패했습니다.", textStatus, errorThrown);
-                                alert("부서 추가에 실패했습니다. 오류: " + errorThrown);
+                        Swal.fire({
+                            title: "부서 추가",
+                            text: "부서를 추가하시겠습니까?",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            confirmButtonText: "확인",
+                            cancelButtonText: "취소",
+                            cancelButtonColor: "#d33",
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                Swal.fire({
+                                    title: "부서 추가",
+                                    text: "완료되었습니다.",
+                                });
+                                $.ajax({
+                                 url: "/api/departments/save",
+                                 type: "POST",
+                                 data: {
+                                     upperDeptId: upperDept,
+                                     departmentName: deptName
+                                 },
+                                 success: function(departmentHTML) {
+                                        window.location.reload();
+                                     },
+                                 error: function(jqXHR, textStatus, errorThrown) {
+                                     console.error("부서 추가에 실패했습니다.", textStatus, errorThrown);
+                                     alert("부서 추가에 실패했습니다. 오류: " + errorThrown);
+                                 }
+                             });
                             }
-                        });
+                        })
+
+
                     });
 
 
@@ -701,7 +715,21 @@
 
 
                 // AJAX 요청으로 부서 수정
-                $.ajax({
+                Swal.fire({
+                            title: "부서 수정",
+                            text: "부서를 수정하시겠습니까?",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            confirmButtonText: "확인",
+                            cancelButtonText: "취소",
+                            cancelButtonColor: "#d33",
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                Swal.fire({
+                                    title: "부서 수정",
+                                    text: "완료되었습니다.",
+                                });
+                                $.ajax({
                     url: '/api/update/' + selectedDeptId, // 부서 수정 API 엔드포인트
                     type: 'PUT',
                     contentType: 'application/json',
@@ -711,15 +739,18 @@
                         upperDeptId: selectedOptionValue
                     }),
                     success: function(response) {
-                        alert("부서가 성공적으로 수정되었습니다.");
                         // 수정 후 필요에 따라 UI 업데이트
-                        $('.edit-department-form').hide(); // 수정 폼 숨기기
+                        window.location.reload(); // 페이지 리로드
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         console.error("부서 수정 실패:", textStatus, errorThrown);
                         alert("부서 수정에 실패했습니다.");
                     }
                 });
+
+                            }
+                        })
+
             });
 
 

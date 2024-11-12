@@ -1687,7 +1687,7 @@ $(document).ready(function() {
         $('.save-contents').show();
     });
 
-    $('.cancel-button').on('click', function () {
+    $('.save-contents .cancel-button').on('click', function () {
        $('.contents').hide();
        $('.default-contents').show();
     });
