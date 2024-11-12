@@ -9,6 +9,7 @@ import com.kcc.trioffice.domain.employee.dto.response.AdminInfo;
 import com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo;
 import com.kcc.trioffice.domain.employee.dto.response.SearchEmployee;
 import com.kcc.trioffice.domain.employee.mapper.EmployeeMapper;
+import com.kcc.trioffice.global.constant.GlobalConstants;
 import com.kcc.trioffice.global.enums.StatusType;
 import com.kcc.trioffice.global.exception.type.EmployeeSaveException;
 import com.kcc.trioffice.global.exception.type.NotFoundException;
@@ -182,7 +183,7 @@ public class EmployeeService {
         String encodingPassword = passwordEncoder.encode(password);
         employeeInfo.setPassword(encodingPassword);
 
-        employeeInfo.setProfileUrl("https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y");
+        employeeInfo.setProfileUrl(GlobalConstants.DEFAULT_EMPLOYEE_PROFILE);
 
         // 회원저장
         int isSuccess = employeeMapper.saveEmployeeFindById(employeeInfo);
@@ -224,7 +225,7 @@ public class EmployeeService {
         EmployeeInfoWithDept employeeInfoWithDept = otherEmployeeMapper.getEmployeeInfoWithDept(employeeId).orElseThrow(() -> new NotFoundException("회원정보를 조회할 수 없습니다."));
 
         if(employeeInfoWithDept.getProfileUrl()== null) {
-            employeeInfoWithDept.setProfileUrl("https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y");
+            employeeInfoWithDept.setProfileUrl(GlobalConstants.DEFAULT_EMPLOYEE_PROFILE);
         }
         return  employeeInfoWithDept;
     }

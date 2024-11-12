@@ -9,5 +9,6 @@ public class GlobalConstants {
     public static final String DEFAULT_DELETE_MESSAGE = "삭제된 메시지입니다.";
     public static final String DEFAULT_DELETE_CHAT_ROOM_MESSAGE = "님이 채팅방을 나갔습니다.";
     public static final String MESSAGE_KEY_PREFIX = "employee:messages:";
+    public static final String DEFAULT_EMPLOYEE_PROFILE = "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y";
 
 }

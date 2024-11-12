@@ -294,38 +294,7 @@ public class ScheduleService {
           Set<String> uniqueEmails = new HashSet<>(employeesEmail);
 
           for (String oneEmployeeEmail : uniqueEmails) {
-
-            // 이메일 메시지 설정
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-
-            helper.setFrom("noreply@kcc.com");
-            helper.setTo(oneEmployeeEmail);
-            helper.setSubject("KCC정보통신 | " + saveSchedule.getName() + " 일정 초대 알림");
-            String htmlContent = "<div class='email-container' style='max-width: 600px; margin: 20px auto; background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);'>"
-                +
-                "<div class='header' style='background-color: #0056b3; color: #ffffff; padding: 20px; text-align: center; border-top-left-radius: 8px; border-top-right-radius: 8px; font-size: 24px;'>"
-                +
-                "    일정 초대" +
-                "</div>" +
-                "<div class='content' style='padding: 20px; line-height: 1.6;'>" +
-                "    <h2 style='color: #333333;'>안녕하세요,</h2>" +
-                "    <p>귀하는 다음 일정에 초대되었습니다:</p>" +
-                "    <p><strong>일정 제목:</strong> " + saveSchedule.getName() + "</p>" +
-                "    <p><strong>일정 기간:</strong> " + saveSchedule.getStartedDt() + " ~ " + saveSchedule.getEndedDt()
-                + "</p>" +
-                "    <a href='#' class='button' style='display: inline-block; padding: 10px 20px; margin-top: 20px; background-color: #0056b3; color: #ffffff; text-decoration: none; border-radius: 5px; font-weight: bold;'>일정 확인하기</a>"
-                +
-                "</div>" +
-                "<div class='footer' style='text-align: center; padding: 10px; font-size: 12px; color: #999999; border-top: 1px solid #dddddd; margin-top: 20px;'>"
-                +
-                "    <p>본 알림은 시스템에 의해 자동 생성되었습니다.</p>" +
-                "</div>" +
-                "</div>";
-
-            helper.setText(htmlContent, true);
-
-            mailSender.send(message);
+            emailService.sendScheduleInvitation(oneEmployeeEmail, saveSchedule);
           }
         } catch (MailException e) {
           e.printStackTrace(); // 예외 처리 로직 추가 가능
