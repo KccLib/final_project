@@ -151,8 +151,9 @@
   border: 2px solid rgb(219 219 219);
   margin-top: 11px;
   border-radius: 51%;
-  margin-left: 1rem;
+  /* margin-left: 1rem; */
   cursor: pointer;
+  margin-left: 5px;
 }
 
 #profile-img img {

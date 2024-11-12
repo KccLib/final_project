@@ -38,12 +38,31 @@ modalOpenButton.addEventListener("click", () => {
       userName.innerHTML = `${employeeInfo.name} <span id="user-position">${employeeInfo.position}</span>`;
       userDept.innerText = `${employeeInfo.deptName}`;
       userEmail.innerText = `${employeeInfo.email}`;
-      userProfileImg.innerHTML = `<img
+      let userProfileImage;
+      /**
+       *
+       employee image null 처리 in modify employee
+       *
+       */
+      let employeeDefaultImg = `<i class="fa-solid fa-circle-user" style="font-size: 67px;  justify-content: center;
+                                           color: darkgray;
+                                        display: flex;
+                                        align-items: center;"></i>`;
+
+      if (
+        employeeInfo.profileUrl === undefined ||
+        employeeInfo.profileUrl === null
+      ) {
+        userProfileImage = employeeDefaultImg;
+      } else {
+        userProfileImage = `<img
               src="${employeeInfo.profileUrl}"
               alt="Profile Image"
               width="150"
               height="150"
             /><div id="profile-img-modify"><i class="fa-solid fa-camera"></i></div>`;
+      }
+      userProfileImg.innerHTML = userProfileImage;
 
       if (employeeInfo.statusMessage) {
         userStatusMessageContents.innerText = `${employeeInfo.statusMessage}`;
