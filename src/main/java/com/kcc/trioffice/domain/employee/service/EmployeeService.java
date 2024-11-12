@@ -182,6 +182,8 @@ public class EmployeeService {
         String encodingPassword = passwordEncoder.encode(password);
         employeeInfo.setPassword(encodingPassword);
 
+        employeeInfo.setProfileUrl("https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y");
+
         // 회원저장
         int isSuccess = employeeMapper.saveEmployeeFindById(employeeInfo);
 
