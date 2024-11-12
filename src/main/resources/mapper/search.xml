@@ -122,4 +122,11 @@
              )
     </select>
 
+    <select id="getRoomName" parameterType="Long" resultType="String">
+        SELECT name
+        from chat_room
+        where chat_room_id = #{chatRoomId}
+        AND is_deleted = 0
+    </select>
+
 </mapper>
