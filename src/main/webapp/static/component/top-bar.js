@@ -163,25 +163,32 @@ searchBar.addEventListener("click", function () {
 
         // searchEmployeeList에서 각 직원 정보를 가져와서 HTML 생성
         responseSearch.searchEmployeeList.forEach(function (employee) {
-          searchContentsPeople.innerHTML +=
-            '<div class="search-peoples" style="cursor: pointer;" data-id="' +
-            employee.id +
-            '">' +
-            '    <div class="search-profile-img">' +
-            '        <img src="' +
-            employee.profileURL +
-            '" alt="프로필 이미지" />' +
-            "    </div>" +
-            '    <p class="search-profile-name">' +
-            employee.name +
-            "</p>" +
-            '    <p class="search-profile-dept">' +
-            employee.deptName +
-            "</p>" +
-            '    <p class="search-profile-position">' +
-            employee.position +
-            "</p>" +
-            "</div>";
+          let employeeImg;
+          let employeeDefaultImg = `<i class="fa-solid fa-circle-user" style="font-size: 50px;  justify-content: center;
+                                        display: flex;
+                                        align-items: center;"></i>`;
+
+          if (
+            employee.profileURL === null ||
+            employee.profileURL === undefined
+          ) {
+            employeeImg = `<div class="search-profile-img">
+            ${employeeDefaultImg}
+          </div>`;
+          } else {
+            employeeImg = `<div class="search-profile-img">
+              <img src="${employee.profileURL}" alt="프로필 이미지" />
+            </div>`;
+          }
+
+          // console.log("넘어온 employee id : " + employee.id);
+          searchContentsPeople.innerHTML += `
+          <div class="search-peoples" style="cursor: pointer;" data-id="${employee.id}">
+            ${employeeImg}
+            <p class="search-profile-name">${employee.name}</p>
+            <p class="search-profile-dept">${employee.deptName}</p>
+            <p class="search-profile-position">${employee.position}</p>
+          </div>`;
         });
 
         searchContentsChatRooms.innerHTML = "";
@@ -244,26 +251,29 @@ searchBar.addEventListener("input", function (event) {
 
       // searchEmployeeList에서 각 직원 정보를 가져와서 HTML 생성
       responseSearch.searchEmployeeList.forEach(function (employee) {
+        let employeeImg;
+        let employeeDefaultImg = `<i class="fa-solid fa-circle-user" style="font-size: 50px;  justify-content: center;
+                                        display: flex;
+                                        align-items: center;"></i>`;
+
+        if (employee.profileURL === null || employee.profileURL === undefined) {
+          employeeImg = `<div class="search-profile-img">
+            ${employeeDefaultImg}
+          </div>`;
+        } else {
+          employeeImg = `<div class="search-profile-img">
+              <img src="${employee.profileURL}" alt="프로필 이미지" />
+            </div>`;
+        }
+
         // console.log("넘어온 employee id : " + employee.id);
-        searchContentsPeople.innerHTML +=
-          '<div class="search-peoples" style="cursor: pointer;" data-id="' +
-          employee.id +
-          '">' +
-          '    <div class="search-profile-img">' +
-          '        <img src="' +
-          employee.profileURL +
-          '" alt="프로필 이미지" />' +
-          "    </div>" +
-          '    <p class="search-profile-name">' +
-          employee.name +
-          "</p>" +
-          '    <p class="search-profile-dept">' +
-          employee.deptName +
-          "</p>" +
-          '    <p class="search-profile-position">' +
-          employee.position +
-          "</p>" +
-          "</div>";
+        searchContentsPeople.innerHTML += `
+          <div class="search-peoples" style="cursor: pointer;" data-id="${employee.id}">
+            ${employeeImg}
+            <p class="search-profile-name">${employee.name}</p>
+            <p class="search-profile-dept">${employee.deptName}</p>
+            <p class="search-profile-position">${employee.position}</p>
+          </div>`;
       });
 
       searchContentsChatRooms.innerHTML = "";
