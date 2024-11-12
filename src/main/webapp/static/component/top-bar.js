@@ -38,12 +38,31 @@ modalOpenButton.addEventListener("click", () => {
       userName.innerHTML = `${employeeInfo.name} <span id="user-position">${employeeInfo.position}</span>`;
       userDept.innerText = `${employeeInfo.deptName}`;
       userEmail.innerText = `${employeeInfo.email}`;
-      userProfileImg.innerHTML = `<img
+      let userProfileImage;
+      /**
+       *
+       employee image null 처리 in modify employee
+       *
+       */
+      let employeeDefaultImg = `<i class="fa-solid fa-circle-user" style="font-size: 67px;  justify-content: center;
+                                           color: darkgray;
+                                        display: flex;
+                                        align-items: center;"></i>`;
+
+      if (
+        employeeInfo.profileUrl === undefined ||
+        employeeInfo.profileUrl === null
+      ) {
+        userProfileImage = employeeDefaultImg;
+      } else {
+        userProfileImage = `<img
               src="${employeeInfo.profileUrl}"
               alt="Profile Image"
               width="150"
               height="150"
             /><div id="profile-img-modify"><i class="fa-solid fa-camera"></i></div>`;
+      }
+      userProfileImg.innerHTML = userProfileImage;
 
       if (employeeInfo.statusMessage) {
         userStatusMessageContents.innerText = `${employeeInfo.statusMessage}`;
@@ -163,25 +182,32 @@ searchBar.addEventListener("click", function () {
 
         // searchEmployeeList에서 각 직원 정보를 가져와서 HTML 생성
         responseSearch.searchEmployeeList.forEach(function (employee) {
-          searchContentsPeople.innerHTML +=
-            '<div class="search-peoples" style="cursor: pointer;" data-id="' +
-            employee.id +
-            '">' +
-            '    <div class="search-profile-img">' +
-            '        <img src="' +
-            employee.profileURL +
-            '" alt="프로필 이미지" />' +
-            "    </div>" +
-            '    <p class="search-profile-name">' +
-            employee.name +
-            "</p>" +
-            '    <p class="search-profile-dept">' +
-            employee.deptName +
-            "</p>" +
-            '    <p class="search-profile-position">' +
-            employee.position +
-            "</p>" +
-            "</div>";
+          let employeeImg;
+          let employeeDefaultImg = `<i class="fa-solid fa-circle-user" style="font-size: 50px;  justify-content: center;
+                                        display: flex;
+                                        align-items: center;"></i>`;
+
+          if (
+            employee.profileURL === null ||
+            employee.profileURL === undefined
+          ) {
+            employeeImg = `<div class="search-profile-img">
+            ${employeeDefaultImg}
+          </div>`;
+          } else {
+            employeeImg = `<div class="search-profile-img">
+              <img src="${employee.profileURL}" alt="프로필 이미지" />
+            </div>`;
+          }
+
+          // console.log("넘어온 employee id : " + employee.id);
+          searchContentsPeople.innerHTML += `
+          <div class="search-peoples" style="cursor: pointer;" data-id="${employee.id}">
+            ${employeeImg}
+            <p class="search-profile-name">${employee.name}</p>
+            <p class="search-profile-dept">${employee.deptName}</p>
+            <p class="search-profile-position">${employee.position}</p>
+          </div>`;
         });
 
         searchContentsChatRooms.innerHTML = "";
@@ -244,26 +270,29 @@ searchBar.addEventListener("input", function (event) {
 
       // searchEmployeeList에서 각 직원 정보를 가져와서 HTML 생성
       responseSearch.searchEmployeeList.forEach(function (employee) {
+        let employeeImg;
+        let employeeDefaultImg = `<i class="fa-solid fa-circle-user" style="font-size: 50px;  justify-content: center;
+                                        display: flex;
+                                        align-items: center;"></i>`;
+
+        if (employee.profileURL === null || employee.profileURL === undefined) {
+          employeeImg = `<div class="search-profile-img">
+            ${employeeDefaultImg}
+          </div>`;
+        } else {
+          employeeImg = `<div class="search-profile-img">
+              <img src="${employee.profileURL}" alt="프로필 이미지" />
+            </div>`;
+        }
+
         // console.log("넘어온 employee id : " + employee.id);
-        searchContentsPeople.innerHTML +=
-          '<div class="search-peoples" style="cursor: pointer;" data-id="' +
-          employee.id +
-          '">' +
-          '    <div class="search-profile-img">' +
-          '        <img src="' +
-          employee.profileURL +
-          '" alt="프로필 이미지" />' +
-          "    </div>" +
-          '    <p class="search-profile-name">' +
-          employee.name +
-          "</p>" +
-          '    <p class="search-profile-dept">' +
-          employee.deptName +
-          "</p>" +
-          '    <p class="search-profile-position">' +
-          employee.position +
-          "</p>" +
-          "</div>";
+        searchContentsPeople.innerHTML += `
+          <div class="search-peoples" style="cursor: pointer;" data-id="${employee.id}">
+            ${employeeImg}
+            <p class="search-profile-name">${employee.name}</p>
+            <p class="search-profile-dept">${employee.deptName}</p>
+            <p class="search-profile-position">${employee.position}</p>
+          </div>`;
       });
 
       searchContentsChatRooms.innerHTML = "";
@@ -355,16 +384,33 @@ const messagePen = document.getElementById("status-message-buttons");
 const statusMessageButtons = document.getElementById("status-message-buttons");
 messagePen.addEventListener("click", function (event) {
   const targetPen = event.target.closest("#message-pen");
-
   if (targetPen) {
-    statusMessageButtons.innerHTML = "";
-    userStatusMessageContents.innerHTML =
-      "<textarea  id='tmp-employee-contents' type='text' placeholder='메시지를 입력하세요' maxlength='80'></textarea>";
+    let targetEmployeeMessage;
 
-    statusMessageButtons.innerHTML = `<div id="message-save"><i class="fa-solid fa-circle-chevron-down"></i></div>
-              <div id="message-trash">
-                <i class="fa-solid fa-trash-can"></i>
-              </div>`;
+    $.ajax({
+      url: "/api/employees/current-employee",
+      method: "GET",
+      dataType: "json",
+      success: function (employeeInfo) {
+        console.log("가져온 user의 상태메세지 " + employeeInfo.statusMessage);
+        targetEmployeeMessage = employeeInfo.statusMessage;
+
+        userStatusMessageContents.innerHTML = `<textarea id="tmp-employee-contents" placeholder="메시지를 입력하세요" maxlength="80">${targetEmployeeMessage}</textarea>`;
+
+        statusMessageButtons.innerHTML = `
+        <div id="message-save">
+          <i class="fa-solid fa-circle-chevron-down" style="color: limegreen;"></i>
+        </div>
+        <div id="message-trash">
+          <i class="fa-solid fa-trash-can"></i>
+        </div>`;
+
+        console.log("가져온 user의 변환 " + targetEmployeeMessage);
+      },
+      error: function (xhr, status, error) {
+        console.error("회원정보를 가져올 수 없습니다. " + error);
+      },
+    });
   }
 });
 

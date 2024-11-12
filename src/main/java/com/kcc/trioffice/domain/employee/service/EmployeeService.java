@@ -9,6 +9,7 @@ import com.kcc.trioffice.domain.employee.dto.response.AdminInfo;
 import com.kcc.trioffice.domain.employee.dto.response.EmployeeInfo;
 import com.kcc.trioffice.domain.employee.dto.response.SearchEmployee;
 import com.kcc.trioffice.domain.employee.mapper.EmployeeMapper;
+import com.kcc.trioffice.global.constant.GlobalConstants;
 import com.kcc.trioffice.global.enums.StatusType;
 import com.kcc.trioffice.global.exception.type.EmployeeSaveException;
 import com.kcc.trioffice.global.exception.type.NotFoundException;
@@ -64,8 +65,8 @@ public class EmployeeService {
     public int employeeSave(SaveEmployee saveEmployee) throws EmployeeSaveException {
         // 비밀번호 인코딩
         String password = saveEmployee.getPassword();
-        String incodingPassword = passwordEncoder.encode(password);
-        saveEmployee.setPassword(incodingPassword);
+        String encodingPassword = passwordEncoder.encode(password);
+        saveEmployee.setPassword(encodingPassword);
 
         // 회원저장
         int isSuccess = employeeMapper.saveEmployee(saveEmployee);
@@ -179,8 +180,10 @@ public class EmployeeService {
     public int saveEmployeeFindById(EmployeeInfo employeeInfo) throws EmployeeSaveException {
         // 비밀번호 인코딩
         String password = employeeInfo.getPassword();
-        String incodingPassword = passwordEncoder.encode(password);
-        employeeInfo.setPassword(incodingPassword);
+        String encodingPassword = passwordEncoder.encode(password);
+        employeeInfo.setPassword(encodingPassword);
+
+        employeeInfo.setProfileUrl(GlobalConstants.DEFAULT_EMPLOYEE_PROFILE);
 
         // 회원저장
         int isSuccess = employeeMapper.saveEmployeeFindById(employeeInfo);
@@ -199,8 +202,8 @@ public class EmployeeService {
         EmployeeInfo loginEmployeeInfo = getEmployeeInfo(employeeId);
 
         String password = employeeInfo.getPassword();
-        String incodingPassword = passwordEncoder.encode(password);
-        employeeInfo.setPassword(incodingPassword);
+        String encodingPassword = passwordEncoder.encode(password);
+        employeeInfo.setPassword(encodingPassword);
         employeeInfo.setCompanyId(loginEmployeeInfo.getCompanyId());
         employeeInfo.setStatus(3L);
 
@@ -221,6 +224,9 @@ public class EmployeeService {
     public EmployeeInfoWithDept getEmployeeInfoWithDept(Long employeeId) {
         EmployeeInfoWithDept employeeInfoWithDept = otherEmployeeMapper.getEmployeeInfoWithDept(employeeId).orElseThrow(() -> new NotFoundException("회원정보를 조회할 수 없습니다."));
 
+        if(employeeInfoWithDept.getProfileUrl()== null) {
+            employeeInfoWithDept.setProfileUrl(GlobalConstants.DEFAULT_EMPLOYEE_PROFILE);
+        }
         return  employeeInfoWithDept;
     }
 

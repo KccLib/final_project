@@ -151,8 +151,9 @@
   border: 2px solid rgb(219 219 219);
   margin-top: 11px;
   border-radius: 51%;
-  margin-left: 1rem;
+  /* margin-left: 1rem; */
   cursor: pointer;
+  margin-left: 5px;
 }
 
 #profile-img img {
@@ -282,12 +283,13 @@
   border-radius: 5px;
   background-color: #e0e0e0;
   position: absolute;
-  top: 133px;
+  top: 134px;
   left: 10px;
   word-wrap: break-word;
   word-break: break-all;
   resize: none;
   border: 0px solid black;
+  padding: 5px;
 }
 
 #status-message-contents {

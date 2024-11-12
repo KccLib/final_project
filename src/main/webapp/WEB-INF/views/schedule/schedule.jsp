@@ -140,7 +140,7 @@ margin-top: -6px;    margin-right: 10px;">
                 value="${_csrf.token}"
               />
             </form>
-            <span id="close-button"></span>
+  <%--            <span id="close-button"></span>--%>
           </div>
         </div>
         <div id="detail-container" class="hidden">

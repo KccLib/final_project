@@ -22,4 +22,6 @@ public interface SearchMapper {
     List<Long> getChangeMyChatRooms(Long employeeId);
 
     List<SearchEmployee> getAllEmployeesInfoByKeyword(Long companyId, String keyword);
+
+    String getRoomName(Long chatRoomId);
 }

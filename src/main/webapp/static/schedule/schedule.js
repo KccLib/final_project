@@ -991,7 +991,7 @@ function submitAndModifySchedule(submitType) {
 }
 // 일정 추가 양식 제출 시 이벤트 처리
 document.getElementById("schedule-form").onsubmit = function (event) {
-  event.preventDefault(); // 기본 제출 동작 방지
+  event.preventDefault();
   const submitButton = document.getElementById("submit-add-schedule");
   const buttonText = submitButton.textContent; // 또는 submitButton.innerText;
   let actionValue; // 값을 저장할 변수
