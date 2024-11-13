@@ -1,7 +1,7 @@
 var idleTime = 0;
 var isAway = false;
 setInterval(timerIncrement, 60000); // 1분마다 실행
-var employeeInfo = 0;
+var employeeInfoStatus = 0;
 
 statusModel.addEventListener("click", function (event) {
   const target = event.target.closest(".user-status-select");
@@ -10,7 +10,7 @@ statusModel.addEventListener("click", function (event) {
     const status = target.dataset.status;
     userStatusBox.innerHTML = "";
     isStatusOpen = !isStatusOpen;
-    employeeInfo = status;
+    employeeInfoStatus = status;
     $.ajax({
       method: "PUT",
       url: "/api/employees/status",
@@ -59,14 +59,12 @@ statusModel.addEventListener("click", function (event) {
 $(document).on("mousemove keypress mousedown scroll touchstart", function () {
   // console.log("타이머 작동");
 
-  if (employeeInfo !== 1) {
-    return;
-  }
-
-  idleTime = 0;
-  if (isAway) {
-    isAway = false;
-    updateUserStatus("ACTIVE"); // 상태가 '온라인'으로 변경될 때만 호출
+  if (employeeInfoStatus === 2) {
+    idleTime = 0;
+    if (isAway) {
+      isAway = false;
+      updateUserStatus("ACTIVE"); // 상태가 '온라인'으로 변경될 때만 호출
+    }
   }
 });
 

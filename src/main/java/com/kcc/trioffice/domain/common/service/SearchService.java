@@ -103,35 +103,50 @@ public class SearchService {
         StringBuilder participationEmployees = new StringBuilder();
 
         chatRoomList.forEach(chatRoomId -> {
-            List<Long> employeeIds = searchMapper.participationEmployeeFindByChatRoomId(chatRoomId);
+            String chatRoomName = searchMapper.getRoomName(chatRoomId);
+            if(chatRoomName == null) {
 
-            List<String> names = new ArrayList<>();
+                List<Long> employeeIds = searchMapper.participationEmployeeFindByChatRoomId(chatRoomId);
 
-            employeeIds.forEach(id -> {
-                EmployeeInfo employeeInfo = employeeMapper.getEmployeeInfo(id).orElseThrow( () -> new NotFoundException("회원의 아이디를 가져올 수 없습니다."));
-                names.add(employeeInfo.getName());
-            });
+                List<String> names = new ArrayList<>();
 
-            // 이름 목록을 문자열로 변환하여 participationEmployees에 추가
-            if (names != null && !names.isEmpty()) {
-                names.forEach(name -> {
-                    participationEmployees.append(name).append(", "); // 각 이름 뒤에 쉼표 추가
-                });
+                int tmpEmployeeCount = 0;
+                if(employeeIds.size() > 5) {
+                    tmpEmployeeCount = 5;
+                } else {
+                    tmpEmployeeCount = employeeIds.size();
+                }
+                for(int i=0; i<tmpEmployeeCount; i++) {
+                    EmployeeInfo employeeInfo = employeeMapper.getEmployeeInfo(employeeIds.get(i)).orElseThrow(() -> new NotFoundException("회원정보를 가져올 수 없습니다. - search Service"));
+                    names.add(employeeInfo.getName());
+                }
+
+                // 이름 목록을 문자열로 변환하여 participationEmployees에 추가
+                if (names != null && !names.isEmpty()) {
+                    names.forEach(name -> {
+                        participationEmployees.append(name).append(", "); // 각 이름 뒤에 쉼표 추가
+                    });
+                }
+
+                if (participationEmployees.length() > 0) {
+                    participationEmployees.setLength(participationEmployees.length() - 2); // 마지막 쉼표 및 공백 제거
+                }
+
+                if(participationEmployees.toString().contains(keyword)) {
+                    participationEmployees.append("님과의 채팅");
+                    searchChatRoomList.add(new SearchChatRoom(participationEmployees.toString(), DEFAULT_GROUP_IMAGE,chatRoomId));
+                    participationEmployees.delete(0, participationEmployees.length());
+
+                }else {
+                    participationEmployees.delete(0, participationEmployees.length());
+
+                }
+            } else {
+                if (chatRoomName.contains(keyword)) {
+                    searchChatRoomList.add(new SearchChatRoom(chatRoomName, DEFAULT_GROUP_IMAGE,chatRoomId));
+                }
             }
 
-            if (participationEmployees.length() > 0) {
-                participationEmployees.setLength(participationEmployees.length() - 2); // 마지막 쉼표 및 공백 제거
-            }
-
-            if(participationEmployees.toString().contains(keyword)) {
-                participationEmployees.append("님과의 채팅");
-                searchChatRoomList.add(new SearchChatRoom(participationEmployees.toString(), DEFAULT_GROUP_IMAGE,chatRoomId));
-                participationEmployees.delete(0, participationEmployees.length());
-
-            }else {
-                participationEmployees.delete(0, participationEmployees.length());
-
-            }
         });
 
 
