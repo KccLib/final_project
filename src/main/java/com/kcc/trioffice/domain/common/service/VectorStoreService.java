@@ -54,7 +54,7 @@ public class VectorStoreService {
         }
         String button1 = "doc:자주하는 질문";
         String button2 = "doc:신규기능 활용 세미나\uD83D\uDE0A";
-        String button3 = "doc:챗봇 답변을 잘받는 TIP";
+        String button3 = "doc:답변을 잘받는 TIP❗";
         String button4 = "doc:맞춤법 검사를 부탁해요";
 
 
