@@ -185,6 +185,7 @@
 #chat-bot-guide {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 
 .chat-bot-guides {
