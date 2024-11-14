@@ -1,4 +1,3 @@
-
 const currentPath = window.location.pathname;
 console.log("Current Path:", currentPath);
 
@@ -41,13 +40,11 @@ chatBotCloseButton.addEventListener("click", function () {
 chatBotListRemoveButton.addEventListener("click", function () {
   chatBotList.innerHTML = ""; // 내용 지우기
   const eventSource = new EventSource(
-      `/api/chat-bot?clientMessage="지금까지 질문내용 초기화 해줘"`
+    `/api/chat-bot?clientMessage="지금까지 질문내용 초기화 해줘"`,
   );
 
   eventSource.onmessage = function (event) {
-
     // addServerMessage(event.data, serverMessageElement);
-
   };
 
   eventSource.onerror = function (event) {
@@ -82,7 +79,7 @@ function submitChatBot() {
   const serverMessageElement = addServerMessageBox(); // 서버 메시지 박스 생성 및 반환값 저장
 
   const eventSource = new EventSource(
-      `/api/chat-bot?clientMessage=${encodeURIComponent(sendClientMessage)}`
+    `/api/chat-bot?clientMessage=${encodeURIComponent(sendClientMessage)}`,
   );
 
   eventSource.onmessage = function (event) {
@@ -99,7 +96,6 @@ function submitChatBot() {
     //   }, index * 50); // 50ms 간격으로 추가
     // });
     addServerMessage(event.data, serverMessageElement);
-
   };
 
   eventSource.onerror = function (event) {
@@ -133,7 +129,7 @@ function addServerMessage(message, serverMessageElement) {
   console.log(serverMessageElement); // serverMessageElement 확인
 
   const addChatMessage = serverMessageElement.querySelector(
-    ".chat-bot-server-messages"
+    ".chat-bot-server-messages",
   );
   if (addChatMessage.innerText.includes("💬")) {
     addChatMessage.innerText = addChatMessage.innerText.replace("💬", ""); // "💬"를 빈 문자열로 대체
@@ -144,42 +140,39 @@ function addServerMessage(message, serverMessageElement) {
   if (message === "") {
     message = " ";
   }
-// Markdown 문법 문자들을 이스케이프 처리
+  // Markdown 문법 문자들을 이스케이프 처리
   const escapedMessage = message
-      .replace(/\*/g, "")  // '*'을 이스케이프
-      .replace(/_/g, "")   // '_'을 이스케이프
-      .replace(/`/g, "");  // '`'을 이스케이프  // Markdown을 HTML로 변환
+    .replace(/\*/g, "") // '*'을 이스케이프
+    .replace(/_/g, "") // '_'을 이스케이프
+    .replace(/`/g, ""); // '`'을 이스케이프  // Markdown을 HTML로 변환
   addChatMessage.innerHTML += escapedMessage; // 변환된 HTML을 넣어줌
-
 
   chatBotList.scrollTop = chatBotList.scrollHeight;
 }
 
 //가이드 답변
 
-$(".chat-bot-guides").on("click", function() {
+$(".chat-bot-guides").on("click", function () {
   const chatBotInput = document.getElementById("chat-bot-input");
   const selectedText = $(this).text().trim(); // 클릭된 요소의 텍스트 추출 및 공백 제거
 
-  console.log( "선택된 요소 " + selectedText);
+  console.log("선택된 요소 " + selectedText);
 
   // "✅맞춤법 검사를 부탁해요"일 경우 chatBotInput의 내용을 추가
-  const clientMessage = selectedText === "✅맞춤법 검사를 부탁해요"
+  const clientMessage =
+    selectedText === "✅ 코드 컨벤션 검사"
       ? `${selectedText} ${chatBotInput.value}`
       : selectedText;
   displayClientChatBotMessage(clientMessage);
 
   const serverMessageElement = addServerMessageBox(); // 서버 메시지 박스 생성 및 반환값 저장
 
-
   const eventSource = new EventSource(
-      `/api/chat-bot?clientMessage=${encodeURIComponent(clientMessage)}`
+    `/api/chat-bot?clientMessage=${encodeURIComponent(clientMessage)}`,
   );
 
   eventSource.onmessage = function (event) {
-
     addServerMessage(event.data, serverMessageElement);
-
   };
 
   eventSource.onerror = function (event) {
