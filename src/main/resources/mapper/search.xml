@@ -54,10 +54,15 @@
 
     <select id="participationEmployeeFindByChatRoomId" parameterType="long"
             resultType="long">
-        SELECT employee_id
-        FROM participation_employee
-        WHERE is_deleted = 0
-          AND chat_room_id = #{chatRoomId}
+        SELECT pe.employee_id
+        FROM participation_employee pe
+        JOIN employee e
+            ON pe.employee_id = e.employee_id
+            AND e.is_deleted = 0
+        WHERE pe.chat_room_id = #{chatRoomId}
+          AND pe.is_deleted = 0
+          AND pe.chat_room_id = #{chatRoomId}
+
     </select>
 
 
