@@ -104,7 +104,7 @@ pageEncoding="UTF-8" %> <%@ include file="/WEB-INF/views/component/lib.jsp" %>
                 답변을 잘받는 TIP❗
               </div>
               <div class="chat-bot-guides" id="chat-bot-guide-4">
-                ✅맞춤법 검사를 부탁해요
+                ✅ 코드 컨벤션 검사
               </div>
             </div>
           </div>
