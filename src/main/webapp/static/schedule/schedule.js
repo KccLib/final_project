@@ -573,7 +573,7 @@ var startDatePicker = mobiscroll.datepicker("#start-date", {
   timeFormat: "HH:mm", // 시간 형식
   stepMinute: 5, // 분 단위 증가폭
   returnFormat: "iso8601", // ISO 8601 형식 반환
-  onChange: function (event) {
+  onClose: function (event) {
     if (event.value) {
       validateDates();
     }
@@ -588,7 +588,7 @@ var endDatePicker = mobiscroll.datepicker("#end-date", {
   timeFormat: "HH:mm",
   stepMinute: 5,
   returnFormat: "iso8601",
-  onChange: function (event) {
+  onClose: function (event) {
     console.log("종료값을 설정하였습니다");
     if (event.value) {
       validateDates();
